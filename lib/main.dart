@@ -13,7 +13,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<ThemeBloc>(
-      // Providing ThemeBloc to the whole widget tree
       create: (_) => ThemeBloc(),
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (context, state) {
@@ -21,7 +20,6 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             title: 'Flutter App',
             theme: state.themeData,
-            darkTheme: ThemeData.dark(),
             initialRoute: '/',
             onGenerateRoute: RouteGenerator.generateRoute,
           );

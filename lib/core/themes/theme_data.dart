@@ -8,6 +8,8 @@ final ThemeData lightTheme = ThemeData(
   //Colors
   primaryColor: primaryColor,
   scaffoldBackgroundColor: backgroundColor,
+  cardColor: cardColor,
+  dividerColor: dividerColor,
 
   appBarTheme: const AppBarTheme(
     backgroundColor: toolbarColor,
@@ -83,18 +85,18 @@ final ThemeData lightTheme = ThemeData(
 
     labelLarge: TextStyle(
       color: textPrimaryColor,
-      fontSize: 14,
+      fontSize: 16,
       fontFamily: font_medium,
       fontWeight: FontWeight.w600,
     ),
     labelMedium: TextStyle(
       color: textPrimaryColor,
-      fontSize: 12,
+      fontSize: 14,
       fontFamily: font_regular,
     ),
     labelSmall: TextStyle(
       color: textPrimaryColor,
-      fontSize: 10,
+      fontSize: 12,
       fontFamily: font_regular,
     ),
   ),
@@ -107,7 +109,10 @@ final ThemeData darkTheme = ThemeData(
   brightness: Brightness.dark,
   //Colors
   primaryColor: primaryColor,
-  scaffoldBackgroundColor: backgroundColor,
+  scaffoldBackgroundColor: backgroundDarkColor,
+
+  cardColor: cardDarkColor,
+  dividerColor: dividerDarkColor,
 
   appBarTheme: const AppBarTheme(
     backgroundColor: toolbarDarkColor,
@@ -115,84 +120,84 @@ final ThemeData darkTheme = ThemeData(
 
   textTheme: const TextTheme(
     bodyLarge: TextStyle(
-      color: textPrimaryColor,
+      color: textPrimaryDarkColor,
       fontSize: 16,
       fontFamily: font_regular,
     ),
     bodyMedium: TextStyle(
-      color: textPrimaryColor,
+      color: textPrimaryDarkColor,
       fontSize: 14,
       fontFamily: font_regular,
     ),
     bodySmall: TextStyle(
-      color: textPrimaryColor,
+      color: textPrimaryDarkColor,
       fontSize: 12,
       fontFamily: font_regular,
     ),
 
     titleLarge: TextStyle(
-      color: textPrimaryColor,
+      color: textPrimaryDarkColor,
       fontSize: 22,
       fontFamily: font_bold,
       fontWeight: FontWeight.bold,
     ),
     titleMedium: TextStyle(
-      color: textPrimaryColor,
+      color: textPrimaryDarkColor,
       fontSize: 20,
       fontFamily: font_medium,
     ),
     titleSmall: TextStyle(
-      color: textPrimaryColor,
+      color: textPrimaryDarkColor,
       fontSize: 18,
       fontFamily: font_regular,
     ),
 
     displayLarge: TextStyle(
-      color: textPrimaryColor,
+      color: textPrimaryDarkColor,
       fontSize: 36,
       fontFamily: font_bold,
       fontWeight: FontWeight.bold,
     ),
     displayMedium: TextStyle(
-      color: textPrimaryColor,
+      color: textPrimaryDarkColor,
       fontSize: 32,
       fontFamily: font_bold,
     ),
     displaySmall: TextStyle(
-      color: textPrimaryColor,
+      color: textPrimaryDarkColor,
       fontSize: 28,
       fontFamily: font_bold,
     ),
 
     headlineLarge: TextStyle(
-      color: textPrimaryColor,
+      color: textPrimaryDarkColor,
       fontSize: 28,
       fontFamily: font_medium,
     ),
     headlineMedium: TextStyle(
-      color: textPrimaryColor,
+      color: textPrimaryDarkColor,
       fontSize: 24,
       fontFamily: font_medium,
     ),
     headlineSmall: TextStyle(
-      color: textPrimaryColor,
+      color: textPrimaryDarkColor,
       fontSize: 20,
       fontFamily: font_medium,
     ),
 
     labelLarge: TextStyle(
-      color: textPrimaryColor,
+      color: textPrimaryDarkColor,
       fontSize: 14,
       fontFamily: font_medium,
       fontWeight: FontWeight.w600,
     ),
     labelMedium: TextStyle(
-      color: textPrimaryColor,
+      color: textPrimaryDarkColor,
       fontSize: 12,
       fontFamily: font_regular,
     ),
     labelSmall: TextStyle(
-      color: textPrimaryColor,
+      color: textPrimaryDarkColor,
       fontSize: 10,
       fontFamily: font_regular,
     ),

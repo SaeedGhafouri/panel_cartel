@@ -40,18 +40,25 @@ class SideDrawer extends StatelessWidget {
                             height: 50,
                           ),
                           const SizedBox(width: 10),
-                          Text(
-                            'کارتل ویژن',
-                            style: Theme.of(context).textTheme.bodyLarge,
-                          ),
+                          Row(
+                            children: [
+                              Text(
+                                'پنل کارتل',
+                                style: Theme.of(context).textTheme.headlineSmall,
+                              ),
+                              const SizedBox(width: 10),
+                              Text(
+                                '1.0.0',
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+                            ],
+                          )
                         ],
                       ),
                       const SizedBox(height: 40),
                       ElevatedButton(
                         onPressed: () {
-                          // Triggering theme toggle event
-                          BlocProvider.of<ThemeBloc>(context)
-                              .add(ToggleThemeEvent());
+                          BlocProvider.of<ThemeBloc>(context).add(ToggleThemeEvent());
                         },
                         child: Container(
                           height: 40,
@@ -77,14 +84,14 @@ class SideDrawer extends StatelessWidget {
                     ],
                   )),
               ListTile(
-                title: Text('آمار کلی',
+                title: Text('کارشناسان',
                     style: Theme.of(context).textTheme.bodyMedium),
                 style: ListTileStyle.drawer,
-                leading: Icon(IconsaxPlusLinear.home, size: 20,),
+                leading: Icon(IconsaxPlusLinear.user_tick, size: 20,),
                 onTap: () => onTap(0),
               ),
               ListTile(
-                title: Text('کارشناسان',
+                title: Text('افزودن کارشناس',
                     style: Theme.of(context).textTheme.bodyMedium),
                 style: ListTileStyle.drawer,
                 leading: Icon(IconsaxPlusLinear.user_tick, size: 20,),

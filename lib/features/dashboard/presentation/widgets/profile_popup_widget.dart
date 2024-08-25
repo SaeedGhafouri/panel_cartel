@@ -3,7 +3,7 @@ import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:panel_cartel/core/constants/colors.dart';
 
 import '../../../../core/constants/assets.dart';
-import 'image_diplay_widget.dart';
+import '../../../../core/widgets/image_diplay_widget.dart';
 
 class ProfilePopupWidget extends StatelessWidget {
   const ProfilePopupWidget({Key? key}) : super(key: key);
@@ -11,6 +11,7 @@ class ProfilePopupWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<String>(
+      color: Theme.of(context).cardColor,
       position: PopupMenuPosition.under,
       onSelected: (value) {
         switch (value) {

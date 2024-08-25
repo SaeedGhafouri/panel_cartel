@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:panel_cartel/features/admin/presentation/screens/admin_create_screen.dart';
 import 'package:panel_cartel/features/admin/presentation/screens/admin_screen.dart';
 import 'package:panel_cartel/features/dashboard/presentation/widgets/appbar.dart';
 import '../widgets/side_drawer.dart';
@@ -13,7 +14,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [
-    AdminScreen(),
+    AdminCreateScreen(),
+    //Other pages
   ];
 
   void _onDrawerItemTapped(int index) {
@@ -32,7 +34,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           Builder(
             builder: (context) => AppBarMain(
               onMenuPressed: () {
-                Scaffold.of(context).openEndDrawer(); // باز کردن Drawer
+                Scaffold.of(context).openEndDrawer();
               },
             ),
           ),
