@@ -50,7 +50,10 @@ class _TextFieldWidget extends State<TextFieldWidget> {
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: smallRadius,
-            borderSide: defaultBorderSide,
+            borderSide: BorderSide(
+              color: Theme.of(context).dividerColor,
+              width: 1.0
+            ),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: smallRadius,
