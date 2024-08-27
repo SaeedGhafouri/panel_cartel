@@ -31,8 +31,6 @@ class AppBarMain extends StatelessWidget {
             children: [
               ProfilePopupWidget(),
               SizedBox(width: 20,),
-              VerticalDivider(width: 4, color: Colors.redAccent),
-              SizedBox(width: 20,),
               IconButton(
                   onPressed: () {
 
