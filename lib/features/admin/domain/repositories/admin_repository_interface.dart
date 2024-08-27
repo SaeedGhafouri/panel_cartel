@@ -2,7 +2,7 @@
 import '../../data/models/admin.dart';
 
 abstract class AdminRepositoryInterface {
-
+/*
   Future<List<Admin>> getAdmins(
       {String? filter}
       );
@@ -11,6 +11,6 @@ abstract class AdminRepositoryInterface {
 
   Future<Admin> deleteAdmin(Admin admin);
 
-  Future<Admin> createAdmin(Admin admin);
+  Future<Admin> createAdmin(Admin admin);*/
 
 }

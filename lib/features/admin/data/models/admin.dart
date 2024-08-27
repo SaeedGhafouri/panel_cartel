@@ -9,6 +9,8 @@ class Admin {
   final int status;
   final String nationalCode;
   final String? image;
+  final String? createdAt;
+  final String? updatedAt;
 
   Admin({
     required this.id,
@@ -21,6 +23,8 @@ class Admin {
     required this.status,
     required this.nationalCode,
     this.image,
+    this.createdAt,
+    this.updatedAt,
   });
 
   factory Admin.fromJson(Map<String, dynamic> json) {
@@ -35,6 +39,8 @@ class Admin {
       status: json['status'],
       nationalCode: json['national_code'],
       image: json['image'],
+      createdAt: json['created_at'],
+      updatedAt: json['updated_at'],
     );
   }
 
@@ -50,6 +56,8 @@ class Admin {
       'status': status,
       'national_code': nationalCode,
       'image': image,
+      'created_at': createdAt,
+      'updated_at': updatedAt,
     };
   }
 }

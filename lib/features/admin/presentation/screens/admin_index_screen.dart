@@ -69,8 +69,10 @@ class _AdminIndexScreenState extends State<AdminIndexScreen> {
                         row_titles: [
                           'عملیات',
                           'وضعیت',
-                          'تاریخ ثبت نام',
+                          //'تاریخ عضویت',
                           'ایمیل',
+                          'شماره موبایل',
+                          'کدملی',
                           'نام',
                           'تصویر',
                           'شناسه',
@@ -87,25 +89,45 @@ class _AdminIndexScreenState extends State<AdminIndexScreen> {
                                 itemBuilder: (context, index) {
                                   return TableColumnWidget(
                                     values: [
-                                      state.data[index].id,
-                                      state.data[index].firstName,
-                                      state.data[index].mobile,
+                                      state.data[index].status,
+                                      //state.data[index].createdAt,
                                       state.data[index].email,
-                                      state.data[index].firstName,
-                                      "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg",
-                                      //state.data[index].image,
+                                      state.data[index].mobile,
+                                      state.data[index].nationalCode,
+                                      state.data[index].firstName + ' ' + state.data[index].lastName,
+                                      state.data[index].image,
                                       state.data[index].id,
                                     ],
+                                    actions: [
+                                      IconButton(
+                                        onPressed: () {
+                                        },
+                                        iconSize: 20,
+                                        icon: const Icon(
+                                          IconsaxPlusLinear.trash,
+                                          color: dangerColor,
+                                        ),
+                                      ),
+                                      IconButton(
+                                        onPressed: () {
+                                        },
+                                        iconSize: 20,
+                                        icon: const Icon(
+                                          IconsaxPlusLinear.edit_2,
+                                          color: grayIconColor,
+                                        ),
+                                      ),
+                                      IconButton(
+                                        onPressed: () {
+                                        },
+                                        iconSize: 20,
+                                        icon: const Icon(
+                                          IconsaxPlusLinear.eye,
+                                          color: grayIconColor,
+                                        ),
+                                      ),
+                                    ],
                                   );
-                                  /*return Container(
-                                      child: Row(
-                                          children: [
-                                            //ItemImage(imageUrl: state.data[index].image),
-                                            ItemText(value: state.data[index].firstName),
-                                            ItemText(value: state.data[index].email),
-                                          ]
-                                      )
-                                  );*/
                                 }
                             );
                           } else if (state is AdminError) {

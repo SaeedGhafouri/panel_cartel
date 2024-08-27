@@ -7,7 +7,9 @@ import '../../themes/themes.dart';
 
 class TableColumnWidget extends StatelessWidget {
   final List<dynamic>? values;
-  const TableColumnWidget({super.key, required this.values});
+  //final childrin
+  final List<Widget>? actions;
+  const TableColumnWidget({super.key, required this.values, this.actions});
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,12 @@ class TableColumnWidget extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: actions!,
+                  )
+                ),
                 for (var value in values!) ...[
                   Expanded(
                     child: Container(
@@ -35,7 +43,7 @@ class TableColumnWidget extends StatelessWidget {
                       child: _buildCell(value, context)
                     ),
                   )
-                ]
+                ],
               ],
             ),
           ),
@@ -77,4 +85,5 @@ class TableColumnWidget extends StatelessWidget {
   bool _isPhoneNumber(String value) {
     return value.length == 11 && value.startsWith('09');
   }
+
 }

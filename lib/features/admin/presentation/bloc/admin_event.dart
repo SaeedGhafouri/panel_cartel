@@ -20,6 +20,16 @@ class GetAdmins extends AdminEvent {
   List<Object> get props => [filter];
 }
 
+/// Details
+class GetAdminDetails extends AdminEvent {
+  final int id;
+
+  const GetAdminDetails(this.id);
+
+  @override
+  List<Object> get props => [id];
+}
+
 /// Add
 class CreateAdmin extends AdminEvent {
   final Admin admin;

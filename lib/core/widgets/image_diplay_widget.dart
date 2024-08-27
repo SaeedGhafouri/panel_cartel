@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 
 class ImageDisplayWidget extends StatelessWidget {
   final String? imageUrl;
@@ -51,7 +52,7 @@ class ImageDisplayWidget extends StatelessWidget {
     if (imageUrl == null && assetPath == null) {
       return Center(
         child: Icon(
-          Icons.image,
+          IconsaxPlusBold.gallery,
           color: Colors.grey,
           size: size / 2,
         ),

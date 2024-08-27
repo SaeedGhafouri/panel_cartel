@@ -1,14 +1,16 @@
 import 'package:dio/dio.dart';
 import 'package:panel_cartel/features/admin/data/models/admin.dart';
+import 'package:panel_cartel/features/admin/data/models/admin_details.dart';
 import 'package:panel_cartel/features/admin/domain/repositories/admin_repository_interface.dart';
 
 import '../../../../core/network/routes.dart';
 
-class AdminRepository implements AdminRepositoryInterface{
+class AdminRepository {
   final Dio _dio = Dio();
 
   @override
   Future<List<Admin>> getAdmins({String? filter}) async {
+    print(Routes.token);
     final response = await _dio.get(
       Routes.adminList,
       queryParameters: {
@@ -18,7 +20,7 @@ class AdminRepository implements AdminRepositoryInterface{
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'Authorization': 'Bearer ${Routes.token}',
+          'Authorization': Routes.token,
         },
       ),
     );
@@ -34,6 +36,25 @@ class AdminRepository implements AdminRepositoryInterface{
         .map((e) => Admin.fromJson(e))
         .toList();
   }
+
+  Future<AdminDetails> getAdminDetails(int id) async {
+    final response = await _dio.get(
+      '${Routes.adminDetails}/$id',
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': Routes.token,
+        },
+      ),
+    );
+
+    if (response.statusCode == 200) {
+      return AdminDetails.fromJson(response.data);
+    } else {
+      throw Exception('Failed to load admin details');
+    }
+  }
+
   @override
   Future<Admin> createAdmin(Admin admin) async {
     try {
@@ -57,7 +78,6 @@ class AdminRepository implements AdminRepositoryInterface{
       throw Exception('Error creating admin: $e');
     }
   }
-
 
   @override
   Future<Admin> deleteAdmin(Admin admin) {

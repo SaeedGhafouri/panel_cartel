@@ -28,3 +28,13 @@ class AdminError extends AdminState {
   @override
   List<Object> get props => [message];
 }
+
+/// Details
+class AdminDetailsLoaded extends AdminState {
+  final AdminDetails data;
+
+  const AdminDetailsLoaded(this.data);
+
+  @override
+  List<Object> get props => [data];
+}
