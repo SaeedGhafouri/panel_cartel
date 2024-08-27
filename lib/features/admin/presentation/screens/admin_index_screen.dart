@@ -5,25 +5,20 @@ import 'package:panel_cartel/core/themes/themes.dart';
 import 'package:panel_cartel/core/widgets/form_main.dart';
 import 'package:panel_cartel/core/widgets/header_main.dart';
 import 'package:panel_cartel/features/admin/data/repositories/admin_repository.dart';
-import 'package:panel_cartel/features/dashboard/presentation/screens/dashboard_screen.dart';
-
 import '../../../../core/widgets/commadbar_main.dart';
-import '../../../../core/widgets/datagrid/item_image.dart';
-import '../../../../core/widgets/datagrid/item_text.dart';
 import '../../../../core/widgets/datagrid/table_column_widget.dart';
 import '../../../../core/widgets/datagrid/table_header_widget.dart';
 import '../../../../core/widgets/datagrid/table_row_widget.dart';
 import '../../../../core/widgets/search_widget.dart';
 import '../bloc/admin_bloc.dart';
-import 'admin_create_screen.dart';
 
-class AdminScreen extends StatefulWidget {
-  const AdminScreen({Key? key}) : super(key: key);
+class AdminIndexScreen extends StatefulWidget {
+  const AdminIndexScreen({Key? key}) : super(key: key);
   @override
-  _AdminScreenState createState() => _AdminScreenState();
+  _AdminIndexScreenState createState() => _AdminIndexScreenState();
 }
 
-class _AdminScreenState extends State<AdminScreen> {
+class _AdminIndexScreenState extends State<AdminIndexScreen> {
   final TextEditingController controller = TextEditingController();
   @override
   Widget build(BuildContext context) {

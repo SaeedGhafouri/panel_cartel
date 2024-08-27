@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'features/auth/presentation/screens/login_screen.dart';
 import 'features/dashboard/presentation/screens/dashboard_screen.dart';
-
 class Routes {
   static const String admin_details = '/admin/details';
   static const String admin_create = '/admin/create';
@@ -9,7 +8,6 @@ class Routes {
   static const String login = '/login';
   static const String dashboard = '/';
 }
-
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -21,7 +19,6 @@ class RouteGenerator {
         return _errorRoute();
     }
   }
-
   static Route<dynamic> _errorRoute() {
     return MaterialPageRoute(
       builder: (_) => Scaffold(
