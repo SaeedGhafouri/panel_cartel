@@ -8,9 +8,13 @@ class Admin {
   final int sex;
   final int status;
   final String nationalCode;
+  final String telephone;
   final String? image;
   final String? createdAt;
   final String? updatedAt;
+  int? userCount;
+  int? productCount;
+  int? orderCount;
 
   Admin({
     required this.id,
@@ -22,9 +26,13 @@ class Admin {
     required this.sex,
     required this.status,
     required this.nationalCode,
+    required this.telephone,
     this.image,
     this.createdAt,
     this.updatedAt,
+    this.userCount,
+    this.productCount,
+    this.orderCount
   });
 
   factory Admin.fromJson(Map<String, dynamic> json) {
@@ -38,9 +46,13 @@ class Admin {
       sex: json['sex'],
       status: json['status'],
       nationalCode: json['national_code'],
+      telephone: json['telephone'],
       image: json['image'],
       createdAt: json['created_at'],
       updatedAt: json['updated_at'],
+      userCount: json['user_count'],
+      productCount: json['product_count'],
+      orderCount: json['order_count'],
     );
   }
 
@@ -55,9 +67,13 @@ class Admin {
       'sex': sex,
       'status': status,
       'national_code': nationalCode,
+      'telephone': telephone,
       'image': image,
       'created_at': createdAt,
       'updated_at': updatedAt,
+      'user_count': userCount,
+      'productCount': productCount,
+      'orderCount': orderCount,
     };
   }
 }

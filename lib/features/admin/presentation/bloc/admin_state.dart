@@ -31,7 +31,7 @@ class AdminError extends AdminState {
 
 /// Details
 class AdminDetailsLoaded extends AdminState {
-  final AdminDetails data;
+  final Admin data;
 
   const AdminDetailsLoaded(this.data);
 

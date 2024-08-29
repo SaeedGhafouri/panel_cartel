@@ -1,7 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:panel_cartel/features/admin/data/models/admin_details.dart';
-import 'package:panel_cartel/features/admin/domain/repositories/admin_repository_interface.dart';
 import '../../data/models/admin.dart';
 import '../../data/repositories/admin_repository.dart';
 
@@ -23,6 +21,7 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
       }
     });
 
+    /// Show
     on<GetAdminDetails>((event, emit) async {
       try {
         emit(AdminLoading());
@@ -57,7 +56,7 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
     /// Delete
     on<DeleteAdmin>((event, emit) async {
       try {
-        await _adminRepository.deleteAdmin(event.admin);
+        await _adminRepository.deleteAdmin(event.admin.id);
         add(GetAdmins());
       } catch (e) {
         emit(AdminError(e.toString()));

@@ -5,10 +5,10 @@ import '../../constants/assets.dart';
 import '../../themes/themes.dart';
 
 class TableHeaderWidget extends StatelessWidget {
-  final List<Widget>? end_children;
-  final List<Widget>? start_children;
+  final List<Widget>? endChildren;
+  final List<Widget>? startChildren;
   final String? title;
-  const TableHeaderWidget({super.key, this.end_children, this.start_children, this.title,});
+  const TableHeaderWidget({super.key, this.endChildren, this.startChildren, this.title,});
 
   @override
   Widget build(BuildContext context) {
@@ -32,14 +32,14 @@ class TableHeaderWidget extends StatelessWidget {
               ] else ...[
                 const SizedBox(width: spacingThin,),
               ],
-              if (end_children != null) ...[
+              if (endChildren != null) ...[
                 Row(
-                  children: end_children!,
+                  children: endChildren!,
                 ),
               ],
-              if (start_children != null) ...[
+              if (startChildren != null) ...[
                 Row(
-                  children: start_children!,
+                  children: startChildren!,
                 ),
               ]
             ],

@@ -137,6 +137,7 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
         sex: sexChoice!,
         status: 1,
         nationalCode: _nationalCode.text,
+        telephone: _telephone.text,
         image: _selectedImageMain != null ? base64Encode(_selectedImageMain!) : null,
       );
       context.read<AdminBloc>().add(CreateAdmin(admin));
@@ -162,7 +163,7 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                               children: [
                                 TableHeaderWidget(
                                   title: 'اطلاعات کاربری',
-                                  end_children: [
+                                  endChildren: [
                                     CommadbarWidget(
                                       text: 'مشاهده لیست',
                                       icon: IconsaxPlusLinear.people,

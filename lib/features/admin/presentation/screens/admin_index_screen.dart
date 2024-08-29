@@ -43,7 +43,7 @@ class _AdminIndexScreenState extends State<AdminIndexScreen> {
                   body: Column(
                     children: [
                       TableHeaderWidget(
-                        end_children: [
+                        endChildren: [
                           CommadbarWidget(
                             text: 'افزودن کارشناس',
                             icon: IconsaxPlusLinear.add_square,
@@ -55,18 +55,18 @@ class _AdminIndexScreenState extends State<AdminIndexScreen> {
                             text: 'بروزرسانی',
                             icon: IconsaxPlusLinear.refresh_square_2,
                             onPressed: () {
-                              BlocProvider.of<AdminBloc>(context).add(GetAdmins());
+
                             },
                           ),
                         ],
-                        start_children: [
+                        startChildren: [
                           SearchFieldWidget(
                             controller: controller,
                           )
                         ],
                       ),
                       const TableRowWidget(
-                        row_titles: [
+                        rowTitles: [
                           'عملیات',
                           'وضعیت',
                           //'تاریخ عضویت',

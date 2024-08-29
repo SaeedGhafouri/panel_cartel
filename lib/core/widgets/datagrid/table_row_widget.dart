@@ -5,8 +5,8 @@ import '../../constants/assets.dart';
 import '../../themes/themes.dart';
 
 class TableRowWidget extends StatelessWidget {
-  final List<String>? row_titles;
-  const TableRowWidget({super.key, required this.row_titles});
+  final List<String>? rowTitles;
+  const TableRowWidget({super.key, required this.rowTitles});
 
   @override
   Widget build(BuildContext context) {
@@ -29,13 +29,13 @@ class TableRowWidget extends StatelessWidget {
               mainAxisAlignment:
               MainAxisAlignment.spaceBetween,
               children: [
-                for (int i = 0; i < row_titles!.length; i++) ...[
+                for (int i = 0; i < rowTitles!.length; i++) ...[
                   Expanded(
                     child: Container(
                       padding: EdgeInsets.symmetric(vertical: 5),
                       child: Text(
                         textAlign: TextAlign.center,
-                        row_titles![i],
+                        rowTitles![i],
                         style: Theme.of(context).textTheme.bodyMedium
                       ),
                     ),

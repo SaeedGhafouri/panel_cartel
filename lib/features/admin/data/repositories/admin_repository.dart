@@ -1,76 +1,63 @@
 import 'package:dio/dio.dart';
 import 'package:panel_cartel/features/admin/data/models/admin.dart';
-import 'package:panel_cartel/features/admin/data/models/admin_details.dart';
-import 'package:panel_cartel/features/admin/domain/repositories/admin_repository_interface.dart';
-
 import '../../../../core/network/routes.dart';
 
 class AdminRepository {
   final Dio _dio = Dio();
 
-  @override
-  Future<List<Admin>> getAdmins({String? filter}) async {
-    print(Routes.token);
-    final response = await _dio.get(
-      Routes.adminList,
-      queryParameters: {
-        'filter': filter,
+  AdminRepository() {
+    _dio.options = BaseOptions(
+      baseUrl: Routes.baseUrl,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': Routes.token,
       },
-      options: Options(
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': Routes.token,
-        },
-      ),
     );
-
-    print(response.statusCode);
-    if (response.statusCode != 200) {
-      throw Exception('Failed to load admin');
-    } else if (response.data == null) {
-      throw Exception('Failed to load admin');
-    }
-
-    return (response.data['data'] as List)
-        .map((e) => Admin.fromJson(e))
-        .toList();
   }
 
-  Future<AdminDetails> getAdminDetails(int id) async {
-    final response = await _dio.get(
-      '${Routes.adminDetails}/$id',
-      options: Options(
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': Routes.token,
-        },
-      ),
-    );
+  Future<List<Admin>> getAdmins({String filter = ''}) async {
+    try {
+      final response = await _dio.get(
+        Routes.adminIndex,
+        queryParameters: {'filter': filter},
+      );
 
-    if (response.statusCode == 200) {
-      return AdminDetails.fromJson(response.data);
-    } else {
-      throw Exception('Failed to load admin details');
+      if (response.statusCode == 200 && response.data != null) {
+        return (response.data['data'])
+            .map((e) => Admin.fromJson(e))
+            .toList();
+      } else {
+        throw Exception('Failed to load admins');
+      }
+    } catch (e) {
+      throw Exception('Error fetching admins: $e');
     }
   }
 
-  @override
+  Future<Admin> getAdminDetails(int id) async {
+    try {
+      final response = await _dio.get('${Routes.adminShow}/$id');
+
+      if (response.statusCode == 200 && response.data != null) {
+        return Admin.fromJson(response.data['data']);
+      } else {
+        throw Exception('Failed to load admin details');
+      }
+    } catch (e) {
+      throw Exception('Error fetching admin details: $e');
+    }
+  }
+
   Future<Admin> createAdmin(Admin admin) async {
     try {
       final response = await _dio.post(
         Routes.adminCreate,
         data: admin.toJson(),
-        options: Options(
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ${Routes.token}',
-          },
-        ),
       );
 
-      if (response.statusCode == 201) {
-        return Admin.fromJson(response.data);
+      if (response.statusCode == 201 && response.data != null) {
+        return Admin.fromJson(response.data['data']);
       } else {
         throw Exception('Failed to create admin');
       }
@@ -79,16 +66,32 @@ class AdminRepository {
     }
   }
 
-  @override
-  Future<Admin> deleteAdmin(Admin admin) {
-    // TODO: implement deleteAdmin
-    throw UnimplementedError();
+  Future<Admin> updateAdmin(Admin admin) async {
+    try {
+      final response = await _dio.patch(
+        '${Routes.adminUpdate}/${admin.id}',
+        data: admin.toJson(),
+      );
+
+      if (response.statusCode == 200 && response.data != null) {
+        return Admin.fromJson(response.data['data']);
+      } else {
+        throw Exception('Failed to update admin');
+      }
+    } catch (e) {
+      throw Exception('Error updating admin: $e');
+    }
   }
 
-  @override
-  Future<Admin> updateAdmin(Admin admin) {
-    // TODO: implement updateAdmin
-    throw UnimplementedError();
-  }
+  Future<void> deleteAdmin(int id) async {
+    try {
+      final response = await _dio.delete('${Routes.adminDelete}/$id');
 
+      if (response.statusCode != 204) {
+        throw Exception('Failed to delete admin');
+      }
+    } catch (e) {
+      throw Exception('Error deleting admin: $e');
+    }
+  }
 }

@@ -45,6 +45,7 @@ dependencies:
   syncfusion_flutter_datagrid: ^26.2.10
   file_picker: ^5.0.0
   shamsi_date: ^1.0.3
+  toastification: ^2.1.0
 
 dev_dependencies:
   flutter_test:
