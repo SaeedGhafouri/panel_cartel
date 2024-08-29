@@ -12,6 +12,7 @@ class TextFieldWidget extends StatefulWidget {
   final int? maxHeight;
   final TextInputType? inputType;
   final List<TextInputFormatter>? inputFormatters;
+  final String? errorText;
 
   TextFieldWidget({
     this.controller,
@@ -21,6 +22,7 @@ class TextFieldWidget extends StatefulWidget {
     this.maxHeight,
     this.inputType,
     this.inputFormatters,
+    this.errorText,
   });
 
   @override
@@ -48,6 +50,7 @@ class _TextFieldWidget extends State<TextFieldWidget> {
             fontFamily: font_regular,
             fontSize: txt_20,
           ),
+          errorText: widget.errorText,
           enabledBorder: OutlineInputBorder(
             borderRadius: smallRadius,
             borderSide: BorderSide(

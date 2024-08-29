@@ -8,12 +8,13 @@ import 'package:panel_cartel/core/widgets/form_main.dart';
 import 'package:panel_cartel/core/widgets/header_main.dart';
 import 'package:panel_cartel/core/widgets/image_diplay_widget.dart';
 import 'package:panel_cartel/core/widgets/spinner_widget.dart';
-import 'package:panel_cartel/features/admin/logic/cubit/admin_state.dart';
 import '../../../../core/constants/assets.dart';
 import '../../../../core/themes/themes.dart';
 import '../../../../core/widgets/card_widget.dart';
 import '../../../../core/widgets/text_field_widget.dart';
-import '../../logic/cubit/admin_cubit.dart';
+import '../../data/models/admin.dart';
+import '../../data/repositories/admin_repository.dart';
+import '../bloc/admin_bloc.dart';
 
 class AdminDetailsScreen extends StatefulWidget {
   const AdminDetailsScreen({Key? key}) : super(key: key);
@@ -34,42 +35,45 @@ class _AdminDetailsScreenState extends State<AdminDetailsScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    context.read<AdminCubit>().fetchAdminDetail(3);
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Directionality(
-          textDirection: TextDirection.rtl,
-          child: SingleChildScrollView(
-            child: Container(
-              padding: container,
-              margin: container,
-              color: Theme.of(context).scaffoldBackgroundColor,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  HeaderMain(
-                    title: 'پروفایل کارشناس',
-                    crumbs: const [
-                      'داشبورد',
-                      'کارشناسان',
-                      'پروفایل کارشناس'
-                    ],
-                  ),
-                  BlocConsumer<AdminCubit, AdminState>(
+    return BlocProvider(
+      create: (context) => AdminBloc(AdminRepository())..add(GetAdminDetails(3)),
+      child: Scaffold(
+        body: Directionality(
+            textDirection: TextDirection.rtl,
+            child: SingleChildScrollView(
+              child: Container(
+                padding: container,
+                margin: container,
+                color: Theme.of(context).scaffoldBackgroundColor,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    HeaderMain(
+                      title: 'پروفایل کارشناس',
+                      crumbs: const [
+                        'داشبورد',
+                        'کارشناسان',
+                        'پروفایل کارشناس'
+                      ],
+                    ),
+                    BlocBuilder<AdminBloc, AdminState>(
                       builder: (context, state) {
                         if (state is AdminLoading) {
-                          return  Center(child: CircularProgressIndicator());
-                        }else if (state is AdminDetailLoaded) {
-                          _firstName.text = state.admin.first_name!;
-                          _lastName.text = state.admin.last_name!;
+                          return const Center(child: CircularProgressIndicator());
+                        } else if(state is AdminError){
+                          return Center(child: Text(state.message));
+                        } else if (state is AdminDetailsLoaded) {
+                          _firstName.text = state.data.firstName!;
+                          _lastName.text = state.data.lastName!;
                           //_password.text = state.data.password!;
-                          _phone.text = state.admin.mobile!;
-                          _telephone.text = state.admin.telephone!;
-                          _email.text = state.admin.email!;
-                          _nationalCode.text = state.admin.national_code!;
-                          _sex = state.admin.sex!;
+                          _phone.text = state.data.mobile!;
+                          _telephone.text = state.data.telephone!;
+                          _email.text = state.data.email!;
+                          _nationalCode.text = state.data.nationalCode!;
+                          _sex = state.data.sex!;
                           return Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -79,7 +83,7 @@ class _AdminDetailsScreenState extends State<AdminDetailsScreen> {
                                   body: Column(
                                     children: [
                                       ImageDisplayWidget(
-                                        imageUrl: state.admin.image,
+                                        imageUrl: state.data.image,
                                       ),
                                       const SizedBox(height: spacingSmall),
                                       //Change image
@@ -108,10 +112,10 @@ class _AdminDetailsScreenState extends State<AdminDetailsScreen> {
                                       Column(
                                         children: [
                                           buildProfileInfoRow(
-                                              IconsaxPlusLinear.personalcard, 'نام و نام خانوادگی:', '${state.admin.first_name} ${state.admin.last_name}'),
-                                          buildProfileInfoRow(IconsaxPlusLinear.mobile, 'شماره موبایل:', state.admin.mobile!),
+                                              IconsaxPlusLinear.personalcard, 'نام و نام خانوادگی:', '${state.data.firstName} ${state.data.lastName}'),
+                                          buildProfileInfoRow(IconsaxPlusLinear.mobile, 'شماره موبایل:', state.data.mobile!),
                                           buildProfileInfoRow(
-                                              IconsaxPlusLinear.message, 'ایمیل:', state.admin.email!),
+                                              IconsaxPlusLinear.message, 'ایمیل:', state.data.email!),
                                         ],
                                       ),
                                       const SizedBox(height: spacingThin),
@@ -134,7 +138,7 @@ class _AdminDetailsScreenState extends State<AdminDetailsScreen> {
                                               text: 'ویرایش',
                                               icon: IconsaxPlusLinear.edit,
                                               onPressed: () {
-                                                /*final data = Admin(
+                                                final data = Admin(
                                                   id: 3,
                                                   firstName: _firstName.text,
                                                   lastName: _lastName.text,
@@ -145,7 +149,7 @@ class _AdminDetailsScreenState extends State<AdminDetailsScreen> {
                                                   sex: _sex,
                                                   status: 1,
                                                 );
-                                                context.read<AdminBloc>().add(UpdateAdmin(data));*/
+                                                context.read<AdminBloc>().add(UpdateAdmin(data));
                                               },
                                             ),
                                             CommadbarWidget(
@@ -208,18 +212,18 @@ class _AdminDetailsScreenState extends State<AdminDetailsScreen> {
                                                       ),
                                                       SizedBox(width: spacingThin),
                                                       Expanded(
-                                                          child: SpinnerWidget(
-                                                            label: 'وضعیت',
-                                                            items: const ['مرد', 'زن'],
-                                                            selectedItem: _sex == 1 ? 'مرد' : 'زن',
-                                                            onChanged: (p0) {
-                                                              if(p0 == 'مرد') {
-                                                                _sex = 1;
-                                                              }else {
-                                                                _sex = 0;
-                                                              }
-                                                            },
-                                                          )
+                                                        child: SpinnerWidget(
+                                                          label: 'وضعیت',
+                                                          items: const ['مرد', 'زن'],
+                                                          selectedItem: _sex == 1 ? 'مرد' : 'زن',
+                                                          onChanged: (p0) {
+                                                            if(p0 == 'مرد') {
+                                                              _sex = 1;
+                                                            }else {
+                                                              _sex = 0;
+                                                            }
+                                                          },
+                                                        )
                                                       ),
                                                     ],
                                                   ),
@@ -252,30 +256,16 @@ class _AdminDetailsScreenState extends State<AdminDetailsScreen> {
                               )
                             ],
                           );
-                        } else if (state is AdminError) {
-                          return Center(
-                            child: Text(
-                              state.message,
-                              style: Theme.of(context).textTheme.bodyLarge,
-                            ),
-                          );
                         } else {
-                          return Center(
-                            child: Text(
-                              'خطای بارگذاری',
-                              style: Theme.of(context).textTheme.bodyLarge,
-                            ),
-                          );
+                          return Container();
                         }
-                      },
-                      listener: (context, state){
-
                       }
-                      )
-                ],
+                    )
+                  ],
+                ),
               ),
-            ),
-          )
+            )
+        ),
       ),
     );
   }

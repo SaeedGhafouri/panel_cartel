@@ -1,32 +1,35 @@
+
 class Admin {
-  final int id;
-  final String firstName;
-  final String lastName;
-  final String mobile;
-  final String? mobileVerify;
-  final String email;
-  final int sex;
-  final int status;
-  final String nationalCode;
-  final String telephone;
-  final String? image;
-  final String? createdAt;
-  final String? updatedAt;
+  int? id;
+  String? first_name;
+  String? last_name;
+  String? mobile;
+  String? mobileVerify;
+  String? email;
+  String? password;
+  int? sex;
+  int? status;
+  String? national_code;
+  String? telephone;
+  String? image;
+  String? createdAt;
+  String? updatedAt;
   int? userCount;
   int? productCount;
   int? orderCount;
 
   Admin({
-    required this.id,
-    required this.firstName,
-    required this.lastName,
-    required this.mobile,
+    this.id,
+    this.first_name,
+    this.last_name,
+    this.mobile,
     this.mobileVerify,
-    required this.email,
-    required this.sex,
-    required this.status,
-    required this.nationalCode,
-    required this.telephone,
+    this.email,
+    this.password,
+    this.sex,
+    this.status,
+    this.national_code,
+    this.telephone,
     this.image,
     this.createdAt,
     this.updatedAt,
@@ -38,14 +41,15 @@ class Admin {
   factory Admin.fromJson(Map<String, dynamic> json) {
     return Admin(
       id: json['id'],
-      firstName: json['first_name'],
-      lastName: json['last_name'],
+      first_name: json['first_name'],
+      last_name: json['last_name'],
       mobile: json['mobile'],
       mobileVerify: json['mobile_verify'],
       email: json['email'],
+      password: json['password'],
       sex: json['sex'],
       status: json['status'],
-      nationalCode: json['national_code'],
+      national_code: json['national_code'],
       telephone: json['telephone'],
       image: json['image'],
       createdAt: json['created_at'],
@@ -59,14 +63,14 @@ class Admin {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'first_name': firstName,
-      'last_name': lastName,
+      'first_name': first_name,
+      'last_name': last_name,
       'mobile': mobile,
       'mobile_verify': mobileVerify,
       'email': email,
       'sex': sex,
       'status': status,
-      'national_code': nationalCode,
+      'national_code': national_code,
       'telephone': telephone,
       'image': image,
       'created_at': createdAt,
