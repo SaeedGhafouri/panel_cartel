@@ -19,6 +19,7 @@ import '../../logic/cubit/admin_cubit.dart';
 
 
 class AdminCreateScreen extends StatefulWidget {
+  static String routeName = 'adminCreate';
   const AdminCreateScreen({Key? key}) : super(key: key);
 
   @override
@@ -60,11 +61,10 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
     }
   }
 
-  Map<String, String?> _errors = {}; // نگهداری خطاها
+  Map<String, String?> _errors = {};
 
   @override
   void dispose() {
-    // تخلیه کنترلرها و منابع
     _firstName.dispose();
     _lastName.dispose();
     _password.dispose();

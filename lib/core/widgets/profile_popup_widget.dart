@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:panel_cartel/core/constants/colors.dart';
 
-import '../../../../core/constants/assets.dart';
-import '../../../../core/widgets/image_diplay_widget.dart';
+import '../constants/assets.dart';
+import 'image_diplay_widget.dart';
 
 class ProfilePopupWidget extends StatelessWidget {
   const ProfilePopupWidget({Key? key}) : super(key: key);

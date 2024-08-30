@@ -2,16 +2,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:panel_cartel/core/constants/assets.dart';
+import 'package:panel_cartel/features/admin/presentation/screens/admin_create_screen.dart';
+import 'package:panel_cartel/features/admin/presentation/screens/admin_index_screen.dart';
 
-import '../../../../core/themes/theme_bloc.dart';
-import '../../../../core/themes/theme_event.dart';
+import '../themes/theme_bloc.dart';
+import '../themes/theme_event.dart';
 
 class SideDrawer extends StatelessWidget {
-  final Function(int) onTap;
-
-  SideDrawer({required this.onTap});
+  const SideDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -88,14 +89,14 @@ class SideDrawer extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyMedium),
                 style: ListTileStyle.drawer,
                 leading: Icon(IconsaxPlusLinear.user_tick, size: 20,),
-                onTap: () => onTap(0),
+                onTap: () => GoRouter.of(context).go(AdminIndexScreen.routeName),
               ),
               ListTile(
                 title: Text('افزودن کارشناس',
                     style: Theme.of(context).textTheme.bodyMedium),
                 style: ListTileStyle.drawer,
                 leading: Icon(IconsaxPlusLinear.user_tick, size: 20,),
-                onTap: () => onTap(1),
+                onTap: () => GoRouter.of(context).go(AdminCreateScreen.routeName),
               ),
             ],
           ),
