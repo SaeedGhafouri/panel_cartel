@@ -5,7 +5,7 @@ import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:panel_cartel/core/widgets/appbar.dart';
 import 'package:panel_cartel/core/widgets/commadbar_main.dart';
 import 'package:panel_cartel/core/widgets/datagrid/table_header_widget.dart';
-import 'package:panel_cartel/core/widgets/form_main.dart';
+import 'package:panel_cartel/core/widgets/form_widget.dart';
 import 'package:panel_cartel/core/widgets/header_main.dart';
 import 'package:panel_cartel/core/widgets/image_diplay_widget.dart';
 import 'package:panel_cartel/core/widgets/side_drawer.dart';
@@ -81,7 +81,7 @@ class _AdminDetailsScreenState extends State<AdminDetailsScreen> {
                                 children: [
                                   Expanded(
                                     flex: 3,
-                                    child: FormMain(
+                                    child: FormWidget(
                                       body: Column(
                                         children: [
                                           ImageDisplayWidget(
@@ -130,7 +130,7 @@ class _AdminDetailsScreenState extends State<AdminDetailsScreen> {
                                   const SizedBox(width: spacingSmall,),
                                   Expanded(
                                       flex: 7,
-                                      child: FormMain(
+                                      child: FormWidget(
                                         body: Column(
                                           children: [
                                             TableHeaderWidget(

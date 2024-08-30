@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import '../themes/themes.dart';
 
-class FormMain extends StatefulWidget {
+class FormWidget extends StatefulWidget {
   final Widget body;
   final double? width;
   final double? height;
 
-  const FormMain({super.key, required this.body, this.width, this.height});
+  const FormWidget({super.key, required this.body, this.width, this.height});
   @override
-  _FormMain createState() => _FormMain();
+  _FormWidget createState() => _FormWidget();
 }
 
-class _FormMain extends State<FormMain> {
+class _FormWidget extends State<FormWidget> {
 
   @override
   Widget build(BuildContext context) {

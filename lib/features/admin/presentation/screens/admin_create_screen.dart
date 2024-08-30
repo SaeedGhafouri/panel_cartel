@@ -11,7 +11,7 @@ import 'package:file_picker/file_picker.dart';
 import '../../../../core/constants/assets.dart';
 import '../../../../core/themes/themes.dart';
 import '../../../../core/widgets/commadbar_main.dart';
-import '../../../../core/widgets/form_main.dart';
+import '../../../../core/widgets/form_widget.dart';
 import '../../../../core/widgets/header_main.dart';
 import '../../../../core/widgets/text_field_widget.dart';
 import '../../data/models/admin_model.dart';
@@ -164,7 +164,7 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                   title: 'افزودن کارشناس',
                   crumbs: const ['داشبورد', 'کارشناسان'],
                 ),
-                FormMain(
+                FormWidget(
                   body: Column(
                     children: [
                       TableHeaderWidget(

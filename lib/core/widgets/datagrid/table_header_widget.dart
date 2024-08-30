@@ -23,11 +23,7 @@ class TableHeaderWidget extends StatelessWidget {
               if (title != null) ...[
                 Text(
                   title!,
-                  style: const TextStyle(
-                    fontFamily: font_medium,
-                    fontSize: txt_20,
-                    color: darkTextColor,
-                  ),
+                  style: Theme.of(context).textTheme.titleSmall,
                 ),
               ] else ...[
                 const SizedBox(width: spacingThin,),

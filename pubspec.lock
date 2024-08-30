@@ -193,6 +193,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.0"
+  fl_chart:
+    dependency: "direct main"
+    description:
+      name: fl_chart
+      sha256: "94307bef3a324a0d329d3ab77b2f0c6e5ed739185ffc029ed28c0f9b019ea7ef"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.69.0"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -206,14 +214,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "8.1.6"
-  flutter_layout_grid:
-    dependency: "direct main"
-    description:
-      name: flutter_layout_grid
-      sha256: "88b4f8484a0874962e27c47733ad256aeb26acc694a9f029edbef771d301885a"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.7"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -234,10 +234,18 @@ packages:
     dependency: transitive
     description:
       name: flutter_plugin_android_lifecycle
-      sha256: "9d98bd47ef9d34e803d438f17fd32b116d31009f534a6fa5ce3a1167f189a6de"
+      sha256: "9ee02950848f61c4129af3d6ec84a1cfc0e47931abc746b03e7a3bc3e8ff6eda"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.21"
+    version: "2.0.22"
+  flutter_staggered_grid_view:
+    dependency: "direct main"
+    description:
+      name: flutter_staggered_grid_view
+      sha256: "19e7abb550c96fbfeb546b23f3ff356ee7c59a019a651f8f102a4ba9b7349395"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.7.0"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -408,6 +416,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.0"
+  loading_animation_widget:
+    dependency: "direct main"
+    description:
+      name: loading_animation_widget
+      sha256: ee3659035528d19145d50cf0107632bf647e7306c88b6a32f35f3bed63f6d728
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.1"
   logging:
     dependency: transitive
     description:
@@ -444,10 +460,10 @@ packages:
     dependency: transitive
     description:
       name: mime
-      sha256: "2e123074287cc9fd6c09de8336dae606d1ddb88d9ac47358826db698c176a1f2"
+      sha256: "801fd0b26f14a4a58ccb09d5892c3fbdeff209594300a542492cf13fba9d247a"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.5"
+    version: "1.0.6"
   nested:
     dependency: transitive
     description:
@@ -504,14 +520,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.2"
-  quiver:
-    dependency: transitive
-    description:
-      name: quiver
-      sha256: ea0b925899e64ecdfbf9c7becb60d5b50e706ade44a85b2363be2a22d88117d2
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.2.2"
   shamsi_date:
     dependency: "direct main"
     description:
@@ -569,18 +577,18 @@ packages:
     dependency: transitive
     description:
       name: syncfusion_flutter_core
-      sha256: ca34210d70dd7ecb77489c21c8131a7f5546dea47780cd5f510326348091cb42
+      sha256: "85f96b7b06f32a60b19ab0bb8c32bf162a0474f2d94f4844384be1118e6b4954"
       url: "https://pub.dev"
     source: hosted
-    version: "26.2.10"
+    version: "26.2.11"
   syncfusion_flutter_datagrid:
     dependency: "direct main"
     description:
       name: syncfusion_flutter_datagrid
-      sha256: "8ecdb6660595c8d8d2491197e56bc4f995e15139811ff1a0347526e3233f440b"
+      sha256: "81d58ca3620fff294a009ade93697e4fe06b5f5867a77c1dabe772c8238dc25e"
       url: "https://pub.dev"
     source: hosted
-    version: "26.2.10"
+    version: "26.2.11"
   term_glyph:
     dependency: transitive
     description:

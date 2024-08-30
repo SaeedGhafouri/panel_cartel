@@ -98,6 +98,11 @@ const EdgeInsets padding_30 = EdgeInsets.all(20.0);
 const EdgeInsets padding_40 = EdgeInsets.all(30.0);
 const EdgeInsets container = EdgeInsets.all(20.0);
 const double container_max_width = 350.0;
+const double containerHorizontal = 100.0;
+const double radiusThin = 3.5;
+const double radiusSmall = 7.0;
+const double radiusMedium = 14.0;
+const double radiusLarge = 28.0;
 
 //Radius
 BorderRadius thinRadius = BorderRadius.circular(3.5);

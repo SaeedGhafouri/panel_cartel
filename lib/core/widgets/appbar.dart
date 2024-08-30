@@ -4,14 +4,16 @@ import 'package:panel_cartel/core/constants/assets.dart';
 import 'package:panel_cartel/core/widgets/profile_popup_widget.dart';
 import 'package:shamsi_date/shamsi_date.dart';
 
+import '../themes/themes.dart';
+
 class AppBarMain extends StatelessWidget {
   const AppBarMain({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Jalali jDate = Jalali.now();
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+    return Directionality(textDirection: TextDirection.ltr, child: Container(
+      padding: const EdgeInsets.symmetric(horizontal: containerHorizontal, vertical: 12),
       decoration: BoxDecoration(
         color: Theme.of(context).appBarTheme.backgroundColor,
         boxShadow: [
@@ -27,39 +29,50 @@ class AppBarMain extends StatelessWidget {
         children: [
           Row(
             children: [
-              ProfilePopupWidget(),
+              ProfilePopupWidget(
+                id: 1,
+                username: 'سعید غفوری',
+                role: 'مدیرعامل',
+                imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDdst0jyv1JAuiWlWtsHEmBx2v9nkKedzcgg&s',
+              ),
               SizedBox(width: 20,),
+              Container(width: 1, height: 40, color:  Theme.of(context).dividerColor,),
+              SizedBox(width: 5,),
               IconButton(
                   onPressed: () {
 
                   },
                   icon: const Icon(
                     IconsaxPlusLinear.notification,
-                    size: 20,
+                    size: 18,
                   )
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Text(
-                '${jDate.formatter.wN} ${jDate.day}/${jDate.formatter.mN}/${jDate.year}',
-                style: const TextStyle(
-                  fontFamily: font_regular,
-                ),
               ),
               IconButton(
                   onPressed: () {
 
                   },
                   icon: const Icon(
-                    IconsaxPlusLinear.search_normal,
-                    size: 20,
+                    IconsaxPlusLinear.activity,
+                    size: 18,
                   )
               ),
+              IconButton(
+                  onPressed: () {
 
-              SizedBox(width: 20,),
-
+                  },
+                  icon: const Icon(
+                    IconsaxPlusLinear.calendar,
+                    size: 18,
+                  )
+              ),
+              Text(
+                '${jDate.formatter.wN} ${jDate.day}/${jDate.formatter.mN}/${jDate.year}',
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
+            ],
+          ),
+          Row(
+            children: [
               IconButton(
                 icon: Icon(IconsaxPlusLinear.menu, ),
                 onPressed: () {
@@ -70,6 +83,6 @@ class AppBarMain extends StatelessWidget {
           ),
         ],
       ),
-    );
+    ));
   }
 }

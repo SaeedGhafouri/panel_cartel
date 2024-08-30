@@ -37,17 +37,15 @@ void showToast({
     context: context,
     title: Text(
       message,
-      style: const TextStyle(
-        fontFamily: font_medium,
-        color: darkTextColor,
-        fontSize: txt_30,
-      ),
+      style: Theme.of(context).textTheme.bodySmall,
     ),
     icon: Icon(icon, color: iconColor),
     borderRadius: smallRadius,
     autoCloseDuration: duration,
     alignment: alignment,
     direction: TextDirection.rtl,
+    backgroundColor: Theme.of(context).cardColor,
+    borderSide: BorderSide.none,
   );
 }
 

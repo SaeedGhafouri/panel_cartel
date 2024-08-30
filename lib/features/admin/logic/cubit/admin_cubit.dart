@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../data/data_sources/admin_service.dart';
+import '../../data/services/admin_service.dart';
 import '../../data/models/admin_model.dart';
 import 'admin_state.dart';
 

@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:panel_cartel/core/themes/themes.dart';
 import 'package:panel_cartel/core/widgets/appbar.dart';
-import 'package:panel_cartel/core/widgets/form_main.dart';
+import 'package:panel_cartel/core/widgets/form_widget.dart';
 import 'package:panel_cartel/core/widgets/header_main.dart';
 import 'package:panel_cartel/features/admin/presentation/screens/admin_create_screen.dart';
 import 'package:panel_cartel/features/auth/presentation/screens/login_screen.dart';
@@ -13,6 +13,7 @@ import '../../../../core/widgets/commadbar_main.dart';
 import '../../../../core/widgets/datagrid/table_column_widget.dart';
 import '../../../../core/widgets/datagrid/table_header_widget.dart';
 import '../../../../core/widgets/datagrid/table_row_widget.dart';
+import '../../../../core/widgets/progress_widget.dart';
 import '../../../../core/widgets/search_widget.dart';
 import '../../../../core/widgets/side_drawer.dart';
 import '../../logic/cubit/admin_cubit.dart';
@@ -44,8 +45,7 @@ class _AdminIndexScreenState extends State<AdminIndexScreen> {
           SingleChildScrollView(
             child: Container(
               color: Theme.of(context).scaffoldBackgroundColor,
-              padding: const EdgeInsets.all(16.0),
-              margin: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: containerHorizontal),
               child: Column(
                 children: [
                   HeaderMain(
@@ -55,7 +55,7 @@ class _AdminIndexScreenState extends State<AdminIndexScreen> {
                       'کارشناسان'
                     ],
                   ),
-                  FormMain(
+                  FormWidget(
                     body: Column(
                       children: [
                         TableHeaderWidget(
@@ -86,7 +86,6 @@ class _AdminIndexScreenState extends State<AdminIndexScreen> {
                           rowTitles: [
                             'عملیات',
                             'وضعیت',
-                            //'تاریخ عضویت',
                             'ایمیل',
                             'شماره موبایل',
                             'کدملی',
@@ -117,7 +116,7 @@ class _AdminIndexScreenState extends State<AdminIndexScreen> {
                           },
                           builder: (context, state) {
                             if (state is AdminLoading) {
-                              return const Center(child: CircularProgressIndicator());
+                              return  Center(child: ProgressWidget());
                             } else if (state is AdminLoaded) {
                               return ListView.builder(
                                 shrinkWrap: true,

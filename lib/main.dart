@@ -4,10 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:panel_cartel/features/admin/presentation/screens/admin_details_screen.dart';
 import 'package:panel_cartel/features/admin/presentation/screens/admin_index_screen.dart';
+import 'package:panel_cartel/features/auth/data/services/auth_service.dart';
+import 'package:panel_cartel/features/auth/logic/cubit/auth_cubit.dart';
 import 'package:panel_cartel/features/dashboard/presentation/screens/dashboard_screen.dart';
 import 'core/themes/theme_bloc.dart';
 import 'core/themes/theme_state.dart';
-import 'features/admin/data/data_sources/admin_service.dart';
+import 'features/admin/data/services/admin_service.dart';
 import 'features/admin/logic/cubit/admin_cubit.dart';
 import 'features/admin/presentation/screens/admin_create_screen.dart';
 import 'features/auth/presentation/screens/login_screen.dart';
@@ -18,6 +20,9 @@ void main() {
       providers: [
         BlocProvider<AdminCubit>(
           create: (context) => AdminCubit(AdminService(Dio())),
+        ),
+        BlocProvider<AuthCubit>(
+          create: (context) => AuthCubit(AuthService(Dio())),
         ),
       ],
       child: MyApp(),
@@ -49,7 +54,7 @@ class MyApp extends StatelessWidget {
     routes: <RouteBase>[
       GoRoute(
         path: '/',
-        builder: (context, state) => const DashboardScreen(),
+        builder: (context, state) => const LoginScreen(),
       ),
       GoRoute(
         path: '/login',

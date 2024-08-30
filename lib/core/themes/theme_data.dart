@@ -3,50 +3,50 @@ import 'package:panel_cartel/core/constants/assets.dart';
 import 'package:panel_cartel/core/constants/colors.dart';
 
 /// LIGHT style
-final ThemeData lightTheme = ThemeData(
+final ThemeData darkTheme = ThemeData(
   brightness: Brightness.light,
   //Colors
   primaryColor: primaryColor,
   scaffoldBackgroundColor: backgroundColor,
   cardColor: cardColor,
   dividerColor: dividerColor,
+  hintColor: textHintColor,
 
   appBarTheme: const AppBarTheme(
     backgroundColor: toolbarColor,
-    foregroundColor: Colors.white,
   ),
 
   textTheme: const TextTheme(
     bodyLarge: TextStyle(
       color: textPrimaryColor,
-      fontSize: 16,
+      fontSize: 14,
       fontFamily: font_regular,
     ),
     bodyMedium: TextStyle(
       color: textPrimaryColor,
-      fontSize: 14,
+      fontSize: 12,
       fontFamily: font_regular,
     ),
     bodySmall: TextStyle(
       color: textPrimaryColor,
-      fontSize: 12,
+      fontSize: 10,
       fontFamily: font_regular,
     ),
 
+    //Title
     titleLarge: TextStyle(
       color: textPrimaryColor,
-      fontSize: 22,
+      fontSize: 18,
       fontFamily: font_bold,
-      fontWeight: FontWeight.bold,
     ),
     titleMedium: TextStyle(
       color: textPrimaryColor,
-      fontSize: 20,
+      fontSize: 14,
       fontFamily: font_medium,
     ),
     titleSmall: TextStyle(
       color: textPrimaryColor,
-      fontSize: 18,
+      fontSize: 12,
       fontFamily: font_regular,
     ),
 
@@ -67,21 +67,23 @@ final ThemeData lightTheme = ThemeData(
       fontFamily: font_bold,
     ),
 
+    //Gray Text
     headlineLarge: TextStyle(
-      color: textPrimaryColor,
-      fontSize: 28,
-      fontFamily: font_medium,
+      color: textSecondaryColor,
+      fontSize: 14,
+      fontFamily: font_regular,
     ),
     headlineMedium: TextStyle(
-      color: textPrimaryColor,
-      fontSize: 24,
-      fontFamily: font_medium,
+      color: textSecondaryColor,
+      fontSize: 12,
+      fontFamily: font_regular,
     ),
     headlineSmall: TextStyle(
-      color: textPrimaryColor,
-      fontSize: 20,
-      fontFamily: font_medium,
+      color: textSecondaryColor,
+      fontSize: 8,
+      fontFamily: font_regular,
     ),
+
 
     labelLarge: TextStyle(
       color: textPrimaryColor,
@@ -105,7 +107,7 @@ final ThemeData lightTheme = ThemeData(
 );
 
 /// DARK style
-final ThemeData darkTheme = ThemeData(
+final ThemeData lightTheme = ThemeData(
   brightness: Brightness.dark,
   //Colors
   primaryColor: primaryColor,
@@ -113,6 +115,7 @@ final ThemeData darkTheme = ThemeData(
 
   cardColor: cardDarkColor,
   dividerColor: dividerDarkColor,
+  hintColor: textHintDarkColor,
 
   appBarTheme: const AppBarTheme(
     backgroundColor: toolbarDarkColor,
@@ -135,20 +138,20 @@ final ThemeData darkTheme = ThemeData(
       fontFamily: font_regular,
     ),
 
+    //Title
     titleLarge: TextStyle(
       color: textPrimaryDarkColor,
-      fontSize: 22,
+      fontSize: 18,
       fontFamily: font_bold,
-      fontWeight: FontWeight.bold,
     ),
     titleMedium: TextStyle(
       color: textPrimaryDarkColor,
-      fontSize: 20,
+      fontSize: 14,
       fontFamily: font_medium,
     ),
     titleSmall: TextStyle(
       color: textPrimaryDarkColor,
-      fontSize: 18,
+      fontSize: 12,
       fontFamily: font_regular,
     ),
 
@@ -169,20 +172,21 @@ final ThemeData darkTheme = ThemeData(
       fontFamily: font_bold,
     ),
 
+    //Gray Text
     headlineLarge: TextStyle(
-      color: textPrimaryDarkColor,
-      fontSize: 28,
-      fontFamily: font_medium,
+      color: textSecondaryDarkColor,
+      fontSize: 14,
+      fontFamily: font_regular,
     ),
     headlineMedium: TextStyle(
-      color: textPrimaryDarkColor,
-      fontSize: 24,
-      fontFamily: font_medium,
+      color: textSecondaryDarkColor,
+      fontSize: 12,
+      fontFamily: font_regular,
     ),
     headlineSmall: TextStyle(
-      color: textPrimaryDarkColor,
-      fontSize: 20,
-      fontFamily: font_medium,
+      color: textSecondaryDarkColor,
+      fontSize: 10,
+      fontFamily: font_regular,
     ),
 
     labelLarge: TextStyle(
