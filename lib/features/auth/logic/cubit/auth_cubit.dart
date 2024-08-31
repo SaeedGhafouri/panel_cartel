@@ -5,6 +5,8 @@ import '../../data/services/auth_service.dart';
 
 part 'auth_state.dart';
 
+
+
 class AuthCubit extends Cubit<AuthState> {
   final AuthService authService;
 
@@ -15,8 +17,11 @@ class AuthCubit extends Cubit<AuthState> {
       emit(AuthLoading());
       final result = await authService.login(input, password);
       emit(AuthLoaded(result));
-    } catch (e) {
-      emit(AuthError('Failed to login'));
+    } on Exception catch (e) {
+      final errorMessage = e.toString().contains('Error 401')
+          ? 'اطلاعات وارد شده صحیح نمی باشد.'
+          : 'خطا در ورود به سیستم';
+      emit(AuthError(errorMessage));
     }
   }
 }

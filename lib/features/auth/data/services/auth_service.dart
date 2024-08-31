@@ -16,9 +16,19 @@ class AuthService {
           'pass': password,
         },
       );
-      return response.data;
+
+      if (response.data['status']) {
+        return response.data;
+      } else {
+        throw Exception(response.data['message']);
+      }
+    } on DioError catch (e) {
+      if (e.response?.statusCode == 401) {
+        throw Exception('Error 401');
+      }
+      throw Exception('Failed to login: ${e.message}');
     } catch (e) {
-      throw Exception('Failed to login');
+      throw Exception('Failed to login: $e');
     }
   }
 }
