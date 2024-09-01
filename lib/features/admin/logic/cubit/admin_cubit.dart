@@ -19,7 +19,7 @@ class AdminCubit extends Cubit<AdminState> {
     }
   }
 
-  void fetchAdminDetail(int id) async {
+  void fetchAdminDetail(double id) async {
     try {
       emit(AdminLoading());
       final response = await _adminService.getAdmin(id);

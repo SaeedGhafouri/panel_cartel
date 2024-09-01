@@ -104,7 +104,7 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
 flutter_native_splash:
-  color: "#FFFFFF" # Background color
+  color: "#000000" # Background color
   image: assets/images/logo.png # Path to your logo image
 
 

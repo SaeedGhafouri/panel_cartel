@@ -61,13 +61,6 @@ class SideDrawer extends StatelessWidget {
                 leading: Icon(IconsaxPlusLinear.user_tick, size: 20,),
                 onTap: () => GoRouter.of(context).go(AdminIndexScreen.routeName),
               ),
-              ListTile(
-                title: Text('افزودن کارشناس',
-                    style: Theme.of(context).textTheme.bodyMedium),
-                style: ListTileStyle.drawer,
-                leading: Icon(IconsaxPlusLinear.user_tick, size: 20,),
-                onTap: () => GoRouter.of(context).go(AdminCreateScreen.routeName),
-              ),
               SizedBox(height: 20,),
               ElevatedButton(
                 onPressed: () {

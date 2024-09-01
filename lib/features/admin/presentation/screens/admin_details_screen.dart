@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
@@ -8,6 +7,7 @@ import 'package:panel_cartel/core/widgets/datagrid/table_header_widget.dart';
 import 'package:panel_cartel/core/widgets/form_widget.dart';
 import 'package:panel_cartel/core/widgets/header_main.dart';
 import 'package:panel_cartel/core/widgets/image_diplay_widget.dart';
+import 'package:panel_cartel/core/widgets/progress_widget.dart';
 import 'package:panel_cartel/core/widgets/side_drawer.dart';
 import 'package:panel_cartel/core/widgets/spinner_widget.dart';
 import 'package:panel_cartel/features/admin/logic/cubit/admin_state.dart';
@@ -19,10 +19,12 @@ import '../../logic/cubit/admin_cubit.dart';
 
 class AdminDetailsScreen extends StatefulWidget {
   static const String routeName = '/adminDetails';
-  const AdminDetailsScreen({Key? key}) : super(key: key);
+  final double? adminId;
+  const AdminDetailsScreen({Key? key, this.adminId}) : super(key: key);
   @override
   _AdminDetailsScreenState createState() => _AdminDetailsScreenState();
 }
+
 class _AdminDetailsScreenState extends State<AdminDetailsScreen> {
   //Person
   final TextEditingController _firstName = TextEditingController();
@@ -37,8 +39,9 @@ class _AdminDetailsScreenState extends State<AdminDetailsScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    context.read<AdminCubit>().fetchAdminDetail(3);
+    context.read<AdminCubit>().fetchAdminDetail(widget.adminId!);
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,8 +69,8 @@ class _AdminDetailsScreenState extends State<AdminDetailsScreen> {
                       BlocConsumer<AdminCubit, AdminState>(
                           builder: (context, state) {
                             if (state is AdminLoading) {
-                              return  Center(child: CircularProgressIndicator());
-                            }else if (state is AdminDetailLoaded) {
+                              return Center(child: ProgressWidget());
+                            } else if (state is AdminDetailLoaded) {
                               _firstName.text = state.admin.first_name!;
                               _lastName.text = state.admin.last_name!;
                               //_password.text = state.data.password!;
@@ -89,45 +92,61 @@ class _AdminDetailsScreenState extends State<AdminDetailsScreen> {
                                           ),
                                           const SizedBox(height: spacingSmall),
                                           //Change image
-                                          GestureDetector(
-                                            onDoubleTap: () {
-
-                                            },
+                                          TextButton(
+                                            onPressed: () {},
                                             child: const Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                               children: [
-                                                Icon(IconsaxPlusLinear.edit, size: 15, color: grayIconColor),
+                                                Icon(IconsaxPlusLinear.edit,
+                                                    size: 15,
+                                                    color: grayIconColor),
                                                 Text(
                                                   ' ویرایش تصویر',
                                                   style: TextStyle(
                                                     fontSize: txt_20,
                                                     color: grayTextColor,
-                                                    fontFamily: font_regular,
+                                                    fontFamily:
+                                                    font_regular,
                                                   ),
                                                 ),
                                               ],
                                             ),
                                           ),
                                           const SizedBox(height: spacingThin),
-                                          const Divider(height: 1, color: grayDividerColor),
+                                          const Divider(
+                                              height: 1,
+                                              color: grayDividerColor),
                                           const SizedBox(height: spacingThin),
                                           Column(
                                             children: [
                                               buildProfileInfoRow(
-                                                  IconsaxPlusLinear.personalcard, 'نام و نام خانوادگی:', '${state.admin.first_name} ${state.admin.last_name}'),
-                                              buildProfileInfoRow(IconsaxPlusLinear.mobile, 'شماره موبایل:', state.admin.mobile!),
+                                                  IconsaxPlusLinear
+                                                      .personalcard,
+                                                  'نام و نام خانوادگی:',
+                                                  '${state.admin.first_name} ${state.admin.last_name}'),
                                               buildProfileInfoRow(
-                                                  IconsaxPlusLinear.message, 'ایمیل:', state.admin.email!),
+                                                  IconsaxPlusLinear.mobile,
+                                                  'شماره موبایل:',
+                                                  state.admin.mobile!),
+                                              buildProfileInfoRow(
+                                                  IconsaxPlusLinear.message,
+                                                  'ایمیل:',
+                                                  state.admin.email!),
                                             ],
                                           ),
                                           const SizedBox(height: spacingThin),
-                                          const Divider(height: 1, color: grayDividerColor),
+                                          const Divider(
+                                              height: 1,
+                                              color: grayDividerColor),
                                           const SizedBox(height: spacingThin),
                                         ],
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(width: spacingSmall,),
+                                  const SizedBox(
+                                    width: spacingSmall,
+                                  ),
                                   Expanded(
                                       flex: 7,
                                       child: FormWidget(
@@ -175,74 +194,109 @@ class _AdminDetailsScreenState extends State<AdminDetailsScreen> {
                                                       Row(
                                                         children: [
                                                           Expanded(
-                                                            child: TextFieldWidget(
-                                                              controller: _firstName,
+                                                            child:
+                                                                TextFieldWidget(
+                                                              controller:
+                                                                  _firstName,
                                                               label: 'نام',
                                                             ),
                                                           ),
-                                                          SizedBox(width: spacingThin),
+                                                          SizedBox(
+                                                              width:
+                                                                  spacingThin),
                                                           Expanded(
-                                                            child: TextFieldWidget(
-                                                              controller: _lastName,
-                                                              label: 'نام خانوادگی',
+                                                            child:
+                                                                TextFieldWidget(
+                                                              controller:
+                                                                  _lastName,
+                                                              label:
+                                                                  'نام خانوادگی',
                                                             ),
                                                           ),
-                                                          SizedBox(width: spacingThin),
+                                                          SizedBox(
+                                                              width:
+                                                                  spacingThin),
                                                           Expanded(
-                                                            child: TextFieldWidget(
-                                                              controller: _nationalCode,
+                                                            child:
+                                                                TextFieldWidget(
+                                                              controller:
+                                                                  _nationalCode,
                                                               label: 'کد ملی',
                                                             ),
                                                           ),
                                                         ],
                                                       ),
-                                                      const SizedBox(height: spacingThin),
+                                                      const SizedBox(
+                                                          height: spacingThin),
                                                       Row(
                                                         children: [
                                                           Expanded(
-                                                            child: TextFieldWidget(
-                                                              controller: _password,
+                                                            child:
+                                                                TextFieldWidget(
+                                                              controller:
+                                                                  _password,
                                                               label: 'رمز عبور',
                                                             ),
                                                           ),
-                                                          SizedBox(width: spacingThin),
+                                                          SizedBox(
+                                                              width:
+                                                                  spacingThin),
                                                           Expanded(
-                                                            child: TextFieldWidget(
-                                                              controller: _email,
+                                                            child:
+                                                                TextFieldWidget(
+                                                              controller:
+                                                                  _email,
                                                               label: 'ایمیل',
                                                             ),
                                                           ),
-                                                          SizedBox(width: spacingThin),
+                                                          SizedBox(
+                                                              width:
+                                                                  spacingThin),
                                                           Expanded(
-                                                              child: SpinnerWidget(
-                                                                label: 'وضعیت',
-                                                                items: const ['مرد', 'زن'],
-                                                                selectedItem: _sex == 1 ? 'مرد' : 'زن',
-                                                                onChanged: (p0) {
-                                                                  if(p0 == 'مرد') {
-                                                                    _sex = 1;
-                                                                  }else {
-                                                                    _sex = 0;
-                                                                  }
-                                                                },
-                                                              )
-                                                          ),
+                                                              child:
+                                                                  SpinnerWidget(
+                                                            label: 'وضعیت',
+                                                            items: const [
+                                                              'مرد',
+                                                              'زن'
+                                                            ],
+                                                            selectedItem:
+                                                                _sex == 1
+                                                                    ? 'مرد'
+                                                                    : 'زن',
+                                                            onChanged: (p0) {
+                                                              if (p0 == 'مرد') {
+                                                                _sex = 1;
+                                                              } else {
+                                                                _sex = 0;
+                                                              }
+                                                            },
+                                                          )),
                                                         ],
                                                       ),
-                                                      const SizedBox(height: spacingThin),
+                                                      const SizedBox(
+                                                          height: spacingThin),
                                                       Row(
                                                         children: [
                                                           Expanded(
-                                                            child: TextFieldWidget(
-                                                              controller: _telephone,
-                                                              label: 'تلفن ثابت',
+                                                            child:
+                                                                TextFieldWidget(
+                                                              controller:
+                                                                  _telephone,
+                                                              label:
+                                                                  'تلفن ثابت',
                                                             ),
                                                           ),
-                                                          SizedBox(width: spacingThin),
+                                                          SizedBox(
+                                                              width:
+                                                                  spacingThin),
                                                           Expanded(
-                                                            child: TextFieldWidget(
-                                                              controller: _phone,
-                                                              label: 'شماره موبایل',
+                                                            child:
+                                                                TextFieldWidget(
+                                                              controller:
+                                                                  _phone,
+                                                              label:
+                                                                  'شماره موبایل',
                                                             ),
                                                           ),
                                                         ],
@@ -254,8 +308,7 @@ class _AdminDetailsScreenState extends State<AdminDetailsScreen> {
                                             ),
                                           ],
                                         ),
-                                      )
-                                  )
+                                      ))
                                 ],
                               );
                             } else if (state is AdminError) {
@@ -274,20 +327,17 @@ class _AdminDetailsScreenState extends State<AdminDetailsScreen> {
                               );
                             }
                           },
-                          listener: (context, state){
-
-                          }
-                      )
+                          listener: (context, state) {})
                     ],
                   ),
                 ),
-              )
-          ),
+              )),
         ],
       ),
       endDrawer: const SideDrawer(),
     );
   }
+
   Widget buildProfileInfoRow(IconData icon, String label, String value) {
     return Container(
       margin: const EdgeInsets.only(bottom: spacingThin),
@@ -298,23 +348,12 @@ class _AdminDetailsScreenState extends State<AdminDetailsScreen> {
             children: [
               Icon(icon, color: grayIconColor, size: 15),
               const SizedBox(width: 5),
-              Text(
-                label,
-                style: const TextStyle(
-                  fontFamily: font_regular,
-                  fontSize: txt_20,
-                  color: grayTextColor,
-                ),
-              ),
+              Text(label, style: Theme.of(context).textTheme.headlineMedium),
             ],
           ),
           Text(
             value,
-            style: const TextStyle(
-              fontFamily: font_regular,
-              fontSize: txt_30,
-              color: darkTextColor,
-            ),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
         ],
       ),

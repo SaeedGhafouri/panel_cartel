@@ -42,7 +42,7 @@ class _SpinnerWidget extends State<SpinnerWidget> {
             borderRadius: smallRadius,
             color: Theme.of(context).cardColor,
             border: Border.all(
-              color: grayDividerColor,
+              color: Theme.of(context).dividerColor,
               width: 1.0,
             ),
           ),
@@ -51,11 +51,7 @@ class _SpinnerWidget extends State<SpinnerWidget> {
               value: selectedValue,
               isExpanded: true,
               icon: Icon(Icons.arrow_drop_down),
-              style: const TextStyle(
-                fontSize: txt_20,
-                fontFamily: font_medium,
-                color: darkTextColor,
-              ),
+              style: Theme.of(context).textTheme.bodySmall,
               onChanged: (String? newValue) {
                 setState(() {
                   selectedValue = newValue;

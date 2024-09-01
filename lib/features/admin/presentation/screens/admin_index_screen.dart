@@ -41,7 +41,7 @@ class _AdminIndexScreenState extends State<AdminIndexScreen> {
     return Scaffold(
       body: Column(
         children: [
-          AppBarMain(),
+          const AppBarMain(),
           SingleChildScrollView(
             child: Container(
               color: Theme.of(context).scaffoldBackgroundColor,
@@ -149,7 +149,7 @@ class _AdminIndexScreenState extends State<AdminIndexScreen> {
                                       IconButton(
                                         onPressed: () {
                                           // TODO: ویرایش ادمین
-                                          GoRouter.of(context).go('/login');
+                                          GoRouter.of(context).go('/admins/adminDetails/${3}');
                                         },
                                         iconSize: 20,
                                         icon: const Icon(

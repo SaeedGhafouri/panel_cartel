@@ -8,7 +8,6 @@ import 'package:panel_cartel/core/utils/toast.dart';
 import 'package:panel_cartel/core/widgets/progress_widget.dart';
 import 'package:panel_cartel/core/widgets/text_field_widget.dart';
 import 'package:panel_cartel/features/dashboard/presentation/screens/dashboard_screen.dart';
-
 import '../../../../core/widgets/button_widget.dart';
 import '../../logic/cubit/auth_cubit.dart';
 
@@ -163,9 +162,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                   context: context,
                                   message: 'ورود با موفقیت انجام شد.',
                                   type: ToastType.success);
-                              GoRouter.of(context).pushNamed(DashboardScreen.routeName);
+                              //GoRouter.of(context).pushNamed(DashboardScreen.routeName);
                               print('Token: ${state.adminData['token']}');
                               print('Admin Info: ${state.adminData['admin']}');
+                              try {
+                                GoRouter.of(context).goNamed('dashboard');
+                              } catch(e) {
+                                print(e);
+                              }
                             } else if (state is AuthError) {
                               showToast(
                                   context: context,
@@ -175,9 +179,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                           builder: (context, state) {
                             if (state is AuthLoading) {
-                              return ProgressWidget(
-                                isButton: true,
-                              );
+                              return ProgressWidget();
                             } else {
                               return ButtonWidget(
                                 onPressed: () {

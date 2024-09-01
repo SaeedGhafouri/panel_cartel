@@ -16,7 +16,7 @@ class AdminService {
 
   Future<void> _setAuthorizationHeader() async {
     final token = await _getToken();
-    _dio.options.headers['Authorization'] = 'Bearer $token';
+    _dio.options.headers['Authorization'] = token;
   }
 
   Future<List<Admin>> getAdmins() async {
@@ -26,7 +26,7 @@ class AdminService {
     return (response.data['data'] as List).map((json) => Admin.fromJson(json)).toList();
   }
 
-  Future<Map<String, dynamic>> getAdmin(int id) async {
+  Future<Map<String, dynamic>> getAdmin(double id) async {
     await _setAuthorizationHeader();
     final response = await _dio.get('${Routes.adminShow}$id');
     _handleResponse(response);
@@ -65,7 +65,6 @@ class AdminService {
 
   void _handleResponse(Response response) {
     if (response.statusCode != 200) {
-      // چاپ پیام خطا
       print('Error: ${response.data['message'] ?? 'Request failed with status ${response.statusCode}'}');
       throw Exception(response.data['message'] ?? 'Request failed with status ${response.statusCode}');
     }

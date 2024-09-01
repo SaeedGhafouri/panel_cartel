@@ -36,7 +36,7 @@ class TableRowWidget extends StatelessWidget {
                       child: Text(
                         textAlign: TextAlign.center,
                         rowTitles![i],
-                        style: Theme.of(context).textTheme.bodyMedium
+                        style: Theme.of(context).textTheme.headlineMedium
                       ),
                     ),
                   )

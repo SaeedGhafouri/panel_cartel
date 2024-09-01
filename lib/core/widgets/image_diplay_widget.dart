@@ -24,7 +24,7 @@ class ImageDisplayWidget extends StatelessWidget {
         height: size,
         decoration: BoxDecoration(
           shape: BoxShape.rectangle,
-          color: Colors.grey[200],
+          color: Theme.of(context).dividerColor.withOpacity(0.2),
           borderRadius: BorderRadius.circular(radius),
           image: _getImageDecoration(),
         ),
