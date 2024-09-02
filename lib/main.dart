@@ -10,6 +10,7 @@ import 'package:panel_cartel/features/brand/presentation/screens/brand_index.dar
 import 'package:panel_cartel/features/dashboard/presentation/screens/dashboard_screen.dart';
 import 'package:panel_cartel/features/product/data/services/product_service.dart';
 import 'package:panel_cartel/features/product/logic/cubit/product_cubit.dart';
+import 'package:panel_cartel/features/product/presentation/screens/product_create.dart';
 import 'package:panel_cartel/features/product/presentation/screens/product_index.dart';
 import 'core/themes/theme_bloc.dart';
 import 'core/themes/theme_state.dart';
@@ -113,6 +114,10 @@ class MyApp extends StatelessWidget {
               final productId = double.tryParse(state.pathParameters['productId'] ?? '');
               return ProductDetailsScreen(productId: productId);
             },
+          ),
+          GoRoute(
+            path: 'productCreate',
+            builder: (context, state) => const ProductCreateScreen(),
           ),
         ]
       ),

@@ -39,139 +39,139 @@ class _ProductIndexScreenState extends State<ProductIndexScreen> {
       body: Column(
         children: [
           AppBarMain(),
-          SingleChildScrollView(
-            child: Container(
-              color: Theme.of(context).scaffoldBackgroundColor,
+          Expanded(child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: containerHorizontal),
               child: Column(
-                children: [
-                  HeaderMain(
-                    title: 'محصولات',
-                    crumbs: const [
-                      'داشبورد',
-                      'فروشگاه',
-                      'محصولات',
-                    ]
-                  ),
-                  FormWidget(
-                    body: Column(
-                      children: [
-                        TableHeaderWidget(
-                          endChildren: [
-                            CommadbarWidget(
-                              text: 'افزودن محصول',
-                              icon: IconsaxPlusLinear.add,
-                              onPressed: () {
-                                // TODO: اضافه کردن محصول
-                              },
-                            ),
-                            CommadbarWidget(
-                              text: 'بروزرسانی',
-                             icon: IconsaxPlusLinear.refresh,
-                              onPressed: () {
-                                // TODO: اضافه کردن محصول
-                              },
-                            )
-                          ]
-                        ),
-                        const TableRowWidget(
-                          rowTitles: [
-                            'عملیات',
-                            'تصویر',
-                            'نام',
-                            'توضیحات',
-                            'قیمت',
-                            'تعداد',
-                            'دسته بندی',
-                            'برند',
-                            'شناسه',
-                          ]
-                        ),
-                        BlocConsumer<ProductCubit, ProductState>(
-                            builder: (context, state) {
-                              if (state is ProductLoading) {
-                                return  ProgressWidget();
-                              } else if (state is ProductLoaded) {
-                                return ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: state.Products.length,
-                                  itemBuilder: (context, index) {
-                                    final Product = state.Products[index];
-                                    return TableColumnWidget(
-                                      values: [
-                                        Product.status,
-                                        //Product.createdAt,
-                                        Product.name,
-                                        Product.quantity,
-                                        Product.price,
-                                        Product.brand,
-                                        Product.id.toString(),
-                                      ],
-                                      actions: [
-                                        IconButton(
-                                          onPressed: () {
-                                            // TODO: حذف ادمین
-                                            //context.read<ProductCubit>().deleteProduct(Product.id!);
-                                          },
-                                          iconSize: 20,
-                                          icon: const Icon(
-                                            IconsaxPlusLinear.trash,
-                                            color: Colors.red,
-                                          ),
-                                        ),
-                                        IconButton(
-                                          onPressed: () {
-                                            // TODO: ویرایش ادمین
-                                            GoRouter.of(context).go('/products/productDetails/${Product.id}');
-                                          },
-                                          iconSize: 20,
-                                          icon: const Icon(
-                                            IconsaxPlusLinear.edit_2,
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                        IconButton(
-                                          onPressed: () {
-                                            // TODO: مشاهده جزئیات ادمین
-                                            Navigator.pushNamed(context, LoginScreen.routeName);
-                                          },
-                                          iconSize: 20,
-                                          icon: const Icon(
-                                            IconsaxPlusLinear.eye,
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                      ],
+                  children: [
+                    HeaderMain(
+                        title: 'محصولات',
+                        crumbs: const [
+                          'داشبورد',
+                          'فروشگاه',
+                          'محصولات',
+                        ]
+                    ),
+                    FormWidget(
+                        body: Column(
+                            children: [
+                              TableHeaderWidget(
+                                  isTable: true,
+                                  endChildren: [
+                                    CommadbarWidget(
+                                      text: 'افزودن محصول',
+                                      icon: IconsaxPlusLinear.add,
+                                      onPressed: () {
+                                        // TODO: اضافه کردن محصول
+                                        GoRouter.of(context).go('/products/productCreate');
+                                      },
+                                    ),
+                                    CommadbarWidget(
+                                      text: 'بروزرسانی',
+                                      icon: IconsaxPlusLinear.refresh,
+                                      onPressed: () {
+                                        // TODO: اضافه کردن محصول
+                                        context.read<ProductCubit>().fetchProducts();
+                                      },
+                                    )
+                                  ]
+                              ),
+                              const TableRowWidget(
+                                  rowTitles: [
+                                    'عملیات',
+                                    'تصویر',
+                                    'نام',
+                                    'توضیحات',
+                                    'قیمت',
+                                    'تعداد',
+                                    'دسته بندی',
+                                    'برند',
+                                    'شناسه',
+                                  ]
+                              ),
+                              BlocConsumer<ProductCubit, ProductState>(
+                                builder: (context, state) {
+                                  if (state is ProductLoading) {
+                                    return  ProgressWidget();
+                                  } else if (state is ProductLoaded) {
+                                    return ListView.builder(
+                                      shrinkWrap: true,
+                                      itemCount: state.Products.length,
+                                      itemBuilder: (context, index) {
+                                        final Product = state.Products[index];
+                                        return TableColumnWidget(
+                                          values: [
+                                            Product.status,
+                                            //Product.createdAt,
+                                            Product.name,
+                                            Product.quantity,
+                                            Product.price,
+                                            Product.brand,
+                                            Product.id.toString(),
+                                          ],
+                                          actions: [
+                                            IconButton(
+                                              onPressed: () {
+                                                // TODO: حذف ادمین
+                                                //context.read<ProductCubit>().deleteProduct(Product.id!);
+                                              },
+                                              iconSize: 20,
+                                              icon: const Icon(
+                                                IconsaxPlusLinear.trash,
+                                                color: Colors.red,
+                                              ),
+                                            ),
+                                            IconButton(
+                                              onPressed: () {
+                                                // TODO: ویرایش ادمین
+                                                GoRouter.of(context).go('/products/productDetails/${Product.id}');
+                                              },
+                                              iconSize: 20,
+                                              icon: const Icon(
+                                                IconsaxPlusLinear.edit_2,
+                                                color: Colors.grey,
+                                              ),
+                                            ),
+                                            IconButton(
+                                              onPressed: () {
+                                                // TODO: مشاهده جزئیات ادمین
+                                                Navigator.pushNamed(context, LoginScreen.routeName);
+                                              },
+                                              iconSize: 20,
+                                              icon: const Icon(
+                                                IconsaxPlusLinear.eye,
+                                                color: Colors.grey,
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      },
                                     );
-                                  },
-                                );
-                              } else if (state is ProductError) {
-                                return Center(
-                                  child: Text(
-                                    state.message,
-                                    style: Theme.of(context).textTheme.bodyLarge,
-                                  ),
-                                );
-                              } else {
-                                return Center(
-                                  child: Text(
-                                    'خطای بارگذاری',
-                                    style: Theme.of(context).textTheme.bodyLarge,
-                                  ),
-                                );
-                              }
-                            },
-                            listener: (context, state) {
-                              
-                            },
+                                  } else if (state is ProductError) {
+                                    return Center(
+                                      child: Text(
+                                        state.message,
+                                        style: Theme.of(context).textTheme.bodyLarge,
+                                      ),
+                                    );
+                                  } else {
+                                    return Center(
+                                      child: Text(
+                                        'خطای بارگذاری',
+                                        style: Theme.of(context).textTheme.bodyLarge,
+                                      ),
+                                    );
+                                  }
+                                },
+                                listener: (context, state) {
+
+                                },
+                              )
+                            ]
                         )
-                      ]
                     )
-                  )
-                ]
+                  ]
               )
-            )
-          )
+          ))
         ]
       ),
       endDrawer: const SideDrawer(),

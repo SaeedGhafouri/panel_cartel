@@ -52,6 +52,8 @@ dependencies:
   loading_animation_widget: ^1.2.1
   toggle_switch: ^2.3.0
   carousel_slider: ^5.0.0
+  flutter_quill: ^10.5.3
+
 
 dev_dependencies:
   flutter_test:

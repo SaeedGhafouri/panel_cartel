@@ -8,7 +8,8 @@ class TableHeaderWidget extends StatelessWidget {
   final List<Widget>? endChildren;
   final List<Widget>? startChildren;
   final String? title;
-  const TableHeaderWidget({super.key, this.endChildren, this.startChildren, this.title,});
+  final bool? isTable;
+  const TableHeaderWidget({super.key, this.endChildren, this.startChildren, this.title, this.isTable,});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +44,11 @@ class TableHeaderWidget extends StatelessWidget {
         ),
         const SizedBox(height: spacingThin,),
         Divider(height: 1, color: Theme.of(context).dividerColor),
-        const SizedBox(height: spacingThin,),
+        SizedBox(
+          height: isTable != null ? 0 : spacingThin,
+        )
+
+
       ],
     );
   }

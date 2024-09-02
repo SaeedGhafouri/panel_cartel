@@ -208,7 +208,7 @@ List<Menu> menuItems(BuildContext context) => [
         name: 'افزودن محصول',
         icon: IconsaxPlusLinear.box_add,
         onPress: () {
-          // Navigate to Add Product
+          GoRouter.of(context).go('/products/productCreate');
         },
       ),
       Menu(

@@ -21,7 +21,7 @@ class TableColumnWidget extends StatelessWidget {
             height: 50,
             decoration: BoxDecoration(
               border: Border(
-                bottom: BorderSide(
+                top: BorderSide(
                   color: Theme.of(context).dividerColor,
                   width: 1.0,
                 ),
