@@ -62,14 +62,14 @@ class _CommadbarWidgetState extends State<CommadbarWidget> {
                 size: widget.iconSize ?? 17,
                 color: widget.iconColor ?? Theme.of(context).textTheme.bodyMedium?.color,
               ),
+              const SizedBox(width: 5,),
             ],
-            SizedBox(width: 5,),
             if (widget.text.isNotEmpty) ...[
               Text(
                 widget.text,
                 style: widget.textStyle ?? TextStyle(
                   color: widget.textColor ?? Theme.of(context).textTheme.bodyMedium?.color,
-                  fontFamily: font_regular,
+                  fontFamily: Theme.of(context).textTheme.bodySmall?.fontFamily,
                   fontSize: txt_20,
                 ),
               ),

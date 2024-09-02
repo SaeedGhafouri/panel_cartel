@@ -21,9 +21,9 @@ class TableRowWidget extends StatelessWidget {
                 topLeft: Radius.circular(10),
                 topRight: Radius.circular(10),
               ),
-              border: Border.all(
+              /*border: Border.all(
                 color: Theme.of(context).dividerColor,
-              ),
+              ),*/
             ),
             child: Row(
               mainAxisAlignment:

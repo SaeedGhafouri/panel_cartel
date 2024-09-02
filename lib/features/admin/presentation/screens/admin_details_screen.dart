@@ -52,9 +52,8 @@ class _AdminDetailsScreenState extends State<AdminDetailsScreen> {
               textDirection: TextDirection.rtl,
               child: SingleChildScrollView(
                 child: Container(
-                  padding: container,
-                  margin: container,
                   color: Theme.of(context).scaffoldBackgroundColor,
+                  padding: const EdgeInsets.symmetric(vertical: 20, horizontal: containerHorizontal),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [

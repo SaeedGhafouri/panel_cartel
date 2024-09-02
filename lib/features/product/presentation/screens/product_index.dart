@@ -122,7 +122,7 @@ class _ProductIndexScreenState extends State<ProductIndexScreen> {
                                         IconButton(
                                           onPressed: () {
                                             // TODO: ویرایش ادمین
-                                            GoRouter.of(context).go('/login');
+                                            GoRouter.of(context).go('/products/productDetails/${Product.id}');
                                           },
                                           iconSize: 20,
                                           icon: const Icon(

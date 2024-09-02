@@ -19,6 +19,7 @@ import 'features/admin/presentation/screens/admin_create_screen.dart';
 import 'features/auth/presentation/screens/login_screen.dart';
 import 'features/brand/data/services/brand_service.dart';
 import 'features/brand/logic/cubit/brand_cubit.dart';
+import 'features/product/presentation/screens/product_details_screen.dart';
 
 void main() {
   runApp(
@@ -84,6 +85,7 @@ class MyApp extends StatelessWidget {
 
       GoRoute(
         path: AdminIndexScreen.routeName,
+        name: 'admins',
         builder: (context, state) => const AdminIndexScreen(),
         routes: [
           GoRoute(
@@ -102,7 +104,17 @@ class MyApp extends StatelessWidget {
 
       GoRoute(
         path: '/products',
+        name: 'products',
         builder: (context, state) => const ProductIndexScreen(),
+        routes: [
+          GoRoute(
+            path: 'productDetails/:productId',
+            builder: (context, state) {
+              final productId = double.tryParse(state.pathParameters['productId'] ?? '');
+              return ProductDetailsScreen(productId: productId);
+            },
+          ),
+        ]
       ),
       GoRoute(
         path: '/brands',

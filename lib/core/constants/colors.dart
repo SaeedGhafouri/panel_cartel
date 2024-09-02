@@ -23,6 +23,6 @@ const toolbarColor = Color(0xFFFFFFFF);
 const toolbarDarkColor = Color(0xFF111112);
 
 const dividerColor = Color(0xFFECECEC);
-const dividerDarkColor = Color(0xFF4F4F4F);
+const dividerDarkColor = Color(0xFF2C2C2C);
 
 const dangerColor = Color(0xFFFC5959);
