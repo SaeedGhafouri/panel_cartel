@@ -39,7 +39,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
     return Scaffold(
       body: Column(
         children: [
-          AppBarMain(),
+          const AppBarMain(),
           Directionality(
               textDirection: TextDirection.rtl,
               child: Expanded(
@@ -73,14 +73,14 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                         label: 'نام محصول',
                                       ),
                                     ),
-                                    SizedBox(width: spacingThin),
+                                    const SizedBox(width: spacingThin),
                                     Expanded(
                                       child: TextFieldWidget(
                                         controller: _slug,
                                         label: 'کلمه کلیدی',
                                       ),
                                     ),
-                                    SizedBox(width: spacingThin),
+                                    const SizedBox(width: spacingThin),
                                     Expanded(
                                       child: SpinnerWidget(
                                         label: 'وضعیت',
@@ -113,7 +113,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                         },
                                       ),
                                     ),
-                                    SizedBox(width: spacingThin),
+                                    const SizedBox(width: spacingThin),
                                     Expanded(
                                       child: SpinnerWidget(
                                         label: 'برند',
@@ -127,14 +127,14 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                         },
                                       ),
                                     ),
-                                    SizedBox(width: spacingThin),
+                                    const SizedBox(width: spacingThin),
                                     Expanded(
                                       child: TextFieldWidget(
                                         controller: _barcode,
                                         label: 'بارکد',
                                       ),
                                     ),
-                                    SizedBox(width: spacingThin),
+                                    const SizedBox(width: spacingThin),
                                     Expanded(
                                       child: SpinnerWidget(
                                         label: 'وضعیت',
@@ -170,7 +170,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                             "مشخصات فنی",
                                             style: Theme.of(context).textTheme.headlineMedium,
                                           ),
-                                          SizedBox(height: spacingThin,),
+                                          const SizedBox(height: spacingThin,),
                                           QuillSimpleToolbar(
                                             controller: _controller,
                                             configurations: const QuillSimpleToolbarConfigurations(
@@ -201,7 +201,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                             ),
                           )),
                           const SizedBox(width: spacingThin,),
-                          Expanded(flex: 3, child: Column(
+                          const Expanded(flex: 3, child: Column(
                             children: [
                               FormWidget(
                                 body: Column(
@@ -360,7 +360,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
 
         ],
       ),
-      endDrawer: SideDrawer(),
+      endDrawer: const SideDrawer(),
     );
   }
 }

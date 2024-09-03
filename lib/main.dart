@@ -70,6 +70,10 @@ class MyApp extends StatelessWidget {
     initialLocation: '/',
     routes: <RouteBase>[
       GoRoute(
+        path: '/brands',
+        builder: (context, state) => const BrandIndexScreen(),
+      ),
+      GoRoute(
         path: DashboardScreen.routeName,
         name: 'dashboard',
         builder: (context, state) => const DashboardScreen(),
@@ -121,10 +125,7 @@ class MyApp extends StatelessWidget {
           ),
         ]
       ),
-      GoRoute(
-        path: '/brands',
-        builder: (context, state) => const BrandIndexScreen(),
-      ),
+
     ],
   );
 }

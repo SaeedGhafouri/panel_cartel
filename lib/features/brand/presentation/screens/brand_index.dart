@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:panel_cartel/core/widgets/appbar.dart';
+import 'package:panel_cartel/core/widgets/button_widget.dart';
 
 import '../../../../core/themes/themes.dart';
 import '../../../../core/widgets/datagrid/table_column_widget.dart';
@@ -81,7 +82,7 @@ class _BrandIndexScreenState extends State<BrandIndexScreen> {
                                               actions: [
                                                 IconButton(
                                                   onPressed: () {
-                                                    // TODO: حذف ادمین
+                                                    // TODO: حذف برند
                                                     //context.read<BrandCubit>().deleteBrand(Brand.id!);
                                                   },
                                                   iconSize: 20,
@@ -92,7 +93,7 @@ class _BrandIndexScreenState extends State<BrandIndexScreen> {
                                                 ),
                                                 IconButton(
                                                   onPressed: () {
-                                                    // TODO: ویرایش ادمین
+                                                    // TODO: ویرایش برند
                                                     GoRouter.of(context).go('/login');
                                                   },
                                                   iconSize: 20,
@@ -103,7 +104,7 @@ class _BrandIndexScreenState extends State<BrandIndexScreen> {
                                                 ),
                                                 IconButton(
                                                   onPressed: () {
-                                                    // TODO: مشاهده جزئیات ادمین
+                                                    // TODO: مشاهده جزئیات برند
                                                     Navigator.pushNamed(context, LoginScreen.routeName);
                                                   },
                                                   iconSize: 20,
