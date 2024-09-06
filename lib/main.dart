@@ -8,12 +8,16 @@ import 'package:panel_cartel/features/auth/data/services/auth_service.dart';
 import 'package:panel_cartel/features/auth/logic/cubit/auth_cubit.dart';
 import 'package:panel_cartel/features/brand/presentation/screens/brand_index.dart';
 import 'package:panel_cartel/features/dashboard/presentation/screens/dashboard_screen.dart';
+import 'package:panel_cartel/features/order/presentation/screens/order_details_screen.dart';
+import 'package:panel_cartel/features/order/presentation/screens/orders_screen.dart';
 import 'package:panel_cartel/features/product/data/services/product_service.dart';
 import 'package:panel_cartel/features/product/logic/cubit/product_cubit.dart';
 import 'package:panel_cartel/features/product/presentation/screens/product_create.dart';
 import 'package:panel_cartel/features/product/presentation/screens/product_index.dart';
 import 'core/themes/theme_bloc.dart';
 import 'core/themes/theme_state.dart';
+import 'features/Category/data/services/category_service.dart';
+import 'features/Category/logic/cubit/Category_cubit.dart';
 import 'features/admin/data/services/admin_service.dart';
 import 'features/admin/logic/cubit/admin_cubit.dart';
 import 'features/admin/presentation/screens/admin_create_screen.dart';
@@ -38,16 +42,16 @@ void main() {
         BlocProvider<BrandCubit>(
           create: (context) => BrandCubit(BrandService(Dio())),
         ),
-
+        BlocProvider<CategoryCubit>(
+          create: (context) => CategoryCubit(CategoryService(Dio())),
+        ),
       ],
       child: MyApp(),
     ),
   );
 }
-
 class MyApp extends StatelessWidget {
   MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider<ThemeBloc>(
@@ -64,30 +68,35 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
-
   final GoRouter _router = GoRouter(
-    //default page
     initialLocation: '/',
     routes: <RouteBase>[
+      // Auth
       GoRoute(
-        path: '/brands',
-        builder: (context, state) => const BrandIndexScreen(),
+        path: '/',
+        name: 'login',
+        builder: (context, state) => const LoginScreen(),
       ),
+      GoRoute(
+        path: '/login',
+        builder: (context, state) => const LoginScreen(),
+      ),
+
+      // Overview
       GoRoute(
         path: DashboardScreen.routeName,
         name: 'dashboard',
         builder: (context, state) => const DashboardScreen(),
       ),
+
+      // Brands
       GoRoute(
-        path: '/',
-        builder: (context, state) => const LoginScreen(),
-      ),
-      GoRoute(
-        path: '/login',
-        name: 'login',
-        builder: (context, state) => const LoginScreen(),
+        path: '/brands',
+        name: 'brands',
+        builder: (context, state) => const BrandIndexScreen(),
       ),
 
+      // Admins
       GoRoute(
         path: AdminIndexScreen.routeName,
         name: 'admins',
@@ -107,6 +116,7 @@ class MyApp extends StatelessWidget {
         ],
       ),
 
+      // Products
       GoRoute(
         path: '/products',
         name: 'products',
@@ -123,9 +133,22 @@ class MyApp extends StatelessWidget {
             path: 'productCreate',
             builder: (context, state) => const ProductCreateScreen(),
           ),
-        ]
+        ],
       ),
 
+      // Orders
+      GoRoute(
+        path: '/orders',
+        name: 'orders',
+        builder: (context, state) => const OrdersScreen(),
+        routes: [
+          // TODO Pass Order id
+          GoRoute(
+            path: 'ordersDetails',
+            builder: (context, state) => OrderDetailsScreen(),
+          ),
+        ]
+      ),
     ],
   );
 }

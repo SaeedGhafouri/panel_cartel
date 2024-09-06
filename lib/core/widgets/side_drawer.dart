@@ -247,7 +247,7 @@ List<Menu> menuItems(BuildContext context) => [
         name: 'سفارشات جدید',
         icon: IconsaxPlusLinear.bag_2,
         onPress: () {
-          // Navigate to New Orders
+          GoRouter.of(context).go('orders');
         },
       ),
       Menu(

@@ -9,12 +9,14 @@ class SpinnerWidget extends StatefulWidget {
   final List<String> items;
   final String? selectedItem;
   final void Function(String?)? onChanged;
+  final double width;
 
   SpinnerWidget({
     required this.items,
     this.label,
     this.selectedItem,
     this.onChanged,
+    this.width = 200,
   });
 
   @override
@@ -36,6 +38,7 @@ class _SpinnerWidget extends State<SpinnerWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
+          width: widget.width,
           height: heightFieldMain,
           padding: EdgeInsets.symmetric(horizontal: 12.0),
           decoration: BoxDecoration(
@@ -71,7 +74,7 @@ class _SpinnerWidget extends State<SpinnerWidget> {
                   .map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
-                  child: Text(value),
+                  child: Text(value, textDirection: TextDirection.ltr,),
                 );
               }).toList(),
             ),

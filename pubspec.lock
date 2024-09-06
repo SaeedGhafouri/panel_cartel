@@ -169,6 +169,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
+  easy_stepper:
+    dependency: "direct main"
+    description:
+      name: easy_stepper
+      sha256: "63f66314a509ec690c8152a41288961fd96ba9e92ef184299f068a5e78bd16ad"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.8.5+1"
   equatable:
     dependency: "direct main"
     description:
@@ -573,6 +581,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
+  lottie:
+    dependency: transitive
+    description:
+      name: lottie
+      sha256: "6a24ade5d3d918c306bb1c21a6b9a04aab0489d51a2582522eea820b4093b62b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.2"
   markdown:
     dependency: transitive
     description:
@@ -734,10 +750,10 @@ packages:
     dependency: transitive
     description:
       name: syncfusion_flutter_core
-      sha256: "85f96b7b06f32a60b19ab0bb8c32bf162a0474f2d94f4844384be1118e6b4954"
+      sha256: "877411504a07c874970c361762c447081e6e13219a6bea6fc88fbb31c2aff4a4"
       url: "https://pub.dev"
     source: hosted
-    version: "26.2.11"
+    version: "26.2.13"
   syncfusion_flutter_datagrid:
     dependency: "direct main"
     description:

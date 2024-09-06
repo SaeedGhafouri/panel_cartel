@@ -1,8 +1,9 @@
 import 'package:bloc/bloc.dart';
-import 'package:panel_cartel/features/product/data/services/product_service.dart';
-import '../../data/models/product_model.dart';
 
-part 'product_state.dart';
+import '../../data/models/product_model.dart';
+import '../../data/services/product_service.dart';
+import 'product_state.dart';
+
 
 class ProductCubit extends Cubit<ProductState> {
   final ProductService _adminService;
@@ -27,4 +28,16 @@ class ProductCubit extends Cubit<ProductState> {
       emit(ProductError(e.toString()));
     }
   }
+
+  // create
+  void createProduct(Product product) async {
+    try {
+      emit(ProductLoading());
+      await _adminService.createProduct(product);
+      fetchProducts();
+    } catch (e) {
+      emit(ProductError(e.toString()));
+    }
+  }
+
 }

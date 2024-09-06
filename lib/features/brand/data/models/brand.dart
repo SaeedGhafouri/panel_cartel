@@ -1,16 +1,16 @@
 class Brand {
   int id;
   String name;
-  String description;
-  String status;
-  String image;
+  String? description;
+  String? status;
+  String? image;
 
   Brand({
     required this.id,
     required this.name,
-    required this.description,
-    required this.status,
-    required this.image,
+    this.description,
+    this.status,
+    this.image,
   });
 
   factory Brand.fromJson(Map<String, dynamic> json) {

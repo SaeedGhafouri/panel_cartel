@@ -49,4 +49,15 @@ class ProductService {
       'message': response.data['message'] ?? 'Product fetched successfully',
     };
   }
+
+  // Create
+  Future<Map<String, dynamic>> createProduct(Product product) async {
+    await _setAuthorizationHeader();
+    final response = await _dio.post(Routes.productCreate, data: product);
+    return {
+      'data': Product.fromJson(response.data['data']),
+      'message': response.data['message'] ?? 'Product created successfully',
+    };
+  }
+
 }

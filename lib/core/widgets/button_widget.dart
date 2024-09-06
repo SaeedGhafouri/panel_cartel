@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 
 import '../constants/assets.dart';
 import '../themes/themes.dart';
@@ -18,6 +19,7 @@ class ButtonWidget extends StatefulWidget {
   final Widget? child;
   final VoidCallback? onPressed;
   final MainAxisAlignment? alignment;
+  final bool? arrowLeft;
 
   ButtonWidget({
     required this.text,
@@ -33,6 +35,7 @@ class ButtonWidget extends StatefulWidget {
     this.iconSize,
     this.child,
     this.alignment,
+    this.arrowLeft = false,
   });
 
   @override
@@ -77,6 +80,10 @@ class _ButtonWidgetState extends State<ButtonWidget> {
                     ),
                   ),
                 ],
+                if (widget.arrowLeft == true) ...[
+                  SizedBox(width: 8.0),
+                  Icon(IconsaxPlusLinear.arrow_left_1, size: 15, color: lightTextColor)
+                ]
 
               ],
             ),

@@ -19,13 +19,13 @@ class SearchFieldWidget extends StatelessWidget {
           color: Theme.of(context).dividerColor,
         ),
       ),
-      height: 40, width: 300,
-      padding: const EdgeInsets.only(right: 10),
+      width: 300,
+      height: 40,
       child: Row(
         children: [
           IconButton(
             onPressed: onPressed,
-            icon: Icon(IconsaxPlusLinear.search_normal, size: 17, ),
+            icon: Icon(IconsaxPlusLinear.search_normal, size: 15, color: Theme.of(context).textTheme.headlineSmall!.color, ),
           ),
           Expanded(
             child: TextField(
@@ -33,11 +33,10 @@ class SearchFieldWidget extends StatelessWidget {
               keyboardType: TextInputType.text,
               textInputAction: TextInputAction.search,
               controller: controller,
-              textAlign: TextAlign.right,
               decoration: InputDecoration(
                   border: InputBorder.none,
                   hintText: 'جستجو',
-                  hintStyle: Theme.of(context).textTheme.labelSmall
+                  hintStyle: Theme.of(context).textTheme.headlineSmall
               ),
             ),
           )

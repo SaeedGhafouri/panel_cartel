@@ -1,41 +1,44 @@
 class Product {
-  final int id;
-  final String name;
-  final String barcode;
-  final int salePrice;
-  final int price;
-  final String imagePath;
-  final String status;
-  final String brand;
-  final List<String> category;
-  final int quantity;
-  final String? details;
+  final int? id;
+  final String? name;
+  final String? barcode;
+  final String? slug;
+  final int? status;
+  final int? brand_id;
+  final String? brand;
+  final int? category_id;
+  final List<String>? category;
+  final String? image;
+  final String? description;
+  final int? is_special;
+  final int? quantity;
+  final String? quantity_unit;
+  final String? salePrice;
+  final String? price;
+  final String? imagePath;
 
-  Product({
-    required this.id,
-    required this.name,
-    required this.barcode,
-    required this.salePrice,
-    required this.price,
-    required this.imagePath,
-    required this.status,
-    required this.brand,
-    required this.category,
-    required this.quantity,
-    this.details,
-  });
+  Product(this.id, this.name, this.barcode, this.slug, this.status, this.brand_id, this.brand, this.category_id, this.category, this.image, this.description, this.is_special, this.quantity, this.quantity_unit, this.salePrice, this.price, this.imagePath);
+
+
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
-      id: json['id'],
-      name: json['name'],
-      barcode: json['barcode'],
-      salePrice: json['sale_price'],
-      price: json['price'],
-      imagePath: json['image_path'],
-      status: json['status'],
-      brand: json['brand'],
-      category: List<String>.from(json['category']),
-      quantity:json['quantity'],
+      json['id'],
+      json['name'],
+      json['barcode'],
+      json['slug'],
+      json['status'],
+      json['brand_id'],
+      json['brand'],
+      json['category_id'],
+      json['category'],
+      json['image'],
+      json['description'],
+      json['is_special'],
+      json['quantity'],
+      json['quantity_unit'],
+      json['sale_price'],
+     json['price'],
+      json['image_path'],
     );
   }
 

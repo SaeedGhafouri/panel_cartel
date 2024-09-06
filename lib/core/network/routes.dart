@@ -26,4 +26,10 @@ class Routes {
   static const String brandUpdate = '$baseUrl/admin/shop/brand/update/';
   static const String brandDelete = '$baseUrl/admin/shop/brand/destroy/';
 
+  /// Category
+  static const String categoryIndex = '$baseUrl/admin/shop/category/index';
+  static const String categoryCreate = '$baseUrl/admin/shop/category/create';
+  static const String categoryUpdate = '$baseUrl/admin/shop/category/update/';
+  static const String categoryDelete = '$baseUrl/admin/shop/category/destroy/';
+
 }

@@ -87,7 +87,8 @@ class _ProductIndexScreenState extends State<ProductIndexScreen> {
                                     'شناسه',
                                   ]
                               ),
-                              BlocConsumer<ProductCubit, ProductState>(
+                              /// TODO
+                              /*BlocConsumer<ProductCubit, ProductState>(
                                 builder: (context, state) {
                                   if (state is ProductLoading) {
                                     return  ProgressWidget();
@@ -164,7 +165,7 @@ class _ProductIndexScreenState extends State<ProductIndexScreen> {
                                 listener: (context, state) {
 
                                 },
-                              )
+                              )*/
                             ]
                         )
                     )

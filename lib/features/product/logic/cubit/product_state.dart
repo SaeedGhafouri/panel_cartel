@@ -1,4 +1,5 @@
-part of 'product_cubit.dart';
+
+import '../../data/models/product_model.dart';
 
 abstract class ProductState {}
 
@@ -21,6 +22,7 @@ class ProductDetailLoaded extends ProductState {
 class ProductCreated extends ProductState {
   ProductCreated(response);
 }
+
 
 class ProductUpdated extends ProductState {
   ProductUpdated(response);
