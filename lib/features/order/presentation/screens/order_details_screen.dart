@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:panel_cartel/core/widgets/appbar.dart';
 import 'package:panel_cartel/core/widgets/commadbar_main.dart';
+import 'package:panel_cartel/core/widgets/datagrid/table_column_widget.dart';
 import 'package:panel_cartel/core/widgets/datagrid/table_header_widget.dart';
+import 'package:panel_cartel/core/widgets/datagrid/table_row_widget.dart';
 import 'package:panel_cartel/core/widgets/form_widget.dart';
 import 'package:easy_stepper/easy_stepper.dart';
 import '../../../../core/themes/themes.dart';
 import '../../../../core/widgets/header_main.dart';
+import '../../../product/presentation/widgets/status_popup_widget.dart';
 
 class OrderDetailsScreen extends StatefulWidget {
   final double? orderId;
@@ -91,7 +94,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                                   .textTheme
                                                   .headlineMedium
                                                   ?.color)),
-                                  TextSpan(text: '  '),
+                                  const TextSpan(text: '  '),
                                   TextSpan(
                                     text: '13:42:21 - 1403/03/21 ',
                                     style:
@@ -106,11 +109,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                       icon: IconsaxPlusLinear.attach_square,
                                       onPressed: () {},
                                     ),
-                                    CommadbarWidget(
-                                      text: 'وضعیت',
-                                      icon: IconsaxPlusLinear.quote_up_square,
-                                      onPressed: () {},
-                                    ),
+                                    StatusPopupWidget(),
                                     CommadbarWidget(
                                       text: 'امضای مشتری',
                                       icon: IconsaxPlusLinear.pen_tool,
@@ -166,43 +165,51 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                               color: Colors.orangeAccent,
                                               width: 1.5)),
                                       child: Padding(
-                                        padding: EdgeInsets.all(10.0),
+                                        padding: const EdgeInsets.all(10.0),
                                         child: Row(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
-                                            Icon(
+                                            const Icon(
                                               IconsaxPlusLinear.warning_2,
                                               color: Colors.orangeAccent,
                                               size: 25,
                                             ),
-                                            SizedBox(width: spacingThin),
+                                            const SizedBox(width: spacingThin),
                                             Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
                                               children: [
                                                 Text(
                                                   'نظارت دقیق بر وضعیت سفارشات',
-                                                  style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.orangeAccent),
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .titleMedium
+                                                      ?.copyWith(
+                                                          color: Colors
+                                                              .orangeAccent),
                                                 ),
-                                                SizedBox(height: 8),
+                                                const SizedBox(height: 8),
                                                 SizedBox(
                                                   width: 320,
                                                   child: Text(
                                                     'کارشناس مسئول باید به طور منظم و به‌موقع وضعیت سفارشات را بررسی کند.عدم توجه به این موضوع می‌تواند منجر به\n'
-                                                        'نارضایتی مشتریان و کاهش کیفیت خدمات گردد.',
-                                                    style: Theme.of(context).textTheme.headlineMedium,
+                                                    'نارضایتی مشتریان و کاهش کیفیت خدمات گردد.',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .headlineMedium,
                                                     softWrap: true,
                                                   ),
                                                 )
                                               ],
                                             )
-
                                           ],
                                         ),
                                       ),
                                     )
                                   ],
                                 )),
-                            Expanded(flex: 3, child: Column()),
+                            const Expanded(flex: 3, child: Column()),
                             Expanded(
                               flex: 4,
                               child: EasyStepper(
@@ -218,7 +225,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                 finishedStepTextColor: primaryColor,
                                 activeStepTextColor: primaryColor,
                                 activeStepIconColor: primaryColor,
-                                finishedStepBackgroundColor: primaryColor.withOpacity(0.1),
+                                finishedStepBackgroundColor:
+                                    primaryColor.withOpacity(0.1),
                                 finishedStepIconColor: primaryColor,
                                 lineStyle: const LineStyle(
                                   lineType: LineType.dashed,
@@ -235,7 +243,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                     title: 'تأیید شده',
                                   ),
                                   EasyStep(
-                                    icon: Icon(IconsaxPlusLinear.refresh_square_2),
+                                    icon: Icon(
+                                        IconsaxPlusLinear.refresh_square_2),
                                     activeIcon: Icon(IconsaxPlusBold.refresh_2),
                                     title: 'در حال پردازش',
                                   ),
@@ -258,9 +267,426 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                               ),
                             ),
                           ],
+                        ),
+                        const SizedBox(height: spacingSmall),
+                        Divider(
+                          height: 1,
+                          color: Theme.of(context).dividerColor,
+                        ),
+                        const SizedBox(height: spacingSmall),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            /// TODO Order Info
+                            Expanded(
+                                flex: 3,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'جزئیات سفارش',
+                                      style:
+                                          Theme.of(context).textTheme.bodySmall,
+                                    ),
+                                    const SizedBox(
+                                      height: spacingThin,
+                                    ),
+                                    /// Invoice Id
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                         Row(
+                                          children: [
+                                            const SizedBox(
+                                              width: spacingThin,
+                                            ),
+                                            Text(
+                                              'شناسه سفارش:',
+                                              style: Theme.of(context).textTheme.headlineMedium,
+                                            ),
+                                          ],
+                                        ),
+
+                                        Text(
+                                          '#5513253',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall,
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: spacingThin,
+                                    ),
+                                    /// Order Id
+                                    Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            const SizedBox(
+                                              width: spacingThin,
+                                            ),
+                                            Text(
+                                              'شناسه سیستمی:',
+                                              style: Theme.of(context).textTheme.headlineMedium,
+                                            ),
+                                          ],
+                                        ),
+
+                                        Text(
+                                          '12451',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall,
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: spacingThin,
+                                    ),
+                                    /// Date
+                                    Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            const SizedBox(
+                                              width: spacingThin,
+                                            ),
+                                            Text(
+                                              'تاریخ ثبت:',
+                                              style: Theme.of(context).textTheme.headlineMedium,
+                                            ),
+                                          ],
+                                        ),
+
+                                        Text(
+                                          ' 1403/03/21 13:42:21',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                )),
+                            const SizedBox(width: spacingMedium),
+                            /// TODO Person Info
+                            Expanded(
+                                flex: 3,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'اطلاعات مشتری',
+                                      style:
+                                      Theme.of(context).textTheme.bodySmall,
+                                    ),
+                                    const SizedBox(
+                                      height: spacingThin,
+                                    ),
+                                    /// User full name
+                                    Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            const SizedBox(
+                                              width: spacingThin,
+                                            ),
+                                            Text(
+                                              'نام و نام خانوادگی:',
+                                              style: Theme.of(context).textTheme.headlineMedium,
+                                            ),
+                                          ],
+                                        ),
+
+                                        Text(
+                                          'سید سعید غفوری',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall,
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: spacingThin,
+                                    ),
+                                    /// Phone
+                                    Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            const SizedBox(
+                                              width: spacingThin,
+                                            ),
+                                            Text(
+                                              'شماره موبایل:',
+                                              style: Theme.of(context).textTheme.headlineMedium,
+                                            ),
+                                          ],
+                                        ),
+
+                                        Text(
+                                          '09914038707',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall,
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: spacingThin,
+                                    ),
+                                    /// Email
+                                    Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            const SizedBox(
+                                              width: spacingThin,
+                                            ),
+                                            Text(
+                                              'ایمیل:',
+                                              style: Theme.of(context).textTheme.headlineMedium,
+                                            ),
+                                          ],
+                                        ),
+
+                                        Text(
+                                          'saeedghafoori1@gmail.com',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall,
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: spacingThin,
+                                    ),
+                                    /// National Code
+                                    Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            const SizedBox(
+                                              width: spacingThin,
+                                            ),
+                                            Text(
+                                              'کد ملی:',
+                                              style: Theme.of(context).textTheme.headlineMedium,
+                                            ),
+                                          ],
+                                        ),
+
+                                        Text(
+                                          '4900986682',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                )),
+                            const SizedBox(width: spacingMedium),
+                            /// TODO Address Info
+                            Expanded(
+                                flex: 3,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'اطلاعات آدرس',
+                                      style:
+                                      Theme.of(context).textTheme.bodySmall,
+                                    ),
+                                    const SizedBox(
+                                      height: spacingThin,
+                                    ),
+                                    /// User full name
+                                    Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            const SizedBox(
+                                              width: spacingThin,
+                                            ),
+                                            Text(
+                                              'نام و نام خانوادگی:',
+                                              style: Theme.of(context).textTheme.headlineMedium,
+                                            ),
+                                          ],
+                                        ),
+
+                                        Text(
+                                          'سید سعید غفوری',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall,
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: spacingThin,
+                                    ),
+                                    /// Phone
+                                    Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            const SizedBox(
+                                              width: spacingThin,
+                                            ),
+                                            Text(
+                                              'شماره موبایل:',
+                                              style: Theme.of(context).textTheme.headlineMedium,
+                                            ),
+                                          ],
+                                        ),
+
+                                        Text(
+                                          '09914038707',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall,
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: spacingThin,
+                                    ),
+                                    /// Email
+                                    Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            const SizedBox(
+                                              width: spacingThin,
+                                            ),
+                                            Text(
+                                              'ایمیل:',
+                                              style: Theme.of(context).textTheme.headlineMedium,
+                                            ),
+                                          ],
+                                        ),
+
+                                        Text(
+                                          'saeedghafoori1@gmail.com',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall,
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: spacingThin,
+                                    ),
+                                    /// National Code
+                                    Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            const SizedBox(
+                                              width: spacingThin,
+                                            ),
+                                            Text(
+                                              'کد ملی:',
+                                              style: Theme.of(context).textTheme.headlineMedium,
+                                            ),
+                                          ],
+                                        ),
+
+                                        Text(
+                                          '4900986682',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                )),
+                          ],
                         )
                       ],
-                    ))
+                    )),
+                    SizedBox(height: spacingSmall,),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        /// Products
+                        const Expanded(
+                          flex: 6,
+                          child: FormWidget(
+                              body: Column(
+                                children: [
+                                  TableHeaderWidget(title: 'اقلام سفارش', isTable: true,),
+                                  TableRowWidget(rowTitles: ['نام', 'تعداد', 'قیمت واحد', 'مبلغ کل', '#']),
+                                ],
+                              )
+                          ),
+                        ),
+                        const SizedBox(width: spacingSmall,),
+                        ///
+                        Expanded(
+                          flex: 4,
+                          child: FormWidget(
+                              body: Column(
+                                children: [
+                                  const TableHeaderWidget(title: 'مشخصات پرداخت', isTable: false,),
+                                  SizedBox(height: spacingSmall,),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              width: 60,
+                                              height: 60,
+                                              decoration: BoxDecoration(
+                                                  color: Colors.greenAccent.withOpacity(0.2),
+                                                  borderRadius: smallRadius
+                                              ),
+                                              child: Center(
+                                                child: Icon(IconsaxPlusLinear.money, color: Colors.greenAccent, size: 30,),
+                                              ),
+                                            ),
+                                            SizedBox(height: spacingThin,),
+                                            Text('تسویه شده')
+                                          ],
+                                        )
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: spacingSmall,),
+                                  Divider(height: 1, color: Theme.of(context).dividerColor,),
+                                  const TableRowWidget(rowTitles: ['مبلغ کل', 'مبلغ تخفیف', 'مبلغ نهایی', 'نوع پرداخت', 'شماره پیگیری']),
+                                ],
+                              )
+                          ),
+                        ),
+                      ],
+                    )
                   ],
                 ),
               )))

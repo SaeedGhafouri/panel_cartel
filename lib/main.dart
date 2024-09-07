@@ -144,7 +144,7 @@ class MyApp extends StatelessWidget {
         routes: [
           // TODO Pass Order id
           GoRoute(
-            path: 'ordersDetails',
+            path: 'orderDetails',
             builder: (context, state) => OrderDetailsScreen(),
           ),
         ]
