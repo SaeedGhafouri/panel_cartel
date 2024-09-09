@@ -1,7 +1,7 @@
 
 class Routes {
   static const String baseUrl = 'http://127.0.0.1:8000/api';
-  static const String token = 'Bearer 2|70BLvJ0ShYLKFOI8FsjIzGPEIvI8HhChYi6CGMVGa9f7bae4';
+  static const String token = 'Bearer 1|I8O0aUCYIMM3RQvJDN186NuudoxbjmKLitdUVHcM0545fdb3';
 
   /// Authcation
   static const String authLogin = '$baseUrl/auth/loginAdmin';

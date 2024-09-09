@@ -72,6 +72,7 @@ class CategoryDialog extends StatelessWidget {
                               ImageDisplayWidget(
                                 imageUrl: Category.image ?? '',
                                 size: 40,
+                                isShow: false,
                               ),
                             ],
                           ),

@@ -44,7 +44,7 @@ void showToast({
     autoCloseDuration: duration,
     alignment: alignment,
     direction: TextDirection.rtl,
-    backgroundColor: Theme.of(context).cardColor,
+    backgroundColor: iconColor.withOpacity(0.3),
     borderSide: BorderSide.none,
   );
 }

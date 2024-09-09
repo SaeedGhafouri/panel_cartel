@@ -9,6 +9,7 @@ class ImageDisplayWidget extends StatelessWidget {
   final String? assetPath;
   final double radius;
   final double size;
+  final bool isShow;
 
   const ImageDisplayWidget({
     Key? key,
@@ -16,6 +17,7 @@ class ImageDisplayWidget extends StatelessWidget {
     this.assetPath,
     this.radius = 100.0,
     this.size = 100.0,
+    this.isShow = false,
   }) : super(key: key);
 
   @override
@@ -23,7 +25,7 @@ class ImageDisplayWidget extends StatelessWidget {
     final imageDecoration = _getImageDecoration();
 
     return GestureDetector(
-      onTap: () => _showImageDialog(context),
+      onTap: () => isShow ? _showImageDialog(context) : null,
       child: Container(
         width: size,
         height: size,

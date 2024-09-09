@@ -17,13 +17,13 @@ import 'package:panel_cartel/core/widgets/header_main.dart';
 import 'package:panel_cartel/core/widgets/side_drawer.dart';
 import 'package:panel_cartel/core/widgets/spinner_widget.dart';
 import 'package:panel_cartel/core/widgets/text_field_widget.dart';
+import 'package:panel_cartel/features/product/data/models/product_model.dart';
 import 'package:toggle_switch/toggle_switch.dart';
-import '../../../../core/constants/assets.dart';
 import '../../../../core/dialogs/category_dialog.dart';
 import '../../../../core/themes/themes.dart';
 import '../../../../core/widgets/progress_widget.dart';
-import '../../data/models/product_model.dart';
 import '../../logic/cubit/product_cubit.dart';
+import '../../logic/cubit/product_state.dart';
 
 class ProductCreateScreen extends StatefulWidget {
   final String routeName = '/productCreate';
@@ -39,8 +39,6 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
   final TextEditingController _slug = TextEditingController();
   final TextEditingController _barcode = TextEditingController();
   final TextEditingController _status = TextEditingController();
-  final TextEditingController _brand_id = TextEditingController();
-  final TextEditingController _category_id = TextEditingController();
   final TextEditingController _image = TextEditingController();
   final TextEditingController _description = TextEditingController();
   final TextEditingController _is_special = TextEditingController();
@@ -50,7 +48,9 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
   final QuillController _controller = QuillController.basic();
   final TextEditingController _discount = TextEditingController();
   final ValueNotifier<String> categoryTxt = ValueNotifier<String>('دسته بندی');
+  late final int categoryId;
   final ValueNotifier<String> brandTxt = ValueNotifier<String>('برند');
+  late final int brandId;
 
   String _discountType = 'مبلغ';
   double _finalPrice = 0.0;
@@ -73,7 +73,6 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
       if (result != null) {
         Uint8List? fileBytes = result.files.single.bytes;
         if (fileBytes != null && fileBytes.length <= 500 * 1024) {
-          // بررسی حجم فایل
           setState(() {
             selectedImages[index] = fileBytes;
           });
@@ -149,8 +148,6 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
     _slug.dispose();
     _barcode.dispose();
     _status.dispose();
-    _brand_id.dispose();
-    _category_id.dispose();
     _image.dispose();
     _description.dispose();
     _is_special.dispose();
@@ -236,10 +233,9 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                                     builder:
                                                         (BuildContext context) {
                                                       return CategoryDialog(
-                                                        onSelected: (int id,
-                                                            String name) {
-                                                          categoryTxt.value =
-                                                              name;
+                                                        onSelected: (int id, String name) {
+                                                          categoryTxt.value = name;
+                                                          brandId = id;
                                                         },
                                                       );
                                                     },
@@ -268,6 +264,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                                             (int id,
                                                                 String name) {
                                                           brandTxt.value = name;
+                                                          brandId = id;
                                                         },
                                                       );
                                                     },
@@ -293,9 +290,9 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                               .withOpacity(0.5),
                                           totalSwitches: 2,
                                           labels: ['فعال', 'غیرفعال'],
-                                          customTextStyles: [
-                                            const TextStyle(fontSize: 12),
-                                            const TextStyle(fontSize: 12),
+                                          customTextStyles: const [
+                                            TextStyle(fontSize: 12),
+                                            TextStyle(fontSize: 12),
                                           ],
                                           onToggle: (index) {},
                                         ),
@@ -378,7 +375,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                   FormWidget(
                                     body: Column(
                                       children: [
-                                        TableHeaderWidget(
+                                        const TableHeaderWidget(
                                           title: "تصاویر",
                                         ),
                                         GridView.builder(
@@ -421,20 +418,18 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                                               double.infinity,
                                                         ),
                                                       )
-                                                    : Icon(
-                                                        IconsaxPlusLinear
-                                                            .gallery,
-                                                        color: Theme.of(context)
-                                                            .iconTheme
-                                                            .color!
-                                                            .withOpacity(0.2),
+                                                    : Center(
+                                                      child: Icon(
+                                                        IconsaxPlusLinear.gallery_add,
+                                                        color: Theme.of(context).textTheme.headlineMedium?.color,
                                                         size: 50,
                                                       ),
+                                                ),
                                               ),
                                             );
                                           },
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: spacingThin,
                                         ),
                                         Text(
@@ -446,10 +441,9 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                       ],
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: spacingThin,
                                   ),
-
                                   /// TODO Price
                                   FormWidget(
                                     body: Column(
@@ -466,7 +460,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                                 inputType: TextInputType.number,
                                               ),
                                             ),
-                                            SizedBox(width: spacingThin),
+                                            const SizedBox(width: spacingThin),
                                             Expanded(
                                               child: TextFieldWidget(
                                                 controller: _sale_price,
@@ -476,7 +470,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                             ),
                                           ],
                                         ),
-                                        SizedBox(height: spacingThin),
+                                        const SizedBox(height: spacingThin),
                                         Row(
                                           children: [
                                             Expanded(
@@ -491,7 +485,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                                 },
                                               ),
                                             ),
-                                            SizedBox(width: spacingThin),
+                                            const SizedBox(width: spacingThin),
                                             Expanded(
                                               child: TextFieldWidget(
                                                 controller: _discount,
@@ -501,12 +495,12 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                             ),
                                           ],
                                         ),
-                                        SizedBox(height: spacingSmall),
+                                        const SizedBox(height: spacingSmall),
                                         Divider(
                                           height: 1,
                                           color: Theme.of(context).dividerColor,
                                         ),
-                                        SizedBox(height: spacingSmall),
+                                        const SizedBox(height: spacingSmall),
                                         //Main Price
                                         Row(
                                           children: [
@@ -517,7 +511,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                                   .textTheme
                                                   .headlineMedium,
                                             )),
-                                            SizedBox(width: spacingThin),
+                                            const SizedBox(width: spacingThin),
                                             Expanded(
                                                 child: Row(
                                               mainAxisAlignment:
@@ -543,7 +537,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                             )),
                                           ],
                                         ),
-                                        SizedBox(height: spacingThin),
+                                        const SizedBox(height: spacingThin),
                                         //Discount
                                         Row(
                                           children: [
@@ -554,7 +548,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                                   .textTheme
                                                   .headlineMedium,
                                             )),
-                                            SizedBox(width: spacingThin),
+                                            const SizedBox(width: spacingThin),
                                             Expanded(
                                                 child: Row(
                                               mainAxisAlignment:
@@ -585,7 +579,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                             )),
                                           ],
                                         ),
-                                        SizedBox(height: spacingThin),
+                                        const SizedBox(height: spacingThin),
                                         //Total price
                                         Row(
                                           children: [
@@ -596,7 +590,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                                   .textTheme
                                                   .headlineMedium,
                                             )),
-                                            SizedBox(width: spacingThin),
+                                            const SizedBox(width: spacingThin),
                                             Expanded(
                                                 child: Row(
                                               mainAxisAlignment:
@@ -625,12 +619,40 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                             )),
                                           ],
                                         ),
-                                        SizedBox(height: spacingThin),
-                                        //Bloc costomer btn
-
                                       ],
                                     ),
-                                  )
+                                  ),
+                                  const SizedBox(
+                                    height: spacingThin,
+                                  ),
+                                  /// Submit
+                                  BlocConsumer<ProductCubit, ProductState>(
+                                    listener: (context, state) {
+                                      if (state is ProductLoaded) {
+                                        showToast(
+                                            context: context,
+                                            message: 'ورود با موفقیت انجام شد.',
+                                            type: ToastType.success);
+                                      } else if (state is ProductError) {
+                                        showToast(
+                                            context: context,
+                                            message: state.message,
+                                            type: ToastType.error);
+                                      }
+                                    },
+                                    builder: (context, state) {
+                                      if (state is ProductLoading) {
+                                        return ProgressWidget();
+                                      } else {
+                                        return ButtonWidget(
+                                          onPressed: () {
+                                            _submit();
+                                          },
+                                          text: 'افزودن محصول',
+                                        );
+                                      }
+                                    },
+                                  ),
                                 ],
                               )),
                         ],
@@ -643,5 +665,31 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
       ),
       endDrawer: const SideDrawer(),
     );
+  }
+
+
+  /// Send request post
+  void _submit() {
+    /*context.read<ProductCubit>().createProduct(
+      Product(
+        id: 1,
+        name: _name.text,
+        barcode: _barcode.text,
+        slug: _slug.text,
+        status: status,
+        brand_id: brandId,
+        brand: '',
+        category_id: categoryId,
+        category: [],
+        image: _image,
+        description: _productDescriptionController.text,
+        is_special: _productIsSpecialController.text == 'true' ? 1 : 0,
+        quantity: _productQuantityController.text == 'true' ? 1 : 0,
+        quantity_unit: _productQuantityUnitController.text,
+        salePrice: _productSalePriceController.text,
+        price: _productPriceController.text,
+        imagePath: _productImagePathController.text,
+      ),
+    );*/
   }
 }
