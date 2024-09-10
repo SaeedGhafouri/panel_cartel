@@ -24,6 +24,8 @@ import 'features/admin/presentation/screens/admin_create_screen.dart';
 import 'features/auth/presentation/screens/login_screen.dart';
 import 'features/brand/data/services/brand_service.dart';
 import 'features/brand/logic/cubit/brand_cubit.dart';
+import 'features/product/data/services/barcode_service.dart';
+import 'features/product/logic/cubit/barcode_cubit.dart';
 import 'features/product/presentation/screens/product_details_screen.dart';
 
 void main() {
@@ -44,6 +46,9 @@ void main() {
         ),
         BlocProvider<CategoryCubit>(
           create: (context) => CategoryCubit(CategoryService(Dio())),
+        ),
+        BlocProvider<BarcodeCubit>(
+          create: (context) => BarcodeCubit(BarcodeService(Dio())),
         ),
       ],
       child: MyApp(),

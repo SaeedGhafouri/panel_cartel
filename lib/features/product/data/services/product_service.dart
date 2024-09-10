@@ -52,12 +52,47 @@ class ProductService {
 
   // Create
   Future<Map<String, dynamic>> createProduct(Product product) async {
-    await _setAuthorizationHeader();
-    final response = await _dio.post(Routes.productCreate, data: product);
-    return {
-      'data': Product.fromJson(response.data['data']),
-      'message': response.data['message'] ?? 'Product created successfully',
-    };
+
+    try {
+      await _setAuthorizationHeader();
+      final response = await _dio.post(
+          Routes.productCreate,
+          queryParameters: {
+            'barcode': product.barcode,
+            'name': product.name,
+            'slug': product.slug,
+            'status': product.status,
+            'brand_id': product.brand_id,
+            'category_id': product.category_id,
+            'image': product.image,
+            'gallery': product.gallery,
+            'description': product.description,
+            'is_special': product.is_special,
+            'quantity': product.quantity,
+            'quantity_unit': product.quantity_unit,
+            'price': product.price,
+            'sale_price': product.salePrice,
+          },
+      );
+      if (response.data['status']) {
+        return {
+          'data': Product.fromJson(response.data['data']),
+          'message': response.data['message'] ?? 'Product created successfully',
+        };
+      } else {
+        throw Exception(response.data['message']);
+      }
+    } on DioError catch (e) {
+      if (e.response?.statusCode == 401) {
+        throw Exception('401');
+      } else if (e.response?.statusCode == 500) {
+        throw Exception(e.response?.data['message']);
+      }
+      throw Exception('Failed to create product: ${e.message}');
+    } catch (e) {
+      throw Exception('Failed to create product: $e');
+    }
+
   }
 
 }

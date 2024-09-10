@@ -23,7 +23,6 @@ class ProductCreated extends ProductState {
   ProductCreated(response);
 }
 
-
 class ProductUpdated extends ProductState {
   ProductUpdated(response);
 }

@@ -20,6 +20,9 @@ class Routes {
   static const String productUpdate = '$baseUrl/admin/shop/product/update/';
   static const String productDelete = '$baseUrl/admin/shop/product/destroy/';
 
+  /// Barcode
+  static const String barcodeGenerator = '$baseUrl/admin/shop/barcode/generator';
+
   /// Brand
   static const String brandIndex = '$baseUrl/admin/shop/brand/index';
   static const String brandCreate = '$baseUrl/admin/shop/brand/create';

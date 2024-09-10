@@ -10,6 +10,7 @@ class SpinnerWidget extends StatefulWidget {
   final String? selectedItem;
   final void Function(String?)? onChanged;
   final double width;
+  final String errorText;
 
   SpinnerWidget({
     required this.items,
@@ -17,6 +18,7 @@ class SpinnerWidget extends StatefulWidget {
     this.selectedItem,
     this.onChanged,
     this.width = 200,
+    this.errorText = '',
   });
 
   @override
@@ -45,7 +47,7 @@ class _SpinnerWidget extends State<SpinnerWidget> {
             borderRadius: smallRadius,
             color: Theme.of(context).cardColor,
             border: Border.all(
-              color: Theme.of(context).dividerColor,
+              color: widget.errorText != '' ? Colors.red : Theme.of(context).dividerColor,
               width: 1.0,
             ),
           ),

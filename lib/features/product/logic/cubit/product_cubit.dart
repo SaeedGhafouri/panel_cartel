@@ -10,6 +10,7 @@ class ProductCubit extends Cubit<ProductState> {
 
   ProductCubit(this._adminService) : super(ProductInitial());
 
+  /// Index
   void fetchProducts() async {
     try {
       emit(ProductLoading());
@@ -20,6 +21,7 @@ class ProductCubit extends Cubit<ProductState> {
     }
   }
 
+  /// Details
   void fetchProductDetail(int id) async {
     try {
       emit(ProductLoading());
@@ -29,13 +31,13 @@ class ProductCubit extends Cubit<ProductState> {
     }
   }
 
-  // create
+  /// Create
   void createProduct(Product product) async {
     try {
       emit(ProductLoading());
-      await _adminService.createProduct(product);
-      fetchProducts();
-    } catch (e) {
+      final response = await _adminService.createProduct(product);
+      emit(ProductCreated(response));
+    } on Exception catch (e) {
       emit(ProductError(e.toString()));
     }
   }

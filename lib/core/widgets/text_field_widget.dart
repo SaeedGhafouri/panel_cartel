@@ -81,6 +81,7 @@ class _TextFieldWidget extends State<TextFieldWidget> {
               fontFamily: font_regular,
               fontSize: txt_20,
             ),
+
             errorText: _currentErrorText,
             errorBorder: OutlineInputBorder(
               borderRadius: smallRadius,

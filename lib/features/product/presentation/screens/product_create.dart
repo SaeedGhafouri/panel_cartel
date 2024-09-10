@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'dart:convert';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -17,11 +17,13 @@ import 'package:panel_cartel/core/widgets/header_main.dart';
 import 'package:panel_cartel/core/widgets/side_drawer.dart';
 import 'package:panel_cartel/core/widgets/spinner_widget.dart';
 import 'package:panel_cartel/core/widgets/text_field_widget.dart';
-import 'package:panel_cartel/features/product/data/models/product_model.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import '../../../../core/dialogs/category_dialog.dart';
 import '../../../../core/themes/themes.dart';
+import '../../../../core/utils/form_validator.dart';
 import '../../../../core/widgets/progress_widget.dart';
+import '../../data/models/product_model.dart';
+import '../../logic/cubit/barcode_cubit.dart';
 import '../../logic/cubit/product_cubit.dart';
 import '../../logic/cubit/product_state.dart';
 
@@ -41,7 +43,6 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
   final TextEditingController _status = TextEditingController();
   final TextEditingController _image = TextEditingController();
   final TextEditingController _description = TextEditingController();
-  final TextEditingController _is_special = TextEditingController();
   final TextEditingController _quantity = TextEditingController();
   final TextEditingController _price = TextEditingController();
   final TextEditingController _sale_price = TextEditingController();
@@ -51,8 +52,8 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
   late final int categoryId;
   final ValueNotifier<String> brandTxt = ValueNotifier<String>('برند');
   late final int brandId;
-
   String _discountType = 'مبلغ';
+  String _quantityUnit = 'عدد';
   double _finalPrice = 0.0;
   double _discountValue = 0.0;
   List<TextInputFormatter> inputFormatters = [
@@ -69,7 +70,6 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
         withData: true,
         allowMultiple: false,
       );
-
       if (result != null) {
         Uint8List? fileBytes = result.files.single.bytes;
         if (fileBytes != null && fileBytes.length <= 500 * 1024) {
@@ -78,9 +78,10 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
           });
         } else {
           showToast(
-              context: context,
-              message: 'حجم تصویر باید کمتر از 500 کیلوبایت باشد',
-              type: ToastType.error);
+            context: context,
+            message: 'حجم تصویر باید کمتر از 500 کیلوبایت باشد',
+            type: ToastType.error,
+          );
         }
       }
     } on PlatformException catch (e) {
@@ -88,7 +89,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
     }
   }
 
-  bool _isActive = false;
+  bool _isSpecial = false;
 
   void _onQuantityTypeChanged(String? value) {
     _updatePrice();
@@ -150,7 +151,6 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
     _status.dispose();
     _image.dispose();
     _description.dispose();
-    _is_special.dispose();
     _quantity.dispose();
     _price.dispose();
     _sale_price.dispose();
@@ -197,6 +197,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                           child: TextFieldWidget(
                                             controller: _name,
                                             label: 'نام محصول',
+                                            errorText: _errors['name'],
                                           ),
                                         ),
                                         const SizedBox(width: spacingThin),
@@ -204,6 +205,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                           child: TextFieldWidget(
                                             controller: _slug,
                                             label: 'کلمه کلیدی',
+                                            errorText: _errors['slug'],
                                           ),
                                         ),
                                         const SizedBox(width: spacingThin),
@@ -211,7 +213,38 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                           child: TextFieldWidget(
                                             controller: _barcode,
                                             label: 'بارکد',
-                                          ),
+                                            errorText: _errors['barcode'],
+                                          )
+                                        ),
+                                        BlocConsumer<BarcodeCubit, BarcodeState> (
+                                            builder: (context, state) {
+                                              if (state is BarcodeLoading) {
+                                                return const Center(
+                                                  child: CircularProgressIndicator(
+                                                    color: primaryColor,
+                                                    strokeWidth: 1,
+
+                                                  ),
+                                                );
+                                              } else {
+                                                return Tooltip(
+                                                  message: 'تولید بارکد',
+                                                  child: IconButton(
+                                                    onPressed: () {
+                                                      context.read<BarcodeCubit>().generator();
+                                                    },
+                                                    icon: Icon(IconsaxPlusLinear.barcode),
+                                                  ),
+                                                );
+                                              }
+                                            },
+                                            listener: (context, state) {
+                                              if (state is BarcodeLoaded) {
+                                                _barcode.text = state.barcode;
+                                              } else if (state is BarcodeError) {
+                                                showToast(context: context, message: state.message, type: ToastType.error);
+                                              }
+                                            }
                                         ),
                                       ],
                                     ),
@@ -299,10 +332,10 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                         const SizedBox(width: spacingThin),
                                         CheckboxWidget(
                                           label: 'پیشنهادی',
-                                          value: _isActive,
+                                          value: _isSpecial,
                                           onChanged: (value) {
                                             setState(() {
-                                              _isActive = value!;
+                                              _isSpecial = value!;
                                             });
                                           },
                                         )
@@ -458,6 +491,10 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                                 controller: _price,
                                                 label: 'قیمت واحد',
                                                 inputType: TextInputType.number,
+                                                inputFormatters: [
+                                                  FilteringTextInputFormatter.digitsOnly,
+                                                ],
+                                                errorText: _errors['price'],
                                               ),
                                             ),
                                             const SizedBox(width: spacingThin),
@@ -465,7 +502,11 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                               child: TextFieldWidget(
                                                 controller: _sale_price,
                                                 label: 'قیمت فروش',
+                                                inputFormatters: [
+                                                  FilteringTextInputFormatter.digitsOnly,
+                                                ],
                                                 inputType: TextInputType.number,
+                                                errorText: _errors['sale_price'],
                                               ),
                                             ),
                                           ],
@@ -491,6 +532,33 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                                 controller: _discount,
                                                 label: 'مقدار تخفیف',
                                                 inputType: TextInputType.number,
+                                                inputFormatters: [
+                                                  FilteringTextInputFormatter.digitsOnly,
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(height: spacingSmall),
+                                        Row(
+                                          children: [
+                                            //Qantity
+                                            Expanded(
+                                              child: TextFieldWidget(
+                                                controller: _quantity,
+                                                label: 'موجودی',
+                                                inputType: TextInputType.number,
+                                              ),
+                                            ),
+                                            SizedBox(width: spacingThin),
+                                            //Type
+                                            Expanded(
+                                              child: SpinnerWidget(
+                                                label: 'نوع بسته',
+                                                items: const ['عدد', 'بسته', 'کارتن', 'شیرینگ', 'کیسه', 'پالت', 'کلاف', 'قوطی', 'جعبه'],
+                                                onChanged: (p0) {
+                                                  _quantityUnit = p0.toString();
+                                                },
                                               ),
                                             ),
                                           ],
@@ -667,29 +735,74 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
     );
   }
 
-
   /// Send request post
+  ///
+  ///
+  Map<String, String?> _errors = {};
   void _submit() {
-    /*context.read<ProductCubit>().createProduct(
-      Product(
-        id: 1,
-        name: _name.text,
-        barcode: _barcode.text,
-        slug: _slug.text,
-        status: status,
-        brand_id: brandId,
-        brand: '',
-        category_id: categoryId,
-        category: [],
-        image: _image,
-        description: _productDescriptionController.text,
-        is_special: _productIsSpecialController.text == 'true' ? 1 : 0,
-        quantity: _productQuantityController.text == 'true' ? 1 : 0,
-        quantity_unit: _productQuantityUnitController.text,
-        salePrice: _productSalePriceController.text,
-        price: _productPriceController.text,
-        imagePath: _productImagePathController.text,
-      ),
-    );*/
+    FormValidator validator = FormValidator();
+    final fields = {
+      'name': _name.text,
+      'barcode': _barcode.text,
+      'slug': _slug.text,
+      'quantity': _quantity.text,
+      'price': _price.text,
+      'sale_price': _sale_price.text,
+    };
+    final rules = {
+      'name': 'required',
+      'barcode': 'required',
+      'slug': 'required',
+      'quantity': 'required|numeric',
+      'price': 'required|numeric',
+      'sale_price': 'required|numeric',
+    };
+    final errors = validator.validateFields(fields, rules);
+
+    if (validator.hasErrors()) {
+      setState(() {
+        _errors = errors;
+      });
+      return;
+    }
+
+    String? mainImage = selectedImages[0] != null ? base64Encode(selectedImages[0]!) : null;
+    List<String> gallery = selectedImages.skip(1).where((image) => image != null).map((image) {
+      return base64Encode(image!);
+    }).toList();
+
+    if (gallery.isEmpty) {
+      gallery = [];
+    }
+    try {
+      context.read<ProductCubit>().createProduct(
+        Product(
+          id: 1,
+          name: _name.text,
+          barcode: _barcode.text,
+          slug: _slug.text,
+          status: status,
+          brand_id: brandId,
+          brand: '',
+          category_id: '1.5',
+          category: [],
+          description: _description.text,
+          is_special: _isSpecial ? 1 : 0,
+          quantity: int.parse(_quantity.text),
+          quantity_unit: _quantityUnit,
+          salePrice: int.parse(_sale_price.text),
+          price: int.parse(_price.text),
+          image: mainImage,
+          gallery: gallery,
+        ),
+      );
+    } catch (e) {
+      showToast(
+        context: context,
+        message: e.toString(),
+        type: ToastType.error,
+      );
+    }
   }
+
 }

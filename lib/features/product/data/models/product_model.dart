@@ -1,21 +1,21 @@
 class Product {
   final int id;
   final String name;
-  final String barcode;
+  final String? barcode;
   final String slug;
   final int status;
-  final int brand_id;
-  final String brand;
-  final int category_id;
-  final List<String> category;
-  final String image;
-  final String description;
+  final int? brand_id;
+  final String? brand;
+  final String? category_id;
+  final List<String>? category;
+  final String? description;
   final int is_special;
   final int quantity;
   final String quantity_unit;
-  final String salePrice;
-  final String price;
-  final String imagePath;
+  final int salePrice;
+  final int price;
+  final String? image;
+  final List<String?>? gallery;
 
   //request
   Product({
@@ -24,18 +24,18 @@ class Product {
     required this.barcode,
     required this.slug,
     required this.status,
-    required this.brand_id,
-    required this.brand,
-    required this.category_id,
-    required this.category,
-    required this.image,
-    required this.description,
+    this.brand_id,
+    this.brand,
+    this.category_id,
+    this.category,
+    this.description,
     required this.is_special,
     required this.quantity,
     required this.quantity_unit,
     required this.salePrice,
     required this.price,
-    required this.imagePath,
+    this.image,
+    this.gallery,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
@@ -49,14 +49,14 @@ class Product {
       brand: json['brand'],
       category_id: json['category_id'],
       category: json['category'],
-      image: json['image'],
       description: json['description'],
       is_special: json['is_special'],
       quantity: json['quantity'],
-      quantity_unit: json['quantity_unit'],
+     quantity_unit: json['quantity_unit'],
       salePrice: json['sale_price'],
       price: json['price'],
-      imagePath: json['image_path'],
+      image: json['image'],
+      gallery: json['gallery'],
     );
   }
 
@@ -71,14 +71,14 @@ class Product {
       'brand': brand,
       'category_id': category_id,
       'category': category,
-      'image': image,
       'description': description,
       'is_special': is_special,
       'quantity': quantity,
       'quantity_unit': quantity_unit,
-      'sale_price': salePrice,
+     'sale_price': salePrice,
       'price': price,
-      'image_path': imagePath,
+      'image': image,
+      'gallery': gallery,
     };
   }
 }
