@@ -16,7 +16,6 @@ class _ProgressWidget extends State<ProgressWidget> {
     return Container(
         height: heightBtnMain,
         decoration: BoxDecoration(
-          color: Theme.of(context).cardColor,
           borderRadius: mediumRadius,
         ),
         child: LoadingAnimationWidget.staggeredDotsWave(

@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
+import 'package:panel_cartel/core/utils/toast.dart';
+import 'package:panel_cartel/core/widgets/actions_popup_widget.dart';
 import 'package:panel_cartel/core/widgets/side_drawer.dart';
-
+import 'package:panel_cartel/features/product/logic/cubit/destroy/product_destroy_cubit.dart';
 import '../../../../core/themes/themes.dart';
 import '../../../../core/widgets/appbar.dart';
 import '../../../../core/widgets/commadbar_main.dart';
 import '../../../../core/widgets/datagrid/table_column_widget.dart';
 import '../../../../core/widgets/datagrid/table_header_widget.dart';
 import '../../../../core/widgets/datagrid/table_row_widget.dart';
-import '../../../../core/widgets/datagrid/table_row_widget.dart';
 import '../../../../core/widgets/form_widget.dart';
 import '../../../../core/widgets/header_main.dart';
 import '../../../../core/widgets/progress_widget.dart';
-import '../../../auth/presentation/screens/login_screen.dart';
-import '../../logic/cubit/product_cubit.dart';
+import '../../logic/cubit/index/product_index_cubit.dart';
 
 class ProductIndexScreen extends StatefulWidget {
   final String routeName = '/products';
@@ -30,150 +30,129 @@ class _ProductIndexScreenState extends State<ProductIndexScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    context.read<ProductCubit>().fetchProducts();
+    context.read<ProductIndexCubit>().index();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          AppBarMain(),
-          Expanded(child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: containerHorizontal),
-              child: Column(
-                  children: [
-                    HeaderMain(
-                        title: 'محصولات',
-                        crumbs: const [
-                          'داشبورد',
-                          'فروشگاه',
-                          'محصولات',
-                        ]
-                    ),
-                    FormWidget(
-                        body: Column(
-                            children: [
-                              TableHeaderWidget(
-                                  isTable: true,
-                                  endChildren: [
-                                    CommadbarWidget(
-                                      text: 'افزودن محصول',
-                                      icon: IconsaxPlusLinear.add,
-                                      onPressed: () {
-                                        // TODO: اضافه کردن محصول
-                                        GoRouter.of(context).go('/products/productCreate');
-                                      },
-                                    ),
-                                    CommadbarWidget(
-                                      text: 'بروزرسانی',
-                                      icon: IconsaxPlusLinear.refresh,
-                                      onPressed: () {
-                                        // TODO: اضافه کردن محصول
-                                        context.read<ProductCubit>().fetchProducts();
-                                      },
-                                    )
-                                  ]
-                              ),
-                              const TableRowWidget(
-                                  rowTitles: [
-                                    'عملیات',
-                                    'تصویر',
-                                    'نام',
-                                    'توضیحات',
-                                    'قیمت',
-                                    'تعداد',
-                                    'دسته بندی',
-                                    'برند',
-                                    'شناسه',
-                                  ]
-                              ),
-                              /// TODO
-                              /*BlocConsumer<ProductCubit, ProductState>(
-                                builder: (context, state) {
-                                  if (state is ProductLoading) {
-                                    return  ProgressWidget();
-                                  } else if (state is ProductLoaded) {
-                                    return ListView.builder(
-                                      shrinkWrap: true,
-                                      itemCount: state.Products.length,
-                                      itemBuilder: (context, index) {
-                                        final Product = state.Products[index];
-                                        return TableColumnWidget(
-                                          values: [
-                                            Product.status,
-                                            //Product.createdAt,
-                                            Product.name,
-                                            Product.quantity,
-                                            Product.price,
-                                            Product.brand,
-                                            Product.id.toString(),
-                                          ],
-                                          actions: [
-                                            IconButton(
-                                              onPressed: () {
-                                                // TODO: حذف ادمین
-                                                //context.read<ProductCubit>().deleteProduct(Product.id!);
-                                              },
-                                              iconSize: 20,
-                                              icon: const Icon(
-                                                IconsaxPlusLinear.trash,
-                                                color: Colors.red,
-                                              ),
-                                            ),
-                                            IconButton(
-                                              onPressed: () {
-                                                // TODO: ویرایش ادمین
-                                                GoRouter.of(context).go('/products/productDetails/${Product.id}');
-                                              },
-                                              iconSize: 20,
-                                              icon: const Icon(
-                                                IconsaxPlusLinear.edit_2,
-                                                color: Colors.grey,
-                                              ),
-                                            ),
-                                            IconButton(
-                                              onPressed: () {
-                                                // TODO: مشاهده جزئیات ادمین
-                                                Navigator.pushNamed(context, LoginScreen.routeName);
-                                              },
-                                              iconSize: 20,
-                                              icon: const Icon(
-                                                IconsaxPlusLinear.eye,
-                                                color: Colors.grey,
-                                              ),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    );
-                                  } else if (state is ProductError) {
-                                    return Center(
-                                      child: Text(
-                                        state.message,
-                                        style: Theme.of(context).textTheme.bodyLarge,
-                                      ),
-                                    );
-                                  } else {
-                                    return Center(
-                                      child: Text(
-                                        'خطای بارگذاری',
-                                        style: Theme.of(context).textTheme.bodyLarge,
-                                      ),
-                                    );
-                                  }
+      body: Directionality(
+          textDirection: TextDirection.ltr,
+          child: Column(children: [
+            AppBarMain(),
+            Expanded(
+                child: SingleChildScrollView(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 20, horizontal: containerHorizontal),
+                    child: Column(children: [
+                      HeaderMain(title: 'محصولات', crumbs: const [
+                        'داشبورد',
+                        'فروشگاه',
+                        'محصولات',
+                      ]),
+                      FormWidget(
+                          body: Column(children: [
+                        TableHeaderWidget(
+                            isTable: true,
+                            title: 'لیست محصولات',
+                            endChildren: [
+                              CommadbarWidget(
+                                text: 'افزودن محصول',
+                                icon: IconsaxPlusLinear.add,
+                                onPressed: () {
+                                  // TODO: اضافه کردن محصول
+                                  GoRouter.of(context)
+                                      .go('/products/productCreate');
                                 },
-                                listener: (context, state) {
+                              ),
+                              CommadbarWidget(
+                                text: 'بروزرسانی',
+                                icon: IconsaxPlusLinear.refresh,
+                                onPressed: () {
+                                  // TODO: اضافه کردن محصول
+                                  context.read<ProductIndexCubit>().index();
+                                },
+                              )
+                            ]),
+                        const TableRowWidget(rowTitles: [
+                          'عملیات',
+                          'وضعیت',
+                          'قیمت',
+                          'تعداد',
+                          'دسته بندی',
+                          'برند',
+                          'نام',
+                          'تصویر',
+                        ]),
+                        BlocConsumer<ProductIndexCubit, ProductIndexState>(
+                          builder: (context, state) {
+                            if (state is ProductIndexLoading) {
+                              return const ProgressWidget();
+                            } else if (state is ProductIndexLoaded) {
+                              return ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: state.products.length,
+                                itemBuilder: (context, index) {
+                                  final product = state.products[index];
+                                  return TableColumnWidget(
+                                    values: [
+                                      product.status,
+                                      product.price,
+                                      product.quantity,
+                                      product.category,
+                                      product.brand,
+                                      product.name,
+                                      product.image,
+                                    ],
+                                    actions: [
+                                      ActionPopupWidget(
+                                        onDelete: () {
+                                          try {
+                                            context.read<ProductDestroyCubit>().destroy(product.id!);
+                                            context.read<ProductIndexCubit>().index();
+                                          } catch (e) {
+                                            showToast(context: context, message: e.toString());
+                                          }
 
+                                        },
+                                        onUpdate: () {
+
+                                        },
+                                        onShow: () {
+                                          GoRouter.of(context).go('/products/productDetails/${product.id}');
+                                        },
+                                      ),
+                                    ],
+                                  );
                                 },
-                              )*/
-                            ]
+                              );
+                            } else if (state is ProductIndexError) {
+                              return Center(
+                                child: Text(
+                                  state.message,
+                                  style: Theme.of(context).textTheme.bodyLarge,
+                                ),
+                              );
+                            } else {
+                              return Center(
+                                child: Text(
+                                  'خطای بارگذاری',
+                                  style: Theme.of(context).textTheme.bodyLarge,
+                                ),
+                              );
+                            }
+                          },
+                          listener: (context, state) {
+                              if (state is ProductIndexLoaded) {
+
+                            } else if (state is ProductIndexError) {
+                              showToast(context: context, message: state.message);
+                            }
+                          },
                         )
-                    )
-                  ]
-              )
-          ))
-        ]
-      ),
+                      ]))
+                    ])))
+          ])),
       endDrawer: const SideDrawer(),
     );
   }

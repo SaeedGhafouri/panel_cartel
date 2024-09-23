@@ -98,4 +98,5 @@ class CategoryDialog extends StatelessWidget {
       ),
     );
   }
+
 }

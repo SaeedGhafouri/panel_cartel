@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:panel_cartel/core/themes/themes.dart';
+import 'package:panel_cartel/core/widgets/actions_popup_widget.dart';
 import 'package:panel_cartel/core/widgets/appbar.dart';
 import 'package:panel_cartel/core/widgets/form_widget.dart';
 import 'package:panel_cartel/core/widgets/header_main.dart';
@@ -96,23 +97,6 @@ class _AdminIndexScreenState extends State<AdminIndexScreen> {
                         ),
                         BlocConsumer<AdminCubit, AdminState>(
                           listener: (context, state) {
-                            /*   if (state is AdminCreated) {
-                          *//*ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(state.message)),
-                          );*//*
-                        } else if (state is AdminUpdated) {
-                         *//* ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(state.message)),
-                          );*//*
-                        } else if (state is AdminDeleted) {
-                         *//* ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(state.message)),
-                          );*//*
-                        } else if (state is AdminError) {
-                          *//*ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Error: ${state.message}')),
-                          );*//*
-                        }*/
                           },
                           builder: (context, state) {
                             if (state is AdminLoading) {
@@ -135,39 +119,17 @@ class _AdminIndexScreenState extends State<AdminIndexScreen> {
                                       admin.id.toString(),
                                     ],
                                     actions: [
-                                      IconButton(
-                                        onPressed: () {
-                                          // TODO: حذف ادمین
+                                      ActionPopupWidget(
+                                        onDelete: () {
                                           context.read<AdminCubit>().deleteAdmin(admin.id!);
                                         },
-                                        iconSize: 20,
-                                        icon: const Icon(
-                                          IconsaxPlusLinear.trash,
-                                          color: Colors.red,
-                                        ),
-                                      ),
-                                      IconButton(
-                                        onPressed: () {
-                                          // TODO: ویرایش ادمین
+                                        onUpdate: () {
                                           GoRouter.of(context).go('/admins/adminDetails/${3}');
                                         },
-                                        iconSize: 20,
-                                        icon: const Icon(
-                                          IconsaxPlusLinear.edit_2,
-                                          color: Colors.grey,
-                                        ),
-                                      ),
-                                      IconButton(
-                                        onPressed: () {
-                                          // TODO: مشاهده جزئیات ادمین
-                                          Navigator.pushNamed(context, LoginScreen.routeName);
+                                        onShow: () {
+                                          GoRouter.of(context).go('/admins/adminDetails/${3}');
                                         },
-                                        iconSize: 20,
-                                        icon: const Icon(
-                                          IconsaxPlusLinear.eye,
-                                          color: Colors.grey,
-                                        ),
-                                      ),
+                                      )
                                     ],
                                   );
                                 },

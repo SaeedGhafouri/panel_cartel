@@ -18,7 +18,7 @@ class Routes {
   static const String productShow = '$baseUrl/admin/shop/product/show/';
   static const String productCreate = '$baseUrl/admin/shop/product/create';
   static const String productUpdate = '$baseUrl/admin/shop/product/update/';
-  static const String productDelete = '$baseUrl/admin/shop/product/destroy/';
+  static const String productDestroy = '$baseUrl/admin/shop/product/destroy/';
 
   /// Barcode
   static const String barcodeGenerator = '$baseUrl/admin/shop/barcode/generator';

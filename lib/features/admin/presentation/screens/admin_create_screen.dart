@@ -140,7 +140,7 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
       email: _email.text,
       sex: int.tryParse(_sex.text) ?? 0,
       status: 1,
-      national_code: _nationalCode.text,
+      national_code: int.parse(_nationalCode.text),
       telephone: _telephone.text,
       image: _selectedImageMain != null ? base64Encode(_selectedImageMain!) : null,
     );

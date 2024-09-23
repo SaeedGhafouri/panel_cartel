@@ -186,7 +186,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ),
     );
   }
-
   Widget _buildWelcomeTile(BuildContext context) {
     return Expanded(
         flex: 2,
@@ -459,10 +458,39 @@ class _DashboardScreenState extends State<DashboardScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              // Admin
               _buildMenuWidgetTile(
                   context,
                   'کارشناسان',
-                  IconsaxPlusBroken.user_tick,
+                  IconsaxPlusBold.user_tick,
+                  primaryColor, () {}
+              ),
+              // User
+              _buildMenuWidgetTile(
+                  context,
+                  'کاربران',
+                  IconsaxPlusBold.user,
+                  primaryColor, () {}
+              ),
+              // Product
+              _buildMenuWidgetTile(
+                  context,
+                  'محصولات',
+                  IconsaxPlusBold.box,
+                  primaryColor, () {}
+              ),
+              // Order
+              _buildMenuWidgetTile(
+                  context,
+                  'سفارشات',
+                  IconsaxPlusBold.receipt_item,
+                  primaryColor, () {}
+              ),
+              // Settings
+              _buildMenuWidgetTile(
+                  context,
+                  'تنظیمات',
+                  IconsaxPlusBold.setting,
                   primaryColor, () {}
               ),
 

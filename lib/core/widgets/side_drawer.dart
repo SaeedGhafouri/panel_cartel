@@ -20,8 +20,7 @@ class SideDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.rtl,
-      child:
-      Drawer(
+      child: Drawer(
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.zero,
         ),
@@ -52,9 +51,9 @@ class SideDrawer extends StatelessWidget {
                 ),
               ),
               ...menuItems(context).map((menu) => buildMenuItem(context, menu)).toList(),
-              const SizedBox(height: 20),
               ToggleSwitch(
                 minWidth: 80.0,
+                minHeight: 30,
                 cornerRadius: 20.0,
                 radiusStyle: true,
                 animationDuration: 100,
@@ -68,14 +67,18 @@ class SideDrawer extends StatelessWidget {
                 inactiveBgColor: Theme.of(context).dividerColor.withOpacity(0.2),
                 initialLabelIndex: Theme.of(context).brightness == Brightness.light ? 0 : 1,
                 totalSwitches: 2,
+                customTextStyles: const [
+                  TextStyle(
+                    fontSize: 12,
+                  ),
+                ],
                 iconSize: 17,
-                labels: ['روشن', 'تیره'],
+                labels: const [' روشن', ' تیره'],
                 icons: [IconsaxPlusLinear.sun_1, IconsaxPlusLinear.moon],
                 onToggle: (index) {
                   BlocProvider.of<ThemeBloc>(context).add(ToggleThemeEvent());
                 },
               ),
-              const SizedBox(height: 20),
             ],
           ),
         ),

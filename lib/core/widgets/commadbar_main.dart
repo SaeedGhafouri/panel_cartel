@@ -69,7 +69,7 @@ class _CommadbarWidgetState extends State<CommadbarWidget> {
                 widget.text,
                 style: widget.textStyle ?? TextStyle(
                   color: widget.textColor ?? Theme.of(context).textTheme.bodyMedium?.color,
-                  fontFamily: Theme.of(context).textTheme.bodySmall?.fontFamily,
+                  fontFamily: font_regular,
                   fontSize: txt_20,
                 ),
               ),

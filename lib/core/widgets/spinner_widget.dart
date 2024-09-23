@@ -55,7 +55,7 @@ class _SpinnerWidget extends State<SpinnerWidget> {
             child: DropdownButton<String>(
               value: selectedValue,
               isExpanded: true,
-              icon: Icon(Icons.arrow_drop_down),
+              icon: const Icon(Icons.arrow_drop_down),
               style: Theme.of(context).textTheme.bodySmall,
               onChanged: (String? newValue) {
                 setState(() {
@@ -68,15 +68,15 @@ class _SpinnerWidget extends State<SpinnerWidget> {
               borderRadius: smallRadius,
               hint: Text(
                 widget.label!,
-                style: TextStyle(
-                  fontFamily: font_regular
+                style: const TextStyle(
+                  fontFamily: font_regular,
                 ),
               ),
               items: widget.items
                   .map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
-                  child: Text(value, textDirection: TextDirection.ltr,),
+                  child: Text(value,),
                 );
               }).toList(),
             ),

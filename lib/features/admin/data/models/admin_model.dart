@@ -9,7 +9,7 @@ class Admin {
   String? password;
   int? sex;
   int? status;
-  String? national_code;
+  int? national_code;
   String? telephone;
   String? image;
   String? createdAt;

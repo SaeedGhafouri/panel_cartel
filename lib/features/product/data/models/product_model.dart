@@ -1,23 +1,22 @@
 class Product {
-  final int id;
-  final String name;
+  final int? id;
+  final String? name;
   final String? barcode;
-  final String slug;
-  final int status;
+  final String? slug;
+  final String? status;
   final int? brand_id;
   final String? brand;
   final String? category_id;
-  final List<String>? category;
+  final List<dynamic>? category;
   final String? description;
-  final int is_special;
-  final int quantity;
-  final String quantity_unit;
-  final int salePrice;
-  final int price;
+  final int? is_special;
+  final int? quantity;
+  final String? quantity_unit;
+  final int? salePrice;
+  final int? price;
   final String? image;
-  final List<String?>? gallery;
+  final List<dynamic?>? gallery;
 
-  //request
   Product({
     required this.id,
     required this.name,
@@ -52,7 +51,7 @@ class Product {
       description: json['description'],
       is_special: json['is_special'],
       quantity: json['quantity'],
-     quantity_unit: json['quantity_unit'],
+      quantity_unit: json['quantity_unit'],
       salePrice: json['sale_price'],
       price: json['price'],
       image: json['image'],
@@ -75,7 +74,7 @@ class Product {
       'is_special': is_special,
       'quantity': quantity,
       'quantity_unit': quantity_unit,
-     'sale_price': salePrice,
+      'sale_price': salePrice,
       'price': price,
       'image': image,
       'gallery': gallery,

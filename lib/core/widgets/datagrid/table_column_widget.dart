@@ -7,7 +7,6 @@ import '../../themes/themes.dart';
 
 class TableColumnWidget extends StatelessWidget {
   final List<dynamic>? values;
-  //final childrin
   final List<Widget>? actions;
   const TableColumnWidget({super.key, required this.values, this.actions});
 
@@ -54,25 +53,36 @@ class TableColumnWidget extends StatelessWidget {
 
   Widget _buildCell(dynamic value, BuildContext context) {
     if (value is String && value.startsWith('http')) {
-      return  ImageDisplayWidget(
+      return ImageDisplayWidget(
         imageUrl: value,
+      );
+    } else if (value is List && _isCategory(value)) {
+      return Wrap(
+        spacing: 2.0,
+        runSpacing: 2.0,
+        children: value.map<Widget>((category) {
+          return Chip(
+            label: Text(category, style: Theme.of(context).textTheme.headlineMedium,),
+            backgroundColor: Theme.of(context).chipTheme.backgroundColor,
+          );
+        }).toList(),
       );
     } else if (value is String && _isEmail(value)) {
       return Text(
         value,
-        style: Theme.of(context).textTheme.bodyMedium,
+        style: Theme.of(context).textTheme.bodySmall,
         textAlign: TextAlign.center,
       );
     } else if (value is String && _isPhoneNumber(value)) {
       return Text(
         value,
-        style: Theme.of(context).textTheme.bodyMedium,
+        style: Theme.of(context).textTheme.bodySmall,
         textAlign: TextAlign.center,
       );
     } else {
       return Text(
         value.toString(),
-        style: Theme.of(context).textTheme.bodyMedium,
+        style: Theme.of(context).textTheme.bodySmall,
         textAlign: TextAlign.center,
       );
     }
@@ -86,4 +96,7 @@ class TableColumnWidget extends StatelessWidget {
     return value.length == 11 && value.startsWith('09');
   }
 
+  bool _isCategory(dynamic value) {
+    return value is List<dynamic>;
+  }
 }

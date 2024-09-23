@@ -16,8 +16,8 @@ class TableRowWidget extends StatelessWidget {
           node: FocusScopeNode(),
           child: Container(
             height: 50,
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.only(
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(10),
                 topRight: Radius.circular(10),
               ),

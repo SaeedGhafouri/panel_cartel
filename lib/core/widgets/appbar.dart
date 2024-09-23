@@ -20,7 +20,7 @@ class AppBarMain extends StatelessWidget {
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
             blurRadius: 4,
-            offset: Offset(0, 2),
+            offset: const Offset(0, 2),
           ),
         ],
       ),
@@ -29,15 +29,15 @@ class AppBarMain extends StatelessWidget {
         children: [
           Row(
             children: [
-              ProfilePopupWidget(
+              const ProfilePopupWidget(
                 id: 1,
                 username: 'سعید غفوری',
                 role: 'مدیرعامل',
-                imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDdst0jyv1JAuiWlWtsHEmBx2v9nkKedzcgg&s',
+                imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUUF7_VlWCXwMR8E-pADupaSq-41cH1QEcVz1D6hz51TcgO-BGwz_FnoBQTxvVDCcvQ5g&usqp=CAU',
               ),
-              SizedBox(width: 20,),
+              const SizedBox(width: spacingSmall,),
               Container(width: 1, height: 40, color:  Theme.of(context).dividerColor,),
-              SizedBox(width: 5,),
+              const SizedBox(width: spacingThin,),
               IconButton(
                   onPressed: () {
 

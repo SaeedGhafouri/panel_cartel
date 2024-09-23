@@ -11,7 +11,7 @@ const Color textSecondaryColor = Color(0xFF8E8E8E);
 const Color textSecondaryDarkColor = Color(0xFF676767);
 
 const Color textHintColor = Color(0xFF9E9E9E);
-const Color textHintDarkColor = Color(0xFF9E9E9E);
+const Color textHintDarkColor = Color(0xFF6A6A6A);
 
 const Color backgroundColor = Color(0xFFF8F8F8);
 const Color backgroundDarkColor = Color(0xFF000000);

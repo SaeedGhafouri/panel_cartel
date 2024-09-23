@@ -76,7 +76,7 @@ class _AdminDetailsScreenState extends State<AdminDetailsScreen> {
                               _phone.text = state.admin.mobile!;
                               _telephone.text = state.admin.telephone!;
                               _email.text = state.admin.email!;
-                              _nationalCode.text = state.admin.national_code!;
+                              _nationalCode.text = state.admin.national_code.toString();
                               _sex = state.admin.sex!;
                               return Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,

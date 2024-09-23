@@ -1,4 +1,3 @@
-
 const font_light = 'font_light_fa';
 const font_regular = 'font_regular_fa';
 const font_medium = 'font_medium_fa';

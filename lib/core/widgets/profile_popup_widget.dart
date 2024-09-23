@@ -36,7 +36,7 @@ class ProfilePopupWidget extends StatelessWidget {
               children: [
                 Text(
                   'مشاهده پروفایل',
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
                 SizedBox(width: 10,),
                 Icon(
@@ -53,7 +53,7 @@ class ProfilePopupWidget extends StatelessWidget {
               children: [
                 Text(
                   'تنظیمات',
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
                 SizedBox(width: 10,),
                 Icon(
@@ -71,7 +71,7 @@ class ProfilePopupWidget extends StatelessWidget {
               children: [
                 Text(
                   'Disable فعالیت',
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
                 SizedBox(width: 10,),
                 Icon(
@@ -88,12 +88,12 @@ class ProfilePopupWidget extends StatelessWidget {
               children: [
                 Text(
                   'خروج از حساب کاربری',
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(color: dangerColor),
                 ),
                 SizedBox(width: 10,),
-                Icon(
+                const Icon(
                   IconsaxPlusLinear.logout,
-                  color: Colors.redAccent,
+                  color: dangerColor,
                   size: 17,
                 ),
               ],

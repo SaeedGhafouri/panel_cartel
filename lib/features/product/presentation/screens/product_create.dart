@@ -9,6 +9,7 @@ import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:panel_cartel/core/dialogs/brands_dialog.dart';
 import 'package:panel_cartel/core/utils/toast.dart';
 import 'package:panel_cartel/core/widgets/appbar.dart';
+import 'package:panel_cartel/core/widgets/button_popup_widget.dart';
 import 'package:panel_cartel/core/widgets/button_widget.dart';
 import 'package:panel_cartel/core/widgets/checkbox_widget.dart';
 import 'package:panel_cartel/core/widgets/datagrid/table_header_widget.dart';
@@ -24,8 +25,7 @@ import '../../../../core/utils/form_validator.dart';
 import '../../../../core/widgets/progress_widget.dart';
 import '../../data/models/product_model.dart';
 import '../../logic/cubit/barcode_cubit.dart';
-import '../../logic/cubit/product_cubit.dart';
-import '../../logic/cubit/product_state.dart';
+import '../../logic/cubit/create/product_create_cubit.dart';
 
 class ProductCreateScreen extends StatefulWidget {
   final String routeName = '/productCreate';
@@ -40,7 +40,6 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
   final TextEditingController _name = TextEditingController();
   final TextEditingController _slug = TextEditingController();
   final TextEditingController _barcode = TextEditingController();
-  final TextEditingController _status = TextEditingController();
   final TextEditingController _image = TextEditingController();
   final TextEditingController _description = TextEditingController();
   final TextEditingController _quantity = TextEditingController();
@@ -148,7 +147,6 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
     _name.dispose();
     _slug.dispose();
     _barcode.dispose();
-    _status.dispose();
     _image.dispose();
     _description.dispose();
     _quantity.dispose();
@@ -177,6 +175,37 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                           'داشبورد',
                           'محصولات',
                           'افزودن محصول',
+                        ],
+                        startChildren: [
+                          BlocConsumer<ProductCreateCubit, ProductCreateState>(
+                            listener: (context, state) {
+                              if (state is ProductCreateSuccess) {
+                                showToast(
+                                    context: context,
+                                    message: 'محصول مورد نظر با موفقیت اضافه شد',
+                                    type: ToastType.success);
+                                Navigator.pop(context);
+                              } else if (state is ProductCreateError) {
+                                print(state.message);
+                                showToast(
+                                    context: context,
+                                    message: state.message,
+                                    type: ToastType.error);
+                              }
+                            },
+                            builder: (context, state) {
+                              if (state is ProductCreateLoading) {
+                                return const ProgressWidget();
+                              } else {
+                                return ButtonWidget(
+                                  onPressed: () {
+                                    _submit();
+                                  },
+                                  text: 'افزودن محصول',
+                                );
+                              }
+                            },
+                          ),
                         ],
                       ),
                       Row(
@@ -210,42 +239,45 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                         ),
                                         const SizedBox(width: spacingThin),
                                         Expanded(
-                                          child: TextFieldWidget(
-                                            controller: _barcode,
-                                            label: 'بارکد',
-                                            errorText: _errors['barcode'],
-                                          )
-                                        ),
-                                        BlocConsumer<BarcodeCubit, BarcodeState> (
+                                            child: TextFieldWidget(
+                                          controller: _barcode,
+                                          label: 'بارکد',
+                                          errorText: _errors['barcode'],
+                                        )),
+                                        BlocConsumer<BarcodeCubit,
+                                                BarcodeState>(
                                             builder: (context, state) {
-                                              if (state is BarcodeLoading) {
-                                                return const Center(
-                                                  child: CircularProgressIndicator(
-                                                    color: primaryColor,
-                                                    strokeWidth: 1,
-
-                                                  ),
-                                                );
-                                              } else {
-                                                return Tooltip(
-                                                  message: 'تولید بارکد',
-                                                  child: IconButton(
-                                                    onPressed: () {
-                                                      context.read<BarcodeCubit>().generator();
-                                                    },
-                                                    icon: Icon(IconsaxPlusLinear.barcode),
-                                                  ),
-                                                );
-                                              }
-                                            },
-                                            listener: (context, state) {
-                                              if (state is BarcodeLoaded) {
-                                                _barcode.text = state.barcode;
-                                              } else if (state is BarcodeError) {
-                                                showToast(context: context, message: state.message, type: ToastType.error);
-                                              }
-                                            }
-                                        ),
+                                          if (state is BarcodeLoading) {
+                                            return const Center(
+                                              child: CircularProgressIndicator(
+                                                color: primaryColor,
+                                                strokeWidth: 1,
+                                              ),
+                                            );
+                                          } else {
+                                            return Tooltip(
+                                              message: 'تولید بارکد',
+                                              child: IconButton(
+                                                onPressed: () {
+                                                  context
+                                                      .read<BarcodeCubit>()
+                                                      .generator();
+                                                },
+                                                icon:  Icon(
+                                                    IconsaxPlusLinear.barcode, color: Theme.of(context).hintColor,),
+                                              ),
+                                            );
+                                          }
+                                        }, listener: (context, state) {
+                                          if (state is BarcodeLoaded) {
+                                            _barcode.text = state.barcode;
+                                          } else if (state is BarcodeError) {
+                                            showToast(
+                                                context: context,
+                                                message: state.message,
+                                                type: ToastType.error);
+                                          }
+                                        }),
                                       ],
                                     ),
                                     const SizedBox(height: spacingThin),
@@ -256,24 +288,16 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                           child: ValueListenableBuilder<String>(
                                             valueListenable: categoryTxt,
                                             builder: (context, value, child) {
-                                              return ButtonWidget(
-                                                icon:
-                                                    IconsaxPlusLinear.category,
-                                                text: value,
-                                                onPressed: () {
-                                                  showDialog(
-                                                    context: context,
-                                                    builder:
-                                                        (BuildContext context) {
-                                                      return CategoryDialog(
-                                                        onSelected: (int id, String name) {
-                                                          categoryTxt.value = name;
-                                                          brandId = id;
-                                                        },
-                                                      );
+                                              return ButtonPopupWidget(
+                                                  widgetDialog: CategoryDialog(
+                                                    onSelected:
+                                                        (int id, String name) {
+                                                      categoryTxt.value = name;
+                                                      brandId = id;
                                                     },
-                                                  );
-                                                },
+                                                  ),
+                                                  value: value,
+                                                icon: IconsaxPlusLinear.category,
                                               );
                                             },
                                           ),
@@ -283,26 +307,17 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                           child: ValueListenableBuilder<String>(
                                             valueListenable: brandTxt,
                                             builder: (context, value, child) {
-                                              return ButtonWidget(
-                                                icon:
-                                                    IconsaxPlusLinear.ticket_2,
-                                                text: value,
-                                                onPressed: () {
-                                                  showDialog(
-                                                    context: context,
-                                                    builder:
-                                                        (BuildContext context) {
-                                                      return BrandsDialog(
-                                                        onBrandSelected:
-                                                            (int id,
-                                                                String name) {
-                                                          brandTxt.value = name;
-                                                          brandId = id;
-                                                        },
-                                                      );
+                                              return ButtonPopupWidget(
+                                                  widgetDialog:  BrandsDialog(
+                                                    onBrandSelected:
+                                                        (int id,
+                                                        String name) {
+                                                      brandTxt.value = name;
+                                                      brandId = id;
                                                     },
-                                                  );
-                                                },
+                                                  ),
+                                                  value: value,
+                                                icon: IconsaxPlusLinear.ticket_star,
                                               );
                                             },
                                           ),
@@ -414,54 +429,49 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                         GridView.builder(
                                           shrinkWrap: true,
                                           itemCount: selectedImages.length,
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
-                                          gridDelegate:
-                                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                          physics: const NeverScrollableScrollPhysics(),
+                                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                                             crossAxisCount: 3,
-                                            childAspectRatio: 2,
+                                            childAspectRatio: 1,
                                           ),
                                           itemBuilder: (context, index) {
                                             return InkWell(
                                               onTap: () => _pickImage(index),
                                               child: Container(
-                                                margin: const EdgeInsets.all(3),
+                                                margin: const EdgeInsets.all(10),
                                                 decoration: BoxDecoration(
                                                   shape: BoxShape.rectangle,
                                                   borderRadius: smallRadius,
                                                   border: Border.all(
-                                                    color: Theme.of(context)
-                                                        .dividerColor,
+                                                    color: Theme.of(context).dividerColor,
                                                     style: BorderStyle.solid,
                                                     width: 1,
                                                   ),
                                                 ),
-                                                child: selectedImages[index] !=
-                                                        null
+                                                child: selectedImages[index] != null
                                                     ? ClipRRect(
-                                                        borderRadius:
-                                                            smallRadius,
-                                                        child: Image.memory(
-                                                          selectedImages[
-                                                              index]!,
-                                                          fit: BoxFit.cover,
-                                                          width:
-                                                              double.infinity,
-                                                          height:
-                                                              double.infinity,
-                                                        ),
-                                                      )
+                                                  borderRadius: smallRadius,
+                                                  child: Image.memory(
+                                                    selectedImages[index]!,
+                                                    fit: BoxFit.cover,
+                                                    width: double.infinity,
+                                                    height: double.infinity,
+                                                  ),
+                                                )
                                                     : Center(
-                                                      child: Icon(
-                                                        IconsaxPlusLinear.gallery_add,
-                                                        color: Theme.of(context).textTheme.headlineMedium?.color,
-                                                        size: 50,
-                                                      ),
+                                                  child: Icon(
+                                                    index == 0
+                                                        ? IconsaxPlusLinear.gallery_export
+                                                        : IconsaxPlusLinear.gallery_add,
+                                                    color: Theme.of(context).dividerColor,
+                                                    size: 50,
+                                                  ),
                                                 ),
                                               ),
                                             );
                                           },
                                         ),
+
                                         const SizedBox(
                                           height: spacingThin,
                                         ),
@@ -477,6 +487,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                   const SizedBox(
                                     height: spacingThin,
                                   ),
+
                                   /// TODO Price
                                   FormWidget(
                                     body: Column(
@@ -489,10 +500,11 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                             Expanded(
                                               child: TextFieldWidget(
                                                 controller: _price,
-                                                label: 'قیمت واحد',
+                                                label: 'قیمت واحد (ریال)',
                                                 inputType: TextInputType.number,
                                                 inputFormatters: [
-                                                  FilteringTextInputFormatter.digitsOnly,
+                                                  FilteringTextInputFormatter
+                                                      .digitsOnly,
                                                 ],
                                                 errorText: _errors['price'],
                                               ),
@@ -501,12 +513,14 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                             Expanded(
                                               child: TextFieldWidget(
                                                 controller: _sale_price,
-                                                label: 'قیمت فروش',
+                                                label: 'قیمت فروش (ریال)',
                                                 inputFormatters: [
-                                                  FilteringTextInputFormatter.digitsOnly,
+                                                  FilteringTextInputFormatter
+                                                      .digitsOnly,
                                                 ],
                                                 inputType: TextInputType.number,
-                                                errorText: _errors['sale_price'],
+                                                errorText:
+                                                    _errors['sale_price'],
                                               ),
                                             ),
                                           ],
@@ -533,32 +547,44 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                                 label: 'مقدار تخفیف',
                                                 inputType: TextInputType.number,
                                                 inputFormatters: [
-                                                  FilteringTextInputFormatter.digitsOnly,
+                                                  FilteringTextInputFormatter
+                                                      .digitsOnly,
                                                 ],
                                               ),
                                             ),
                                           ],
                                         ),
-                                        const SizedBox(height: spacingSmall),
+                                        const SizedBox(height: spacingThin),
                                         Row(
                                           children: [
+                                            //Type
+                                            Expanded(
+                                              child: SpinnerWidget(
+                                                label: 'نوع بسته',
+                                                items: const [
+                                                  'عدد',
+                                                  'بسته',
+                                                  'کارتن',
+                                                  'شیرینگ',
+                                                  'کیسه',
+                                                  'پالت',
+                                                  'کلاف',
+                                                  'قوطی',
+                                                  'جعبه'
+                                                ],
+                                                onChanged: (p0) {
+                                                  _quantityUnit = p0.toString();
+                                                },
+                                              ),
+                                            ),
+                                            SizedBox(width: spacingThin),
                                             //Qantity
                                             Expanded(
                                               child: TextFieldWidget(
                                                 controller: _quantity,
                                                 label: 'موجودی',
                                                 inputType: TextInputType.number,
-                                              ),
-                                            ),
-                                            SizedBox(width: spacingThin),
-                                            //Type
-                                            Expanded(
-                                              child: SpinnerWidget(
-                                                label: 'نوع بسته',
-                                                items: const ['عدد', 'بسته', 'کارتن', 'شیرینگ', 'کیسه', 'پالت', 'کلاف', 'قوطی', 'جعبه'],
-                                                onChanged: (p0) {
-                                                  _quantityUnit = p0.toString();
-                                                },
+                                                errorText: _errors['quantity'],
                                               ),
                                             ),
                                           ],
@@ -690,37 +716,6 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                       ],
                                     ),
                                   ),
-                                  const SizedBox(
-                                    height: spacingThin,
-                                  ),
-                                  /// Submit
-                                  BlocConsumer<ProductCubit, ProductState>(
-                                    listener: (context, state) {
-                                      if (state is ProductLoaded) {
-                                        showToast(
-                                            context: context,
-                                            message: 'ورود با موفقیت انجام شد.',
-                                            type: ToastType.success);
-                                      } else if (state is ProductError) {
-                                        showToast(
-                                            context: context,
-                                            message: state.message,
-                                            type: ToastType.error);
-                                      }
-                                    },
-                                    builder: (context, state) {
-                                      if (state is ProductLoading) {
-                                        return ProgressWidget();
-                                      } else {
-                                        return ButtonWidget(
-                                          onPressed: () {
-                                            _submit();
-                                          },
-                                          text: 'افزودن محصول',
-                                        );
-                                      }
-                                    },
-                                  ),
                                 ],
                               )),
                         ],
@@ -736,66 +731,66 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
   }
 
   /// Send request post
-  ///
-  ///
   Map<String, String?> _errors = {};
   void _submit() {
-    FormValidator validator = FormValidator();
-    final fields = {
-      'name': _name.text,
-      'barcode': _barcode.text,
-      'slug': _slug.text,
-      'quantity': _quantity.text,
-      'price': _price.text,
-      'sale_price': _sale_price.text,
-    };
-    final rules = {
-      'name': 'required',
-      'barcode': 'required',
-      'slug': 'required',
-      'quantity': 'required|numeric',
-      'price': 'required|numeric',
-      'sale_price': 'required|numeric',
-    };
-    final errors = validator.validateFields(fields, rules);
-
-    if (validator.hasErrors()) {
-      setState(() {
-        _errors = errors;
-      });
-      return;
-    }
-
-    String? mainImage = selectedImages[0] != null ? base64Encode(selectedImages[0]!) : null;
-    List<String> gallery = selectedImages.skip(1).where((image) => image != null).map((image) {
-      return base64Encode(image!);
-    }).toList();
-
-    if (gallery.isEmpty) {
-      gallery = [];
-    }
     try {
-      context.read<ProductCubit>().createProduct(
-        Product(
-          id: 1,
-          name: _name.text,
-          barcode: _barcode.text,
-          slug: _slug.text,
-          status: status,
-          brand_id: brandId,
-          brand: '',
-          category_id: '1.5',
-          category: [],
-          description: _description.text,
-          is_special: _isSpecial ? 1 : 0,
-          quantity: int.parse(_quantity.text),
-          quantity_unit: _quantityUnit,
-          salePrice: int.parse(_sale_price.text),
-          price: int.parse(_price.text),
-          image: mainImage,
-          gallery: gallery,
-        ),
-      );
+      FormValidator validator = FormValidator();
+      final fields = {
+        'name': _name.text,
+        'barcode': _barcode.text,
+        'slug': _slug.text,
+        'quantity': _quantity.text,
+        'price': _price.text,
+        'sale_price': _sale_price.text,
+      };
+      final rules = {
+        'name': 'required',
+        'barcode': 'required',
+        'slug': 'required',
+        'quantity': 'required|numeric',
+        'price': 'required|numeric',
+        'sale_price': 'required|numeric',
+      };
+      final errors = validator.validateFields(fields, rules);
+      if (validator.hasErrors()) {
+        setState(() {
+          _errors = errors;
+        });
+        return;
+      }
+
+      String? mainImage = (selectedImages.isNotEmpty && selectedImages[0] != null)
+          ? base64Encode(selectedImages[0]!)
+          : null;
+      
+      List<String> gallery = [];
+      if (selectedImages.length > 1) {
+        gallery = selectedImages
+            .skip(1)
+            .where((image) => image != null)
+            .map((image) => base64Encode(image!))
+            .toList();
+      }
+
+      context.read<ProductCreateCubit>().createProduct(Product(
+        id: 1,
+        name: _name.text,
+        barcode: _barcode.text,
+        slug: _slug.text,
+        status: status.toString(),
+        brand_id: brandId,
+        brand: '',
+        category_id: '1.5',
+        category: [],
+        description: _description.text,
+        is_special: _isSpecial ? 1 : 0,
+        quantity: int.parse(_quantity.text),
+        quantity_unit: _quantityUnit,
+        salePrice: int.parse(_sale_price.text),
+        price: int.parse(_price.text),
+        image: mainImage,
+        gallery: gallery,
+      ));
     } catch (e) {
       showToast(
         context: context,

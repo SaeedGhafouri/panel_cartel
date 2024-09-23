@@ -67,6 +67,7 @@ final ThemeData darkTheme = ThemeData(
       fontFamily: font_bold,
     ),
 
+
     //Gray Text
     headlineLarge: TextStyle(
       color: textSecondaryColor,
