@@ -28,7 +28,6 @@ class ProductIndexScreen extends StatefulWidget {
 class _ProductIndexScreenState extends State<ProductIndexScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     context.read<ProductIndexCubit>().index();
   }

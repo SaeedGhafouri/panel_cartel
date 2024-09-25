@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:panel_cartel/features/user/presentation/screens/user_index.dart';
 
 import '../../features/admin/presentation/screens/admin_create_screen.dart';
 import '../../features/admin/presentation/screens/admin_details_screen.dart';
@@ -57,6 +58,28 @@ class AppRouter {
               return AdminDetailsScreen(adminId: adminId);
             },
           ),
+        ],
+      ),
+
+      // Admins
+      GoRoute(
+        path: AppRoutes.users,
+        name: 'users',
+        builder: (context, state) => const UserIndexScreen(),
+        routes: [
+          GoRoute(
+            path: AppRoutes.userCreate,
+            name: 'userCreate',
+            builder: (context, state) => const AdminCreateScreen(),
+          ),
+         /* GoRoute(
+            path: AppRoutes.adminDetails,
+            name: 'userDetails',
+            builder: (context, state) {
+              final userId = double.tryParse(state.pathParameters['userId'] ?? '');
+              return AdminDetailsScreen(userId: userId);
+            },
+          ),*/
         ],
       ),
 

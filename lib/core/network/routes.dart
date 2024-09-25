@@ -13,6 +13,13 @@ class Routes {
   static const String adminUpdate = '$baseUrl/admin/admin/update';
   static const String adminDelete = '$baseUrl/admin/admin/destroy/';
 
+  /// User
+  static const String userIndex = '$baseUrl/admin/user/index';
+  static const String userShow = '$baseUrl/admin/user/show/';
+  static const String userCreate = '$baseUrl/admin/user/create';
+  static const String userUpdate = '$baseUrl/admin/user/update';
+  static const String userDelete = '$baseUrl/admin/user/destroy/';
+
   /// Product
   static const String productIndex = '$baseUrl/admin/shop/product/index';
   static const String productShow = '$baseUrl/admin/shop/product/show/';

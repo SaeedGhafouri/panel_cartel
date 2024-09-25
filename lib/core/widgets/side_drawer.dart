@@ -188,19 +188,19 @@ List<Menu> menuItems(BuildContext context) => [
     icon: IconsaxPlusLinear.user,
     children: [
       Menu(
-        id: 3,
-        name: 'افزودن مشتریان',
-        icon: IconsaxPlusLinear.user_add,
-        onPress: () {
-          context.go('${AppRoutes.users}/${AppRoutes.userCreate}');
-        },
-      ),
-      Menu(
         id: 4,
         name: 'مدیریت مشتری',
         icon: IconsaxPlusLinear.user_edit,
         onPress: () {
           context.go(AppRoutes.users);
+        },
+      ),
+      Menu(
+        id: 3,
+        name: 'افزودن مشتریان',
+        icon: IconsaxPlusLinear.user_add,
+        onPress: () {
+          context.go('${AppRoutes.users}/${AppRoutes.userCreate}');
         },
       ),
     ],

@@ -9,8 +9,8 @@ class ProductIndexCubit extends Cubit<ProductIndexState> {
   final ProductService _service;
   ProductIndexCubit(this._service) : super(ProductIndexInitial());
   void index() async {
+    emit(ProductIndexLoading());
     try {
-      emit(ProductIndexLoading());
       final products = await _service.index();
       emit(ProductIndexLoaded(products));
     } catch (e) {

@@ -51,8 +51,12 @@ class ImageDisplayWidget extends StatelessWidget {
         image: AssetImage(assetPath!),
         fit: BoxFit.cover,
       );
+    } else {
+      return DecorationImage(
+        image: AssetImage(),
+        fit: BoxFit.cover,
+      );
     }
-    return null;
   }
 
   Widget _getChildWidget(BuildContext context) {
@@ -84,7 +88,7 @@ class ImageDisplayWidget extends StatelessWidget {
             height: 350,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(7),
-              image: imageDecoration, // اطمینان از تنظیم صحیح تصویر
+              image: imageDecoration,
             ),
             child: imageDecoration == null ? _getChildWidget(context) : null,
           ),

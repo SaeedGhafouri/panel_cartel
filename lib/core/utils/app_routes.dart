@@ -11,8 +11,8 @@ class AppRoutes {
   static const orders = '/orders';
   static const orderDetails = 'details';
   static const users = '/users';
-  static const userCreate = '/users/create';
-  static const userDetails = '/users/details';
+  static const userCreate = 'create';
+  static const userDetails = 'details/:userId';
   static const categories = '/products/categories';
   static const brands = '/brands';
 }

@@ -22,6 +22,8 @@ import 'features/product/logic/cubit/barcode_cubit.dart';
 import 'features/product/logic/cubit/create/product_create_cubit.dart';
 import 'features/product/logic/cubit/destroy/product_destroy_cubit.dart';
 import 'features/product/logic/cubit/show/product_show_cubit.dart';
+import 'features/user/data/services/user_service.dart';
+import 'features/user/logic/cubit/index/user_index_cubit.dart';
 
 void main() {
   runApp(
@@ -29,6 +31,10 @@ void main() {
       providers: [
         BlocProvider<AdminCubit>(
           create: (context) => AdminCubit(AdminService(Dio())),
+        ),
+        /// User
+        BlocProvider<UserIndexCubit>(
+          create: (context) => UserIndexCubit(UserService(Dio())),
         ),
         BlocProvider<AuthCubit>(
           create: (context) => AuthCubit(AuthService(Dio())),

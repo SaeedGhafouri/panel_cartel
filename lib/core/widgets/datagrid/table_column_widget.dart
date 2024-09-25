@@ -12,7 +12,7 @@ class TableColumnWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Directionality(textDirection: TextDirection.ltr, child: Column(
       children: [
         FocusScope(
           node: FocusScopeNode(),
@@ -30,16 +30,16 @@ class TableColumnWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: actions!,
-                  )
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: actions!,
+                    )
                 ),
                 for (var value in values!) ...[
                   Expanded(
                     child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 5),
-                      child: _buildCell(value, context)
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: _buildCell(value, context)
                     ),
                   )
                 ],
@@ -48,7 +48,7 @@ class TableColumnWidget extends StatelessWidget {
           ),
         ),
       ],
-    );
+    ));
   }
 
   Widget _buildCell(dynamic value, BuildContext context) {
