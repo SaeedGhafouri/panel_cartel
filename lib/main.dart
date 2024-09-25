@@ -10,7 +10,7 @@ import 'package:panel_cartel/features/product/data/services/product_service.dart
 import 'package:panel_cartel/features/product/logic/cubit/index/product_index_cubit.dart';
 import 'core/themes/theme_bloc.dart';
 import 'core/themes/theme_state.dart';
-import 'core/utils/app_route.dart';
+import 'core/utils/app_router.dart';
 import 'features/Category/data/services/category_service.dart';
 import 'features/Category/logic/cubit/Category_cubit.dart';
 import 'features/admin/data/services/admin_service.dart';

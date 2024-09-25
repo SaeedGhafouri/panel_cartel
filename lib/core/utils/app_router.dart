@@ -11,43 +11,47 @@ import '../../features/order/presentation/screens/orders_screen.dart';
 import '../../features/product/presentation/screens/product_create.dart';
 import '../../features/product/presentation/screens/product_details_screen.dart';
 import '../../features/product/presentation/screens/product_index.dart';
-
+import '../widgets/page_not_found.dart';
+import 'app_routes.dart';
 class AppRouter {
   final GoRouter router = GoRouter(
-    initialLocation: '/createProduct',
+    initialLocation: AppRoutes.dashboard,
     routes: <RouteBase>[
       // Auth
       GoRoute(
-        path: '/login',
+        path: AppRoutes.login,
+        name: 'login',
         builder: (context, state) => const LoginScreen(),
       ),
 
       // Overview
       GoRoute(
-        path: DashboardScreen.routeName,
-        name: '/dashboard',
+        path: AppRoutes.dashboard,
+        name: '/',
         builder: (context, state) => const DashboardScreen(),
       ),
 
       // Brands
       GoRoute(
-        path: '/brands',
+        path: AppRoutes.brands,
         name: 'brands',
         builder: (context, state) => const BrandIndexScreen(),
       ),
 
       // Admins
       GoRoute(
-        path: AdminIndexScreen.routeName,
+        path: AppRoutes.admins,
         name: 'admins',
         builder: (context, state) => const AdminIndexScreen(),
         routes: [
           GoRoute(
-            path: AdminCreateScreen.routeName,
+            path: AppRoutes.adminCreate,
+            name: 'adminCreate',
             builder: (context, state) => const AdminCreateScreen(),
           ),
           GoRoute(
-            path: 'adminDetails/:adminId',
+            path: AppRoutes.adminDetails,
+            name: 'adminDetails',
             builder: (context, state) {
               final adminId = double.tryParse(state.pathParameters['adminId'] ?? '');
               return AdminDetailsScreen(adminId: adminId);
@@ -58,19 +62,21 @@ class AppRouter {
 
       // Products
       GoRoute(
-        path: '/products',
+        path: AppRoutes.products,
         name: 'products',
         builder: (context, state) => const ProductIndexScreen(),
         routes: [
           GoRoute(
-            path: 'productDetails/:productId',
+            path: AppRoutes.productDetails,
+            name: 'productDetails',
             builder: (context, state) {
               final productId = int.tryParse(state.pathParameters['productId'] ?? '');
               return ProductDetailsScreen(productId: productId);
             },
           ),
           GoRoute(
-            path: 'productCreate',
+            path: AppRoutes.productCreate,
+            name: 'productCreate',
             builder: (context, state) => const ProductCreateScreen(),
           ),
         ],
@@ -78,16 +84,23 @@ class AppRouter {
 
       // Orders
       GoRoute(
-        path: '/orders',
+        path: AppRoutes.orders,
         name: 'orders',
         builder: (context, state) => const OrdersScreen(),
         routes: [
           GoRoute(
-            path: 'orderDetails',
-            builder: (context, state) => OrderDetailsScreen(),
+            path: AppRoutes.orderDetails,
+            name: 'orderDetails',
+            builder: (context, state) => const OrderDetailsScreen(),
           ),
         ],
       ),
     ],
+
+    errorBuilder: (context, state) {
+      return const PageNotFound(); 
+    },
   );
 }
+
+

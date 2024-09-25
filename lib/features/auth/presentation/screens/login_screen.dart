@@ -7,6 +7,7 @@ import 'package:panel_cartel/core/themes/themes.dart';
 import 'package:panel_cartel/core/utils/toast.dart';
 import 'package:panel_cartel/core/widgets/progress_widget.dart';
 import 'package:panel_cartel/core/widgets/text_field_widget.dart';
+import '../../../../core/utils/app_routes.dart';
 import '../../../../core/widgets/button_widget.dart';
 import '../../logic/cubit/auth_cubit.dart';
 
@@ -161,9 +162,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   context: context,
                                   message: 'ورود با موفقیت انجام شد.',
                                   type: ToastType.success);
-                              //GoRouter.of(context).pushNamed(DashboardScreen.routeName);
-                              print('Token: ${state.adminData['token']}');
-                              print('Admin Info: ${state.adminData['admin']}');
+                              context.go(AppRoutes.dashboard);
                               try {
                                 GoRouter.of(context).goNamed('dashboard');
                               } catch(e) {

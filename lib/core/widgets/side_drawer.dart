@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:panel_cartel/core/constants/assets.dart';
 import 'package:panel_cartel/core/themes/themes.dart';
+import 'package:panel_cartel/core/utils/app_routes.dart';
 import 'package:panel_cartel/features/admin/presentation/screens/admin_create_screen.dart';
 import 'package:panel_cartel/features/admin/presentation/screens/admin_index_screen.dart';
 import 'package:toggle_switch/toggle_switch.dart';
@@ -139,14 +140,16 @@ class Menu {
 }
 
 List<Menu> menuItems(BuildContext context) => [
+  /// Dashboard
   Menu(
     id: 1,
     name: 'داشبورد',
     icon: IconsaxPlusLinear.home,
     onPress: () {
-      // Navigate to Dashboard
+      context.go(AppRoutes.dashboard);
     },
   ),
+  /// Admins
   Menu(
     id: 2,
     name: 'کارشناسان',
@@ -154,18 +157,18 @@ List<Menu> menuItems(BuildContext context) => [
     children: [
       Menu(
         id: 3,
-        name: 'افزودن کارشناس',
+        name: 'مدیریت کارشناسان',
         icon: IconsaxPlusLinear.user_add,
         onPress: () {
-          // Navigate to Add User
+          context.go(AppRoutes.admins);
         },
       ),
       Menu(
         id: 3,
-        name: 'مدیریت کارشناسان',
+        name: 'افزودن کارشناس',
         icon: IconsaxPlusLinear.user_add,
         onPress: () {
-          GoRouter.of(context).goNamed('admins');
+          context.go('${AppRoutes.admins}/${AppRoutes.adminCreate}');
         },
       ),
       Menu(
@@ -173,11 +176,12 @@ List<Menu> menuItems(BuildContext context) => [
         name: 'نقش‌ها و دسترسی‌ها',
         icon: IconsaxPlusLinear.security_user,
         onPress: () {
-          // Navigate to Roles and Permissions
+          context.go('${AppRoutes.admins}/${AppRoutes.adminRoles}');
         },
       ),
     ],
   ),
+  /// Users
   Menu(
     id: 2,
     name: 'مشتریان',
@@ -188,7 +192,7 @@ List<Menu> menuItems(BuildContext context) => [
         name: 'افزودن مشتریان',
         icon: IconsaxPlusLinear.user_add,
         onPress: () {
-          // Navigate to Add User
+          context.go('${AppRoutes.users}/${AppRoutes.userCreate}');
         },
       ),
       Menu(
@@ -196,30 +200,31 @@ List<Menu> menuItems(BuildContext context) => [
         name: 'مدیریت مشتری',
         icon: IconsaxPlusLinear.user_edit,
         onPress: () {
-          // Navigate to Manage Users
+          context.go(AppRoutes.users);
         },
       ),
     ],
   ),
+  /// Products
   Menu(
     id: 6,
     name: 'محصولات',
     icon: IconsaxPlusLinear.box,
     children: [
       Menu(
-        id: 7,
-        name: 'افزودن محصول',
-        icon: IconsaxPlusLinear.box_add,
-        onPress: () {
-          GoRouter.of(context).go('/products/productCreate');
-        },
-      ),
-      Menu(
         id: 8,
         name: 'مدیریت محصولات',
         icon: IconsaxPlusLinear.box,
         onPress: () {
-          GoRouter.of(context).goNamed('products');
+          context.go(AppRoutes.products);
+        },
+      ),
+      Menu(
+        id: 7,
+        name: 'افزودن محصول',
+        icon: IconsaxPlusLinear.box_add,
+        onPress: () {
+          context.go('${AppRoutes.products}/${AppRoutes.productCreate}');
         },
       ),
       Menu(
@@ -227,81 +232,36 @@ List<Menu> menuItems(BuildContext context) => [
         name: 'دسته‌بندی‌ها',
         icon: IconsaxPlusLinear.category,
         onPress: () {
-          // Navigate to Categories
+          context.go(AppRoutes.categories);
         },
       ),
       Menu(
         id: 10,
-        name: 'برچسب‌ها',
+        name: 'برندها',
         icon: IconsaxPlusLinear.tag,
         onPress: () {
-          // Navigate to Tags
+          context.go(AppRoutes.brands);
         },
       ),
     ],
   ),
+  /// Orders
   Menu(
     id: 11,
     name: 'سفارشات',
     icon: IconsaxPlusLinear.shopping_cart,
     children: [
       Menu(
-        id: 12,
-        name: 'سفارشات جدید',
-        icon: IconsaxPlusLinear.bag_2,
-        onPress: () {
-          GoRouter.of(context).go('orders');
-        },
-      ),
-      Menu(
         id: 13,
         name: 'مدیریت سفارشات',
         icon: IconsaxPlusLinear.bag_tick,
         onPress: () {
-          // Navigate to Manage Orders
-        },
-      ),
-      Menu(
-        id: 14,
-        name: 'پیگیری سفارشات',
-        icon: IconsaxPlusLinear.bag_cross,
-        onPress: () {
-          // Navigate to Order Tracking
+          context.go(AppRoutes.orders);
         },
       ),
     ],
   ),
-  Menu(
-    id: 15,
-    name: 'گزارشات',
-    icon: IconsaxPlusLinear.diagram,
-    children: [
-      Menu(
-        id: 16,
-        name: 'گزارش فروش',
-        icon: IconsaxPlusLinear.chart,
-        onPress: () {
-          // Navigate to Sales Report
-        },
-      ),
-      Menu(
-        id: 17,
-        name: 'گزارش محصولات',
-        icon: IconsaxPlusLinear.chart_square,
-        onPress: () {
-          // Navigate to Product Report
-        },
-      ),
-      Menu(
-        id: 18,
-        name: 'گزارش کاربران',
-        icon: IconsaxPlusLinear.chart,
-        onPress: () {
-          // Navigate to User Report
-        },
-      ),
-    ],
-  ),
+  /// Settings
   Menu(
     id: 19,
     name: 'تنظیمات',
