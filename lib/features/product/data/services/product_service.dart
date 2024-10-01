@@ -9,9 +9,13 @@ class ProductService {
   Future<void> _setAuthorizationHeader() async {
     Future<String> token() async {
       String? token = await ExpertPreferences.getToken();
-      return token!;
+      return token ?? '';
     }
-    _dio.options.headers['Authorization'] = token();
+
+    String authToken = await token();
+    print('Token: $authToken');
+
+    _dio.options.headers['Authorization'] = 'Bearer $authToken';
   }
   Future<List<Product>> index() async {
     try {
@@ -24,7 +28,7 @@ class ProductService {
         throw Exception(response.data['message']);
       }
     } on DioError catch (e) {
-      throw Exception( 'Failed: ${e.message}');
+      throw Exception(e.response?.data['message'] ?? 'Request failed with status ${e.response?.statusCode}');
     } catch (e) {
       throw Exception('Failed1: $e');
     }

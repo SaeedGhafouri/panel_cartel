@@ -12,7 +12,7 @@ class AdminCubit extends Cubit<AdminState> {
   void fetchAdmins() async {
     try {
       emit(AdminLoading());
-      final admins = await _adminService.getAdmins();
+      final admins = await _adminService.index();
       emit(AdminLoaded(admins));
     } catch (e) {
       emit(AdminError(e.toString()));

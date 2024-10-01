@@ -1,0 +1,84 @@
+import 'dart:typed_data';
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
+
+class ImagePickerWidget extends StatefulWidget {
+  final Function(Uint8List?) onImageSelected;
+
+  const ImagePickerWidget({Key? key, required this.onImageSelected})
+      : super(key: key);
+
+  @override
+  _ImagePickerWidgetState createState() => _ImagePickerWidgetState();
+}
+
+class _ImagePickerWidgetState extends State<ImagePickerWidget> {
+  Uint8List? _selectedImage;
+
+  Future<void> _pickImage() async {
+    try {
+      FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.image);
+
+      if (result != null && result.files.single.bytes != null) {
+        setState(() {
+          _selectedImage = result.files.single.bytes!;
+        });
+        widget.onImageSelected(_selectedImage);
+      } else {
+        debugPrint("هیچ تصویری انتخاب نشد."); // برای دیباگ
+      }
+    } catch (e) {
+      debugPrint("خطا در انتخاب تصویر: $e"); // برای دیباگ
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: _pickImage,
+      child: Container(
+        width: 150,
+        height: 150,
+        decoration: BoxDecoration(
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.circular(8.0),
+          border: Border.all(
+            color: Theme.of(context).dividerColor,
+            style: BorderStyle.solid,
+            width: 1,
+          ),
+        ),
+        padding: const EdgeInsets.all(20.0),
+        child: _selectedImage == null
+            ? Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.photo_library,
+              size: 50,
+              color: Theme.of(context)
+                  .textTheme
+                  .bodyMedium
+                  ?.color
+                  ?.withOpacity(0.2),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              'تصویر کارشناس',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+          ],
+        )
+            : ClipRRect(
+          borderRadius: BorderRadius.circular(8.0),
+          child: Image.memory(
+            _selectedImage!,
+            fit: BoxFit.cover,
+            width: 150,
+            height: 150,
+          ),
+        ),
+      ),
+    );
+  }
+}

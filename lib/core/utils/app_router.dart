@@ -16,7 +16,7 @@ import '../widgets/page_not_found.dart';
 import 'app_routes.dart';
 class AppRouter {
   final GoRouter router = GoRouter(
-    initialLocation: '${AppRoutes.users}${AppRoutes.userCreate}',
+    initialLocation: AppRoutes.admins,
     routes: <RouteBase>[
       // Auth
       GoRoute(

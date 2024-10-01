@@ -35,7 +35,6 @@ class _AdminIndexScreenState extends State<AdminIndexScreen> {
   @override
   void initState() {
     super.initState();
-    print('saeed');
 
     context.read<AdminCubit>().fetchAdmins();
   }

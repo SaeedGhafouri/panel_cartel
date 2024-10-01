@@ -30,6 +30,8 @@ class AdminDeleted extends AdminState {
   AdminDeleted(response);
 }
 
+class AuthError extends AdminState {}
+
 class AdminError extends AdminState {
   final String message;
 

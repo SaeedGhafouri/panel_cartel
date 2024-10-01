@@ -10,7 +10,7 @@ class TextFieldWidget extends StatefulWidget {
   final TextEditingController? controller;
   final String? label;
   final String? hint;
-  final int? maxEms;
+  final int? maxLength;
   final int? maxHeight;
   final TextInputType? inputType;
   final List<TextInputFormatter>? inputFormatters;
@@ -21,7 +21,7 @@ class TextFieldWidget extends StatefulWidget {
     this.controller,
     this.label,
     this.hint,
-    this.maxEms,
+    this.maxLength,
     this.maxHeight,
     this.inputType,
     this.inputFormatters,
@@ -71,10 +71,12 @@ class _TextFieldWidget extends State<TextFieldWidget> {
           obscureText: widget.isPassword && !_isPasswordVisible,
           style: const TextStyle(
             fontSize: txt_20,
-            fontFamily: font_medium,
+            fontFamily: font_regular,
           ),
+          maxLength: widget.maxLength,
           inputFormatters: widget.inputFormatters,
           decoration: InputDecoration(
+            counter: const SizedBox.shrink(),
             labelText: widget.label,
             labelStyle: TextStyle(
               color: Theme.of(context).hintColor,

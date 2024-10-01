@@ -15,17 +15,25 @@ class AdminService {
   Future<void> _setAuthorizationHeader() async {
     Future<String> token() async {
       String? token = await ExpertPreferences.getToken();
-      return token!;
+      return token ?? '';
     }
-    print('heelo');
-    _dio.options.headers['Authorization'] = token();
+
+    String authToken = await token();
+    print('Token: $authToken');
+
+    _dio.options.headers['Authorization'] = 'Bearer $authToken';
   }
 
-  Future<List<Admin>> getAdmins() async {
-    await _setAuthorizationHeader();
-    final response = await _dio.get(Routes.adminIndex);
-    _handleResponse(response);
-    return (response.data['data'] as List).map((json) => Admin.fromJson(json)).toList();
+
+  Future<List<Admin>> index() async {
+    try {
+      await _setAuthorizationHeader();
+      final response = await _dio.get(Routes.adminIndex);
+      _handleResponse(response);
+      return (response.data['data'] as List).map((json) => Admin.fromJson(json)).toList();
+    } on DioError catch (e) {
+      throw Exception(e.response?.data['message'] ?? 'Request failed with status ${e.response?.statusCode}');
+    }
   }
 
   Future<Map<String, dynamic>> getAdmin(double id) async {

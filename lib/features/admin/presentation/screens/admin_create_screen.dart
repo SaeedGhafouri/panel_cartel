@@ -3,17 +3,23 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
-import 'package:panel_cartel/core/dialogs/validate_form_dialog.dart';
+import 'package:panel_cartel/core/dialogs/invalid_auth_dialog.dart';
+import 'package:panel_cartel/core/dialogs/logout_dialog.dart';
+import 'package:panel_cartel/core/utils/app_routes.dart';
 import 'package:panel_cartel/core/widgets/datagrid/table_header_widget.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:panel_cartel/core/widgets/gender_spinner_widget.dart';
 import 'package:panel_cartel/core/widgets/side_drawer.dart';
-import '../../../../core/constants/assets.dart';
+import 'package:panel_cartel/core/widgets/status_switch_widget.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 import '../../../../core/themes/themes.dart';
 import '../../../../core/widgets/appbar.dart';
 import '../../../../core/widgets/commadbar_main.dart';
 import '../../../../core/widgets/form_widget.dart';
 import '../../../../core/widgets/header_main.dart';
+import '../../../../core/widgets/image_picker_widget.dart';
 import '../../../../core/widgets/text_field_widget.dart';
 import '../../data/models/admin_model.dart';
 import '../../logic/cubit/admin_cubit.dart';
@@ -35,7 +41,8 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
   final TextEditingController _telephone = TextEditingController();
   final TextEditingController _email = TextEditingController();
   final TextEditingController _nationalCode = TextEditingController();
-  final TextEditingController _sex = TextEditingController();
+  final int _sex = 1;
+  late int _status;
 
   //Address
   final TextEditingController _country = TextEditingController();
@@ -73,7 +80,6 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
     _telephone.dispose();
     _email.dispose();
     _nationalCode.dispose();
-    _sex.dispose();
     _country.dispose();
     _state.dispose();
     _city.dispose();
@@ -130,13 +136,12 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
     }
 
     final admin = Admin(
-      id: 0,
       first_name: _firstName.text,
       last_name: _lastName.text,
       mobile: _phone.text,
       email: _email.text,
-      sex: int.tryParse(_sex.text) ?? 0,
-      status: 1,
+      sex: _sex,
+      status: _status,
       national_code: int.parse(_nationalCode.text),
       telephone: _telephone.text,
       image:
@@ -174,7 +179,7 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                   text: 'مشاهده لیست',
                                   icon: Icons.people,
                                   onPressed: () {
-                                    // TODO: نمایش لیست ادمین‌ها
+                                    context.go(AppRoutes.admins);
                                   },
                                 ),
                                 CommadbarWidget(
@@ -183,70 +188,18 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                   textColor: Colors.white,
                                   icon: Icons.check,
                                   iconColor: Colors.white,
-                                  onPressed: _submit, // فراخوانی تابع _submit
+                                  onPressed: _submit,
                                 ),
                               ],
                             ),
                             Row(
                               children: [
-                                Expanded(
-                                  flex: 2,
-                                  child: GestureDetector(
-                                    onTap: _pickImageMain,
-                                    child: Container(
-                                      width: 150,
-                                      height: 150,
-                                      decoration: BoxDecoration(
-                                        color: _selectedImageMain == null
-                                            ? Colors.grey[200]
-                                            : Colors.transparent,
-                                        shape: BoxShape.rectangle,
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                        border: Border.all(
-                                          color: Theme.of(context).dividerColor,
-                                          style: BorderStyle.solid,
-                                          width: 2,
-                                        ),
-                                      ),
-                                      padding: const EdgeInsets.all(20.0),
-                                      child: _selectedImageMain == null
-                                          ? Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Icon(
-                                                  Icons.photo_library,
-                                                  size: 50,
-                                                  color: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyMedium
-                                                      ?.color
-                                                      ?.withOpacity(0.2),
-                                                ),
-                                                const SizedBox(height: 10),
-                                                Text(
-                                                  'تصویر کارشناس',
-                                                  style: TextStyle(
-                                                    color: Theme.of(context)
-                                                        .textTheme
-                                                        .bodyMedium
-                                                        ?.color
-                                                        ?.withOpacity(0.2),
-                                                    fontFamily: 'Medium',
-                                                    fontSize: 20,
-                                                  ),
-                                                ),
-                                              ],
-                                            )
-                                          : Image.memory(
-                                              _selectedImageMain!,
-                                              fit: BoxFit.cover,
-                                              width: 100,
-                                              height: 100,
-                                            ),
-                                    ),
-                                  ),
+                                ImagePickerWidget(
+                                  onImageSelected: (Uint8List? image) {
+                                    if (image != null) {
+                                      print("تصویر برای سرور آماده است");
+                                    }
+                                  },
                                 ),
                                 const SizedBox(width: 8.0),
                                 Expanded(
@@ -259,6 +212,7 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                             child: TextFieldWidget(
                                               controller: _firstName,
                                               label: 'نام',
+                                              maxLength: 35,
                                               errorText: _errors['firstName'],
                                             ),
                                           ),
@@ -267,6 +221,7 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                             child: TextFieldWidget(
                                               controller: _lastName,
                                               label: 'نام خانوادگی',
+                                              maxLength: 35,
                                               errorText: _errors['lastName'],
                                             ),
                                           ),
@@ -275,6 +230,7 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                             child: TextFieldWidget(
                                               controller: _nationalCode,
                                               label: 'کد ملی',
+                                              maxLength: 10,
                                               errorText:
                                                   _errors['nationalCode'],
                                             ),
@@ -288,6 +244,8 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                             child: TextFieldWidget(
                                               controller: _password,
                                               label: 'رمز عبور',
+                                              maxLength: 32,
+                                              isPassword: true,
                                               inputType:
                                                   TextInputType.visiblePassword,
                                               errorText: _errors['password'],
@@ -297,16 +255,15 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                           Expanded(
                                             child: TextFieldWidget(
                                               controller: _email,
+                                              maxLength: 50,
                                               label: 'ایمیل',
                                               errorText: _errors['email'],
                                             ),
                                           ),
                                           const SizedBox(width: 8.0),
                                           Expanded(
-                                            child: TextFieldWidget(
-                                              controller: _sex,
-                                              label: 'جنسیت',
-                                            ),
+                                            child: GenderSpinnerWidget(
+                                                errorText: _errors['sex'])
                                           ),
                                         ],
                                       ),
@@ -314,18 +271,31 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                       Row(
                                         children: [
                                           Expanded(
+                                            flex: 2,
                                             child: TextFieldWidget(
                                               controller: _telephone,
+                                              maxLength: 15,
                                               label: 'تلفن ثابت',
                                               errorText: _errors['telephone'],
                                             ),
                                           ),
                                           const SizedBox(width: 8.0),
                                           Expanded(
+                                            flex: 2,
                                             child: TextFieldWidget(
                                               controller: _phone,
+                                              maxLength: 11,
                                               label: 'شماره موبایل',
                                               errorText: _errors['phone'],
+                                            ),
+                                          ),
+                                          const SizedBox(width: 8.0),
+                                          Expanded(
+                                            flex: 2,
+                                            child: StatusSwitchWidget(
+                                              onToggle: (p0) {
+                                                _status = p0;
+                                              },
                                             ),
                                           ),
                                         ],

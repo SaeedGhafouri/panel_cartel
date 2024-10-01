@@ -141,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           label: 'شماره موبایل',
                           inputType: TextInputType.phone,
                           errorText: _errors['input'],
-                          maxEms: 11,
+                          maxLength: 11,
                         ),
                         const SizedBox(
                           height: spacingThin,
@@ -163,6 +163,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   context: context,
                                   message: 'ورود با موفقیت انجام شد.',
                                   type: ToastType.success);
+                              print('saeeds : ${state.expert['token']}');
                               ExpertPreferences.setUserInfo(
                                 firstName: state.expert['expert']['first_name']!,
                                 lastName: state.expert['expert']['last_name']!,

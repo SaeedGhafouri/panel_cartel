@@ -11,9 +11,9 @@ class ExpertPreferences {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString(_keyFirstName, firstName!);
     await prefs.setString(_keyLastName, lastName!);
-    await prefs.setString(_imageUrl, imageUrl!);
-    await prefs.setString(_keyToken, token!);
+    await prefs.setString(_keyToken, 'Bearer ${token!}');
     await prefs.setBool(_isLogin, isLogin!);
+    await prefs.setString(_imageUrl, imageUrl ?? '');
   }
 
   static Future<String?> getFirstName() async {
