@@ -2,6 +2,7 @@
 import 'package:dio/dio.dart';
 
 import '../../../../core/network/routes.dart';
+import '../../../auth/logic/storage/expert/expert_preferences.dart';
 import '../models/admin_model.dart';
 
 
@@ -10,13 +11,14 @@ class AdminService {
 
   AdminService(this._dio);
 
-  Future<String> _getToken() async {
-    return Routes.token;
-  }
 
   Future<void> _setAuthorizationHeader() async {
-    final token = await _getToken();
-    _dio.options.headers['Authorization'] = token;
+    Future<String> token() async {
+      String? token = await ExpertPreferences.getToken();
+      return token!;
+    }
+    print('heelo');
+    _dio.options.headers['Authorization'] = token();
   }
 
   Future<List<Admin>> getAdmins() async {

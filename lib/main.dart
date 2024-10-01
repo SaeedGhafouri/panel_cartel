@@ -1,9 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-import 'package:panel_cartel/features/admin/presentation/screens/admin_details_screen.dart';
-import 'package:panel_cartel/features/admin/presentation/screens/admin_index_screen.dart';
 import 'package:panel_cartel/features/auth/data/services/auth_service.dart';
 import 'package:panel_cartel/features/auth/logic/cubit/auth_cubit.dart';
 import 'package:panel_cartel/features/product/data/services/product_service.dart';

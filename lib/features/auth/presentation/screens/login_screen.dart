@@ -10,6 +10,7 @@ import 'package:panel_cartel/core/widgets/text_field_widget.dart';
 import '../../../../core/utils/app_routes.dart';
 import '../../../../core/widgets/button_widget.dart';
 import '../../logic/cubit/auth_cubit.dart';
+import '../../logic/storage/expert/expert_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String routeName = '/login';
@@ -162,6 +163,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                   context: context,
                                   message: 'ورود با موفقیت انجام شد.',
                                   type: ToastType.success);
+                              ExpertPreferences.setUserInfo(
+                                firstName: state.expert['expert']['first_name']!,
+                                lastName: state.expert['expert']['last_name']!,
+                                token: state.expert['token'],
+                                isLogin: true
+                              );
                               context.go(AppRoutes.dashboard);
                               try {
                                 GoRouter.of(context).goNamed('dashboard');
@@ -207,14 +214,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 // Left side
                 Expanded(
                   flex: 5,
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: primaryColor,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(radiusMedium),
-                        bottomLeft: Radius.circular(radiusMedium),
-                      ),
-                    ),
+                  child: Image.asset(
+                    frame_nature,
                   ),
                 ),
               ],

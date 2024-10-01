@@ -7,9 +7,8 @@ class AuthInitial extends AuthState {}
 class AuthLoading extends AuthState {}
 
 class AuthLoaded extends AuthState {
-  final Map<String, dynamic> adminData;
-
-  AuthLoaded(this.adminData);
+  final Map<String, dynamic> expert;
+  AuthLoaded(this.expert);
 }
 
 class AuthError extends AuthState {

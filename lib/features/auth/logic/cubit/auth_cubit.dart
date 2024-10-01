@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
+import '../../data/models/expert_model.dart';
 import '../../data/services/auth_service.dart';
 
 part 'auth_state.dart';

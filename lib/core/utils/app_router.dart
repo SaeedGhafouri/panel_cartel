@@ -1,6 +1,6 @@
 import 'package:go_router/go_router.dart';
+import 'package:panel_cartel/features/user/presentation/screens/user_create.dart';
 import 'package:panel_cartel/features/user/presentation/screens/user_index.dart';
-
 import '../../features/admin/presentation/screens/admin_create_screen.dart';
 import '../../features/admin/presentation/screens/admin_details_screen.dart';
 import '../../features/admin/presentation/screens/admin_index_screen.dart';
@@ -16,7 +16,7 @@ import '../widgets/page_not_found.dart';
 import 'app_routes.dart';
 class AppRouter {
   final GoRouter router = GoRouter(
-    initialLocation: AppRoutes.dashboard,
+    initialLocation: '${AppRoutes.users}${AppRoutes.userCreate}',
     routes: <RouteBase>[
       // Auth
       GoRoute(
@@ -70,7 +70,7 @@ class AppRouter {
           GoRoute(
             path: AppRoutes.userCreate,
             name: 'userCreate',
-            builder: (context, state) => const AdminCreateScreen(),
+            builder: (context, state) => const UserCreateScreen(),
           ),
          /* GoRoute(
             path: AppRoutes.adminDetails,

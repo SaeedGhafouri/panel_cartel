@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:panel_cartel/core/themes/themes.dart';
+import '../dialogs/logout_dialog.dart';
 import 'image_diplay_widget.dart';
 
 class ProfilePopupWidget extends StatelessWidget {
@@ -38,8 +39,8 @@ class ProfilePopupWidget extends StatelessWidget {
                   'مشاهده پروفایل',
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
-                SizedBox(width: 10,),
-                Icon(
+                const SizedBox(width: 10,),
+                const Icon(
                   IconsaxPlusLinear.user,
                   size: 17,
                 ),
@@ -55,8 +56,8 @@ class ProfilePopupWidget extends StatelessWidget {
                   'تنظیمات',
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
-                SizedBox(width: 10,),
-                Icon(
+                const SizedBox(width: 10,),
+                const Icon(
                   IconsaxPlusLinear.setting,
                   size: 17,
                 ),
@@ -73,8 +74,8 @@ class ProfilePopupWidget extends StatelessWidget {
                   'Disable فعالیت',
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
-                SizedBox(width: 10,),
-                Icon(
+                const SizedBox(width: 10,),
+                const Icon(
                   IconsaxPlusLinear.activity,
                   size: 17,
                 ),
@@ -90,7 +91,7 @@ class ProfilePopupWidget extends StatelessWidget {
                   'خروج از حساب کاربری',
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(color: dangerColor),
                 ),
-                SizedBox(width: 10,),
+                const SizedBox(width: 10,),
                 const Icon(
                   IconsaxPlusLinear.logout,
                   color: dangerColor,
@@ -98,6 +99,12 @@ class ProfilePopupWidget extends StatelessWidget {
                 ),
               ],
             ),
+            onTap: () {
+              showDialog(
+                  context: context,
+                  builder: (context) => const LogoutDialog(),
+              );
+            },
           ),
         ];
       },
@@ -108,7 +115,7 @@ class ProfilePopupWidget extends StatelessWidget {
             size: 17,
             color: Theme.of(context).hintColor,
           ),
-          SizedBox(width: 70),
+          const SizedBox(width: 70),
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -122,7 +129,7 @@ class ProfilePopupWidget extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
           ImageDisplayWidget(
             radius: radiusSmall,
             imageUrl: imageUrl ,

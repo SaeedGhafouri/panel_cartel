@@ -8,6 +8,7 @@ import 'package:panel_cartel/core/widgets/appbar.dart';
 import 'package:panel_cartel/core/widgets/form_widget.dart';
 import 'package:panel_cartel/core/widgets/header_main.dart';
 import 'package:panel_cartel/features/admin/presentation/screens/admin_create_screen.dart';
+import 'package:panel_cartel/features/auth/logic/storage/expert/expert_preferences.dart';
 import 'package:panel_cartel/features/auth/presentation/screens/login_screen.dart';
 import '../../../../core/network/routes.dart';
 import '../../../../core/widgets/commadbar_main.dart';
@@ -22,7 +23,7 @@ import '../../logic/cubit/admin_state.dart';
 
 class AdminIndexScreen extends StatefulWidget {
   static String routeName = '/admins';
-  const AdminIndexScreen({Key? key}) : super(key: key);
+  const AdminIndexScreen({super.key});
 
   @override
   _AdminIndexScreenState createState() => _AdminIndexScreenState();
@@ -34,6 +35,8 @@ class _AdminIndexScreenState extends State<AdminIndexScreen> {
   @override
   void initState() {
     super.initState();
+    print('saeed');
+
     context.read<AdminCubit>().fetchAdmins();
   }
 

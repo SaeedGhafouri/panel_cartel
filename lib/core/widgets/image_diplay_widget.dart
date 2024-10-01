@@ -51,31 +51,22 @@ class ImageDisplayWidget extends StatelessWidget {
         image: AssetImage(assetPath!),
         fit: BoxFit.cover,
       );
-    } else {
-      return DecorationImage(
-        image: AssetImage(),
-        fit: BoxFit.cover,
-      );
     }
+    return null; // در صورت نبودن عکس، مقدار null برمی‌گردد تا آیکون نمایش داده شود.
   }
 
   Widget _getChildWidget(BuildContext context) {
-    if ((imageUrl == null || imageUrl!.isEmpty) &&
-        (assetPath == null || assetPath!.isEmpty)) {
-      return Center(
-        child: Icon(
-          IconsaxPlusBold.gallery,
-          color: Theme.of(context).iconTheme.color!.withOpacity(0.2),
-          size: size / 1.7,
-        ),
-      );
-    }
-    return Container();
+    // در صورتی که هیچ عکسی وجود نداشت، آیکون گالری نمایش داده می‌شود.
+    return Center(
+      child: Icon(
+        Icons.photo_library, // از آیکون گالری استفاده شده
+        color: Theme.of(context).iconTheme.color!.withOpacity(0.2),
+        size: size / 1.7,
+      ),
+    );
   }
 
   void _showImageDialog(BuildContext context) {
-    final imageDecoration = _getImageDecoration();
-
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -83,17 +74,38 @@ class ImageDisplayWidget extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(7),
           ),
-          child: Container(
-            width: 350,
-            height: 350,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(7),
-              image: imageDecoration,
-            ),
-            child: imageDecoration == null ? _getChildWidget(context) : null,
-          ),
+          child: _buildImageDialogContent(context),
         );
       },
     );
+  }
+
+  Widget _buildImageDialogContent(BuildContext context) {
+    if (imageUrl != null && imageUrl!.isNotEmpty) {
+      return InteractiveViewer(
+        child: Image.network(
+          imageUrl!,
+          fit: BoxFit.contain, // تصویر با نسبت ابعاد واقعی نمایش داده می‌شود
+        ),
+      );
+    } else if (assetPath != null && assetPath!.isNotEmpty) {
+      return InteractiveViewer(
+        child: Image.asset(
+          assetPath!,
+          fit: BoxFit.contain, // تصویر از asset با نسبت واقعی نمایش داده می‌شود
+        ),
+      );
+    } else {
+      return Container(
+        width: 350,
+        height: 350,
+        alignment: Alignment.center,
+        child: Icon(
+          Icons.photo_library,
+          color: Theme.of(context).iconTheme.color!.withOpacity(0.2),
+          size: 100,
+        ),
+      );
+    }
   }
 }

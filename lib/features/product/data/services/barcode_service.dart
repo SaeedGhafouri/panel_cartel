@@ -1,20 +1,19 @@
 
 import 'package:dio/dio.dart';
-
 import '../../../../core/network/routes.dart';
+import '../../../auth/logic/storage/expert/expert_preferences.dart';
 
 class BarcodeService {
   final Dio _dio;
 
   BarcodeService(this._dio);
 
-  Future<String> _getToken() async {
-    return Routes.token;
-  }
-
   Future<void> _setAuthorizationHeader() async {
-    final token = await _getToken();
-    _dio.options.headers['Authorization'] = token;
+    Future<String> token() async {
+      String? token = await ExpertPreferences.getToken();
+      return token!;
+    }
+    _dio.options.headers['Authorization'] = token();
   }
 
   Future<String> generator() async {

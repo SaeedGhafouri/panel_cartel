@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:panel_cartel/core/themes/themes.dart';
 import 'package:panel_cartel/core/widgets/datagrid/table_header_widget.dart';
 import 'package:panel_cartel/core/widgets/form_widget.dart';
 import 'package:panel_cartel/core/widgets/appbar.dart';
-import 'package:panel_cartel/core/widgets/spinner_widget.dart';
+import '../../../../core/constants/responsive.dart';
 import '../../../../core/widgets/side_drawer.dart';
+import '../chart/line_chart.dart';
 
 class DashboardScreen extends StatefulWidget {
   static const String routeName = '/';
@@ -28,118 +28,111 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Directionality(
-          textDirection: TextDirection.rtl,
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              int crossAxisCount = constraints.maxWidth < 600
-                  ? 1
-                  : constraints.maxWidth < 900
-                      ? 2
-                      : 4;
+        textDirection: TextDirection.rtl,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            bool isMobile = Responsive.isMobile(context);
+            bool isTablet = Responsive.isTablet(context);
+            bool isDesktop = Responsive.isDesktop(context);
 
-              return Column(
-                children: [
-                  const AppBarMain(),
-                  Flexible(
-                    child: SingleChildScrollView(
-                        child: Container(
+            return Column(
+              children: [
+                const AppBarMain(),
+                Flexible(
+                  child: SingleChildScrollView(
+                    child: Container(
                       padding: const EdgeInsets.symmetric(
                           horizontal: containerHorizontal, vertical: 20),
                       child: Column(
                         children: [
-                          Row(
-                            children: [
-                              _buildCardTile(
-                                context,
-                                title: 'محصولات',
-                                count: '721',
-                                icon: IconsaxPlusLinear.box,
-                              ),
-                              const SizedBox(
-                                width: spacingSmall,
-                              ),
-                              _buildCardTile(
-                                context,
-                                title: 'مشتریان',
-                                count: '342',
-                                icon: IconsaxPlusLinear.user,
-                              ),
-                              const SizedBox(
-                                width: spacingSmall,
-                              ),
-                              _buildCardTile(
-                                context,
-                                title: 'سفارشات',
-                                count: '123',
-                                icon: IconsaxPlusLinear.shopping_bag,
-                              ),
-                              const SizedBox(
-                                width: spacingSmall,
-                              ),
-                              _buildWelcomeTile(context),
-                            ],
-                          ),
-                          SizedBox(height: spacingSmall),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                flex: 7,
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        /// TODO FEATURES
-                                        Expanded(
-                                          flex: 3,
-                                          child: _buildFeaturesWidgetTile(),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: spacingSmall,
-                                    ),
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        /// TODO USER WIDGET
-                                        Expanded(
-                                          flex: 3,
-                                          child: _buildUserWidgetTile(),
-                                        ),
-                                        const SizedBox(width: spacingSmall),
-
-                                        /// TODO LAST ORDER
-                                        Expanded(
-                                          flex: 5,
-                                          child: _buildLastOrderWidgetTile(),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(width: spacingSmall),
-
-                              /// TODO SERVER
-                              Expanded(
-                                flex: 3,
-                                child: _buildServerWidget(),
-                              ),
-                            ],
-                          )
+                          _buildResponsiveRow(context),
+                          const SizedBox(height: spacingSmall),
+                          _buildMainContent(context, isMobile, isTablet),
                         ],
                       ),
-                    )),
-                  )
-                ],
-              );
-            },
-          )),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
+      ),
       endDrawer: const SideDrawer(),
     );
+  }
+
+  Widget _buildResponsiveRow(BuildContext context) {
+    if (Responsive.isMobile(context)) {
+      return Column(
+        children: [
+          _buildCardTile(context, title: 'محصولات', count: '721', icon: IconsaxPlusLinear.box),
+          const SizedBox(height: spacingSmall),
+          _buildCardTile(context, title: 'مشتریان', count: '342', icon: IconsaxPlusLinear.user),
+          const SizedBox(height: spacingSmall),
+          _buildCardTile(context, title: 'سفارشات', count: '123', icon: IconsaxPlusLinear.shopping_bag),
+          const SizedBox(height: spacingSmall),
+          _buildWelcomeTile(context),
+        ],
+      );
+    } else {
+      return Row(
+        children: [
+          _buildCardTile(context, title: 'محصولات', count: '721', icon: IconsaxPlusLinear.box),
+          const SizedBox(width: spacingSmall),
+          _buildCardTile(context, title: 'مشتریان', count: '342', icon: IconsaxPlusLinear.user),
+          const SizedBox(width: spacingSmall),
+          _buildCardTile(context, title: 'سفارشات', count: '123', icon: IconsaxPlusLinear.shopping_bag),
+          const SizedBox(width: spacingSmall),
+          _buildWelcomeTile(context),
+        ],
+      );
+    }
+  }
+
+  Widget _buildMainContent(BuildContext context, bool isMobile, bool isTablet) {
+    if (isMobile) {
+      return Column(
+        children: [
+          _buildFeaturesWidgetTile(),
+          const SizedBox(height: spacingSmall),
+          _buildUserWidgetTile(),
+          const SizedBox(height: spacingSmall),
+          _buildLastOrderWidgetTile(),
+          const SizedBox(height: spacingSmall),
+          _buildServerWidget(),
+        ],
+      );
+    } else {
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            flex: 7,
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(flex: 3, child: _buildFeaturesWidgetTile()),
+                  ],
+                ),
+                const SizedBox(height: spacingSmall),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(flex: 3, child: _buildUserWidgetTile()),
+                    const SizedBox(width: spacingSmall),
+                    Expanded(flex: 5, child: _buildLastOrderWidgetTile()),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: spacingSmall),
+          Expanded(flex: 3, child: _buildServerWidget()),
+        ],
+      );
+    }
   }
 
   Widget _buildCardTile(
@@ -431,23 +424,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   Widget _buildLastOrderWidgetTile() {
-    return const FormWidget(
-      body: Column(
-        children: [
-          TableHeaderWidget(
-            title: 'آمار فروش',
-            endChildren: [
-              /* SpinnerWidget(
-                 items: [
-                   'هفته',
-                   'ماه',
-                   'سال'
-                 ],
-               )*/
-            ],
-          ),
-        ],
-      ),
+    return FormWidget(
+      body: LineChartCard()
     );
   }
 

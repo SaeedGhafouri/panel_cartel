@@ -5,7 +5,6 @@ import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:panel_cartel/core/widgets/form_widget.dart';
 import 'package:panel_cartel/core/widgets/side_drawer.dart';
 import 'package:panel_cartel/features/user/logic/cubit/index/user_index_cubit.dart';
-
 import '../../../../core/themes/themes.dart';
 import '../../../../core/widgets/actions_popup_widget.dart';
 import '../../../../core/widgets/appbar.dart';

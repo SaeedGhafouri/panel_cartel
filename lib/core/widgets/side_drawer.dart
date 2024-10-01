@@ -7,21 +7,27 @@ import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:panel_cartel/core/constants/assets.dart';
 import 'package:panel_cartel/core/themes/themes.dart';
 import 'package:panel_cartel/core/utils/app_routes.dart';
-import 'package:panel_cartel/features/admin/presentation/screens/admin_create_screen.dart';
-import 'package:panel_cartel/features/admin/presentation/screens/admin_index_screen.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 import '../themes/theme_bloc.dart';
 import '../themes/theme_event.dart';
 
-class SideDrawer extends StatelessWidget {
-  const SideDrawer({super.key});
+class SideDrawer extends StatefulWidget {
+  const SideDrawer({Key? key}) : super(key: key);
+
+  @override
+  _SideDrawerState createState() => _SideDrawerState();
+}
+
+class _SideDrawerState extends State<SideDrawer> {
+  bool _isExpanded = false;
 
   @override
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Drawer(
+        width: _isExpanded ? 300 : 70,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.zero,
         ),
@@ -30,7 +36,7 @@ class SideDrawer extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -39,20 +45,29 @@ class SideDrawer extends StatelessWidget {
                       height: 50,
                     ),
                     const SizedBox(height: 20),
-                    Text(
-                      'کارتل ویژن',
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      'نسخه 4.1.7',
-                      style: Theme.of(context).textTheme.headlineMedium,
+                    AnimatedSize(
+                      duration: const Duration(milliseconds: 300),
+                      child: _isExpanded
+                          ? Column(
+                        children: [
+                          Text(
+                            'کارتل ویژن',
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
+                          const SizedBox(height: 10),
+                          Text(
+                            'نسخه 4.1.7',
+                            style: Theme.of(context).textTheme.headlineMedium,
+                          ),
+                        ],
+                      )
+                          : Container(), // Show nothing when collapsed
                     ),
                   ],
                 ),
               ),
               ...menuItems(context).map((menu) => buildMenuItem(context, menu)).toList(),
-              ToggleSwitch(
+              /*ToggleSwitch(
                 minWidth: 80.0,
                 minHeight: 30,
                 cornerRadius: 20.0,
@@ -79,17 +94,30 @@ class SideDrawer extends StatelessWidget {
                 onToggle: (index) {
                   BlocProvider.of<ThemeBloc>(context).add(ToggleThemeEvent());
                 },
+              ),*/
+              IconButton(
+                icon: Icon(
+                  _isExpanded ? IconsaxPlusLinear.arrow_left_1 : IconsaxPlusLinear.arrow_right_3,
+                  color: Theme.of(context).textTheme.headlineSmall?.color,
+                  size: 20,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _isExpanded = !_isExpanded; // Toggle the expanded state
+                  });
+                },
               ),
             ],
           ),
         ),
-      )
+      ),
     );
   }
 
   Widget buildMenuItem(BuildContext context, Menu menu) {
     if (menu.children!.isNotEmpty) {
       return ExpansionTile(
+        showTrailingIcon: _isExpanded,
         childrenPadding: const EdgeInsets.symmetric(horizontal: 16),
         iconColor: primaryColor,
         textColor: primaryColor,
@@ -98,28 +126,57 @@ class SideDrawer extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
         ),
         collapsedIconColor: Theme.of(context).iconTheme.color?.withOpacity(0.2),
-        title: Text(menu.name, style: Theme.of(context).textTheme.bodySmall),
-        leading: Icon(menu.icon, size: 20),
-        children: menu.children!
-            .map(
-              (child) => ListTile(
-            title: Text(child.name,
-                style: Theme.of(context).textTheme.bodySmall),
-            leading: Icon(child.icon, size: 17,color: Theme.of(context).iconTheme.color?.withOpacity(0.2)),
+        title: Row(
+          children: [
+            Icon(menu.icon, size: 20),
+            if (_isExpanded) ...[ // Show name only when expanded
+              const SizedBox(width: 10),
+              Text(menu.name, style: Theme.of(context).textTheme.bodySmall),
+            ],
+          ],
+        ),
+        children: menu.children!.map((child) {
+          return ListTile(
+            title: Row(
+              children: [
+                Icon(child.icon, size: 17, color: Theme.of(context).iconTheme.color?.withOpacity(0.2)),
+                if (_isExpanded) ...[ // Show child name only when expanded
+                  const SizedBox(width: 10),
+                  Text(child.name, style: Theme.of(context).textTheme.bodySmall),
+                ],
+              ],
+            ),
             onTap: child.onPress,
-          ),
-        )
-            .toList(),
+          );
+        }).toList(),
       );
     } else {
-      return ListTile(
-        title: Text(menu.name, style: Theme.of(context).textTheme.bodySmall),
-        leading: Icon(menu.icon, size: 17, color: Theme.of(context).iconTheme.color?.withOpacity(0.2),),
-        onTap: menu.onPress,
-      );
+      if (_isExpanded) {
+        return ListTile(
+          title: Text(menu.name, style: Theme.of(context).textTheme.bodySmall) ,
+          leading: Icon(menu.icon, size: 17, color: Theme.of(context).iconTheme.color?.withOpacity(0.2),),
+          onTap: menu.onPress,
+        );
+      }else {
+        return ListTile(
+          title: Row(
+            children: [
+              Icon(menu.icon, size: 20),
+              if (_isExpanded) ...[ // Show name only when expanded
+                const SizedBox(width: 10),
+                Text(menu.name, style: Theme.of(context).textTheme.bodySmall),
+              ],
+            ],
+          ),
+          onTap: menu.onPress,
+        );
+      }
+
     }
+
   }
 }
+
 
 class Menu {
   final int id;

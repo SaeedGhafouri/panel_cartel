@@ -1,32 +1,28 @@
-import 'dart:convert';
 
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:iconsax_plus/iconsax_plus.dart';
-import 'package:panel_cartel/core/dialogs/validate_form_dialog.dart';
-import 'package:panel_cartel/core/widgets/datagrid/table_header_widget.dart';
-import 'package:file_picker/file_picker.dart';
+import 'package:panel_cartel/core/widgets/header_main.dart';
 import 'package:panel_cartel/core/widgets/side_drawer.dart';
-import '../../../../core/constants/assets.dart';
+
 import '../../../../core/themes/themes.dart';
 import '../../../../core/widgets/appbar.dart';
 import '../../../../core/widgets/commadbar_main.dart';
+import '../../../../core/widgets/datagrid/table_header_widget.dart';
 import '../../../../core/widgets/form_widget.dart';
-import '../../../../core/widgets/header_main.dart';
 import '../../../../core/widgets/text_field_widget.dart';
-import '../../data/models/admin_model.dart';
-import '../../logic/cubit/admin_cubit.dart';
 
-class AdminCreateScreen extends StatefulWidget {
-  static String routeName = 'adminCreate';
-  const AdminCreateScreen({Key? key}) : super(key: key);
+class UserCreateScreen extends StatefulWidget {
+  const UserCreateScreen({super.key});
 
   @override
-  _AdminCreateScreenState createState() => _AdminCreateScreenState();
+  State<UserCreateScreen> createState() => _UserCreateScreenState();
 }
 
-class _AdminCreateScreenState extends State<AdminCreateScreen> {
+class _UserCreateScreenState extends State<UserCreateScreen> {
+
+
   //Person
   final TextEditingController _firstName = TextEditingController();
   final TextEditingController _lastName = TextEditingController();
@@ -53,11 +49,10 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
   Uint8List? _selectedImageMain;
 
   Future<void> _pickImageMain() async {
-    FilePickerResult? result =
-        await FilePicker.platform.pickFiles(type: FileType.image);
+    FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.image);
     if (result != null && result.files.single.bytes != null) {
       setState(() {
-        _selectedImageMain = result.files.single.bytes!;
+        _selectedImageMain = result.files.single.bytes! as Uint8List?;
       });
     }
   }
@@ -103,6 +98,10 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
       errors['phone'] = 'شماره موبایل الزامی است';
     }
 
+    if (_telephone.text.isEmpty) {
+      errors['telephone'] = 'شماره تلفن ثابت الزامی است';
+    }
+
     if (_email.text.isEmpty || !_email.text.contains('@')) {
       errors['email'] = 'ایمیل معتبر نیست';
     }
@@ -129,7 +128,7 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
       return;
     }
 
-    final admin = Admin(
+    /*final admin = Admin(
       id: 0,
       first_name: _firstName.text,
       last_name: _lastName.text,
@@ -139,30 +138,34 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
       status: 1,
       national_code: int.parse(_nationalCode.text),
       telephone: _telephone.text,
-      image:
-          _selectedImageMain != null ? base64Encode(_selectedImageMain!) : null,
+      image: _selectedImageMain != null ? base64Encode(_selectedImageMain!) : null,
     );
 
-    context.read<AdminCubit>().createAdmin(admin);
+    context.read<AdminCubit>().createAdmin(admin);*/
   }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Directionality(
-        textDirection: TextDirection.rtl,
-        child: Column(
-          children: [
-            const AppBarMain(),
-            Expanded(
-              child: SingleChildScrollView(
+          textDirection: TextDirection.rtl,
+          child: Column(
+            children: [
+              AppBarMain(),
+              Expanded(
+                child:  SingleChildScrollView(
                   padding: const EdgeInsets.symmetric(
                       vertical: 20, horizontal: containerHorizontal),
                   child: Column(
                     children: [
                       HeaderMain(
-                        title: 'افزودن کارشناس',
-                        crumbs: const ['داشبورد', 'کارشناسان'],
+                        title: 'ایجاد مشتری جدید',
+                        crumbs: const [
+                          'داشبورد',
+                          'مدیریت مشتریان',
+                          'ایجاد مشتری جدید'
+                        ],
                       ),
                       FormWidget(
                         body: Column(
@@ -183,7 +186,7 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                   textColor: Colors.white,
                                   icon: Icons.check,
                                   iconColor: Colors.white,
-                                  onPressed: _submit, // فراخوانی تابع _submit
+                                  onPressed: _submit,  // فراخوانی تابع _submit
                                 ),
                               ],
                             ),
@@ -197,12 +200,9 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                       width: 150,
                                       height: 150,
                                       decoration: BoxDecoration(
-                                        color: _selectedImageMain == null
-                                            ? Colors.grey[200]
-                                            : Colors.transparent,
+                                        color: _selectedImageMain == null ? Colors.grey[200] : Colors.transparent,
                                         shape: BoxShape.rectangle,
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
+                                        borderRadius: BorderRadius.circular(8.0),
                                         border: Border.all(
                                           color: Theme.of(context).dividerColor,
                                           style: BorderStyle.solid,
@@ -212,39 +212,30 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                       padding: const EdgeInsets.all(20.0),
                                       child: _selectedImageMain == null
                                           ? Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Icon(
-                                                  Icons.photo_library,
-                                                  size: 50,
-                                                  color: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyMedium
-                                                      ?.color
-                                                      ?.withOpacity(0.2),
-                                                ),
-                                                const SizedBox(height: 10),
-                                                Text(
-                                                  'تصویر کارشناس',
-                                                  style: TextStyle(
-                                                    color: Theme.of(context)
-                                                        .textTheme
-                                                        .bodyMedium
-                                                        ?.color
-                                                        ?.withOpacity(0.2),
-                                                    fontFamily: 'Medium',
-                                                    fontSize: 20,
-                                                  ),
-                                                ),
-                                              ],
-                                            )
-                                          : Image.memory(
-                                              _selectedImageMain!,
-                                              fit: BoxFit.cover,
-                                              width: 100,
-                                              height: 100,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.photo_library,
+                                            size: 50,
+                                            color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.2),
+                                          ),
+                                          const SizedBox(height: 10),
+                                          Text(
+                                            'تصویر کارشناس',
+                                            style: TextStyle(
+                                              color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.2),
+                                              fontFamily: 'Medium',
+                                              fontSize: 20,
                                             ),
+                                          ),
+                                        ],
+                                      )
+                                          : Image.memory(
+                                        _selectedImageMain!,
+                                        fit: BoxFit.cover,
+                                        width: 100,
+                                        height: 100,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -275,8 +266,7 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                             child: TextFieldWidget(
                                               controller: _nationalCode,
                                               label: 'کد ملی',
-                                              errorText:
-                                                  _errors['nationalCode'],
+                                              errorText: _errors['nationalCode'],
                                             ),
                                           ),
                                         ],
@@ -288,8 +278,7 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                             child: TextFieldWidget(
                                               controller: _password,
                                               label: 'رمز عبور',
-                                              inputType:
-                                                  TextInputType.visiblePassword,
+                                              inputType: TextInputType.visiblePassword,
                                               errorText: _errors['password'],
                                             ),
                                           ),
@@ -424,10 +413,11 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                         ),
                       ),
                     ],
-                  )),
-            )
-          ],
-        ),
+                  ),
+                ),
+              )
+            ],
+          )
       ),
       endDrawer: const SideDrawer(),
     );
