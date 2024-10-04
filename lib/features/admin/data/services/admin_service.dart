@@ -17,11 +17,8 @@ class AdminService {
       String? token = await ExpertPreferences.getToken();
       return token ?? '';
     }
-
     String authToken = await token();
-    print('Token: $authToken');
-
-    _dio.options.headers['Authorization'] = 'Bearer $authToken';
+    _dio.options.headers['Authorization'] = authToken;
   }
 
 
@@ -29,36 +26,54 @@ class AdminService {
     try {
       await _setAuthorizationHeader();
       final response = await _dio.get(Routes.adminIndex);
-      _handleResponse(response);
-      return (response.data['data'] as List).map((json) => Admin.fromJson(json)).toList();
+      if (response.statusCode == 200) {
+        return (response.data['data'] as List).map((json) => Admin.fromJson(json)).toList();
+      } else {
+        throw Exception(response.data['message']);
+      }
     } on DioError catch (e) {
       throw Exception(e.response?.data['message'] ?? 'Request failed with status ${e.response?.statusCode}');
+    } catch (e) {
+      throw Exception('Failed: $e');
     }
   }
 
   Future<Map<String, dynamic>> getAdmin(double id) async {
     await _setAuthorizationHeader();
     final response = await _dio.get('${Routes.adminShow}$id');
-    _handleResponse(response);
     return {
       'data': Admin.fromJson(response.data['data']),
       'message': response.data['message'] ?? 'Admin fetched successfully',
     };
   }
 
-  Future<Map<String, dynamic>> createAdmin(Admin admin) async {
+  /// Create Admin
+  Future<Map<String, dynamic>> create(Admin admin) async {
     await _setAuthorizationHeader();
-    final response = await _dio.post(Routes.adminCreate, data: admin.toJson());
-    _handleResponse(response);
-    return {
-      'message': response.data['message'] ?? 'Admin created successfully',
-    };
+    try {
+      print(admin.toJson().toString());
+      final response = await _dio.post(
+        Routes.adminCreate,
+        data: admin.toJson(),
+      );
+      return {
+        'message': response.data['message'] ?? 'Admin created successfully',
+      };
+    } on DioError catch (e) {
+      print('Error: ${e.response?.data ?? 'Request failed with status ${e.response?.statusCode}'}');
+      throw Exception(e.response?.data['message'] ?? 'Request failed with status ${e.response?.statusCode}');
+    }
   }
 
+
+  /// Update Admin
   Future<Map<String, dynamic>> updateAdmin(Admin admin) async {
     await _setAuthorizationHeader();
     final response = await _dio.put('/admins/${admin.id}', data: admin.toJson());
-    _handleResponse(response);
+    if (response.statusCode != 200) {
+      print('Error: ${response.data['message'] ?? 'Request failed with status ${response.statusCode}'}');
+      throw Exception(response.data['message'] ?? 'Request failed with status ${response.statusCode}');
+    }
     return {
       'message': response.data['message'] ?? 'Admin updated successfully',
     };

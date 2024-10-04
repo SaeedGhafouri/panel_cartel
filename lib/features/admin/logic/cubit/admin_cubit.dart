@@ -29,16 +29,6 @@ class AdminCubit extends Cubit<AdminState> {
     }
   }
 
-  void createAdmin(Admin admin) async {
-    try {
-      emit(AdminLoading());
-      final response = await _adminService.createAdmin(admin);
-      emit(AdminCreated(response['message']));
-    } catch (e) {
-      emit(AdminError(e.toString()));
-    }
-  }
-
   void updateAdmin(Admin admin) async {
     try {
       emit(AdminLoading());

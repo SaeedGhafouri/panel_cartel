@@ -1,16 +1,11 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:panel_cartel/core/constants/assets.dart';
 import 'package:panel_cartel/core/themes/themes.dart';
 import 'package:panel_cartel/core/utils/app_routes.dart';
-import 'package:toggle_switch/toggle_switch.dart';
-
-import '../themes/theme_bloc.dart';
-import '../themes/theme_event.dart';
 
 class SideDrawer extends StatefulWidget {
   const SideDrawer({Key? key}) : super(key: key);
@@ -20,7 +15,7 @@ class SideDrawer extends StatefulWidget {
 }
 
 class _SideDrawerState extends State<SideDrawer> {
-  bool _isExpanded = false;
+  bool _isExpanded = true;
 
   @override
   Widget build(BuildContext context) {
@@ -217,7 +212,7 @@ List<Menu> menuItems(BuildContext context) => [
         name: 'مدیریت کارشناسان',
         icon: IconsaxPlusLinear.user_add,
         onPress: () {
-          context.go(AppRoutes.admins);
+          context.go('${AppRoutes.admins}');
         },
       ),
       Menu(

@@ -43,6 +43,7 @@ class PageNotFound extends StatelessWidget {
             width: 180,
             child: ButtonWidget(
               onPressed: () {
+                // return
                 context.go(AppRoutes.dashboard);
               },
               text: 'به داشبورد بروید',

@@ -4,25 +4,24 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:iconsax_plus/iconsax_plus.dart';
-import 'package:panel_cartel/core/dialogs/invalid_auth_dialog.dart';
-import 'package:panel_cartel/core/dialogs/logout_dialog.dart';
 import 'package:panel_cartel/core/utils/app_routes.dart';
+import 'package:panel_cartel/core/utils/toast.dart';
 import 'package:panel_cartel/core/widgets/datagrid/table_header_widget.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:panel_cartel/core/widgets/gender_spinner_widget.dart';
 import 'package:panel_cartel/core/widgets/side_drawer.dart';
 import 'package:panel_cartel/core/widgets/status_switch_widget.dart';
-import 'package:toggle_switch/toggle_switch.dart';
 import '../../../../core/themes/themes.dart';
 import '../../../../core/widgets/appbar.dart';
 import '../../../../core/widgets/commadbar_main.dart';
 import '../../../../core/widgets/form_widget.dart';
 import '../../../../core/widgets/header_main.dart';
 import '../../../../core/widgets/image_picker_widget.dart';
+import '../../../../core/widgets/progress_widget.dart';
 import '../../../../core/widgets/text_field_widget.dart';
 import '../../data/models/admin_model.dart';
 import '../../logic/cubit/admin_cubit.dart';
+import '../../logic/cubit/create/admin_create_cubit.dart';
 
 class AdminCreateScreen extends StatefulWidget {
   static String routeName = 'adminCreate';
@@ -42,7 +41,7 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
   final TextEditingController _email = TextEditingController();
   final TextEditingController _nationalCode = TextEditingController();
   final int _sex = 1;
-  late int _status;
+  late int _status = 1;
 
   //Address
   final TextEditingController _country = TextEditingController();
@@ -132,6 +131,7 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
     final errors = _validateForm();
 
     if (errors.isNotEmpty) {
+      print('Error isnotempty');
       return;
     }
 
@@ -140,15 +140,15 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
       last_name: _lastName.text,
       mobile: _phone.text,
       email: _email.text,
+      password: _password.text,
       sex: _sex,
       status: _status,
-      national_code: int.parse(_nationalCode.text),
+      national_code: int.parse(_nationalCode.text.trim()),
       telephone: _telephone.text,
-      image:
-          _selectedImageMain != null ? base64Encode(_selectedImageMain!) : null,
+      image: _selectedImageMain != null ? base64Encode(_selectedImageMain!) : null,
     );
-
-    context.read<AdminCubit>().createAdmin(admin);
+    print('start');
+    context.read<AdminCreateCubit>().create(admin);
   }
 
   @override
@@ -182,14 +182,30 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                     context.go(AppRoutes.admins);
                                   },
                                 ),
-                                CommadbarWidget(
-                                  text: 'تایید و ذخیره',
-                                  background: Theme.of(context).primaryColor,
-                                  textColor: Colors.white,
-                                  icon: Icons.check,
-                                  iconColor: Colors.white,
-                                  onPressed: _submit,
-                                ),
+                                BlocConsumer<AdminCreateCubit, AdminCreateState>(
+                                    builder: (context, state) {
+                                      if (state is AdminCreateLoading) {
+                                        return const ProgressWidget();
+                                      } else {
+                                        return CommadbarWidget(
+                                          text: 'تایید و ذخیره',
+                                          background: Theme.of(context).primaryColor,
+                                          textColor: Colors.white,
+                                          icon: Icons.check,
+                                          iconColor: Colors.white,
+                                          onPressed: _submit,
+                                        );
+                                      }
+                                    },
+                                    listener: (context, state) {
+                                      if (state is AdminCreateSuccess) {
+                                        showToast(context: context, message: 'کاربر با موفقیت اضافه شد', type: ToastType.success);
+                                        context.go(AppRoutes.admins);
+                                      } else if (state is AdminCreateFailure) {
+                                        showToast(context: context, message: state.message);
+                                      }
+                                    }
+                                )
                               ],
                             ),
                             Row(
@@ -263,7 +279,7 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                           const SizedBox(width: 8.0),
                                           Expanded(
                                             child: GenderSpinnerWidget(
-                                                errorText: _errors['sex'])
+                                                /*errorText: _errors['sex']*/)
                                           ),
                                         ],
                                       ),
@@ -290,13 +306,10 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                             ),
                                           ),
                                           const SizedBox(width: 8.0),
-                                          Expanded(
-                                            flex: 2,
-                                            child: StatusSwitchWidget(
-                                              onToggle: (p0) {
-                                                _status = p0;
-                                              },
-                                            ),
+                                          StatusSwitchWidget(
+                                            onToggle: (p0) {
+                                              _status = p0;
+                                            },
                                           ),
                                         ],
                                       ),

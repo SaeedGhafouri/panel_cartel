@@ -18,10 +18,6 @@ class AdminDetailLoaded extends AdminState {
   AdminDetailLoaded(this.admin, response);
 }
 
-class AdminCreated extends AdminState {
-  AdminCreated(response);
-}
-
 class AdminUpdated extends AdminState {
   AdminUpdated(response);
 }

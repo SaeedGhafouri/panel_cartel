@@ -7,10 +7,10 @@ import 'package:panel_cartel/core/widgets/actions_popup_widget.dart';
 import 'package:panel_cartel/core/widgets/appbar.dart';
 import 'package:panel_cartel/core/widgets/form_widget.dart';
 import 'package:panel_cartel/core/widgets/header_main.dart';
+import 'package:panel_cartel/features/admin/logic/cubit/destroy/admin_destroy_cubit.dart';
+import 'package:panel_cartel/features/admin/logic/cubit/index/admin_index_cubit.dart';
 import 'package:panel_cartel/features/admin/presentation/screens/admin_create_screen.dart';
-import 'package:panel_cartel/features/auth/logic/storage/expert/expert_preferences.dart';
-import 'package:panel_cartel/features/auth/presentation/screens/login_screen.dart';
-import '../../../../core/network/routes.dart';
+import '../../../../core/utils/app_routes.dart';
 import '../../../../core/widgets/commadbar_main.dart';
 import '../../../../core/widgets/datagrid/table_column_widget.dart';
 import '../../../../core/widgets/datagrid/table_header_widget.dart';
@@ -18,8 +18,7 @@ import '../../../../core/widgets/datagrid/table_row_widget.dart';
 import '../../../../core/widgets/progress_widget.dart';
 import '../../../../core/widgets/search_widget.dart';
 import '../../../../core/widgets/side_drawer.dart';
-import '../../logic/cubit/admin_cubit.dart';
-import '../../logic/cubit/admin_state.dart';
+import '../../logic/cubit/create/admin_create_cubit.dart';
 
 class AdminIndexScreen extends StatefulWidget {
   static String routeName = '/admins';
@@ -36,7 +35,7 @@ class _AdminIndexScreenState extends State<AdminIndexScreen> {
   void initState() {
     super.initState();
 
-    context.read<AdminCubit>().fetchAdmins();
+    context.read<AdminIndexCubit>().index();
   }
 
   @override
@@ -67,15 +66,14 @@ class _AdminIndexScreenState extends State<AdminIndexScreen> {
                               text: 'افزودن کارشناس',
                               icon: IconsaxPlusLinear.add,
                               onPressed: () {
-                                // TODO: اضافه کردن کارشناس
-                                GoRouter.of(context).push(AdminCreateScreen.routeName);
+                                context.go('${AppRoutes.admins}/${AppRoutes.adminCreate}');
                               },
                             ),
                             CommadbarWidget(
                               text: 'بروزرسانی',
                               icon: IconsaxPlusLinear.refresh,
                               onPressed: () {
-                                context.read<AdminCubit>().fetchAdmins();
+                                context.read<AdminIndexCubit>().index();
                               },
                             ),
                           ],
@@ -94,16 +92,15 @@ class _AdminIndexScreenState extends State<AdminIndexScreen> {
                             'کدملی',
                             'نام',
                             'تصویر',
-                            'شناسه',
                           ],
                         ),
-                        BlocConsumer<AdminCubit, AdminState>(
+                        BlocConsumer<AdminIndexCubit, AdminIndexState>(
                           listener: (context, state) {
                           },
                           builder: (context, state) {
-                            if (state is AdminLoading) {
+                            if (state is AdminIndexLoading) {
                               return  Center(child: ProgressWidget());
-                            } else if (state is AdminLoaded) {
+                            } else if (state is AdminIndexLoaded) {
                               return ListView.builder(
                                 shrinkWrap: true,
                                 itemCount: state.admins.length,
@@ -118,12 +115,11 @@ class _AdminIndexScreenState extends State<AdminIndexScreen> {
                                       admin.national_code,
                                       '${admin.first_name} ${admin.last_name}',
                                       admin.image,
-                                      admin.id.toString(),
                                     ],
                                     actions: [
                                       ActionPopupWidget(
                                         onDelete: () {
-                                          context.read<AdminCubit>().deleteAdmin(admin.id!);
+                                          //context.read<AdminDestroyCubit>().deleteAdmin(admin.id!);
                                         },
                                         onUpdate: () {
                                           GoRouter.of(context).go('/admins/adminDetails/${3}');
@@ -136,7 +132,7 @@ class _AdminIndexScreenState extends State<AdminIndexScreen> {
                                   );
                                 },
                               );
-                            } else if (state is AdminError) {
+                            } else if (state is AdminIndexError) {
                               return Center(
                                 child: Text(
                                   state.message,

@@ -13,7 +13,6 @@ import 'package:panel_cartel/core/widgets/spinner_widget.dart';
 import 'package:panel_cartel/features/admin/logic/cubit/admin_state.dart';
 import '../../../../core/constants/assets.dart';
 import '../../../../core/themes/themes.dart';
-import '../../../../core/widgets/card_widget.dart';
 import '../../../../core/widgets/text_field_widget.dart';
 import '../../logic/cubit/admin_cubit.dart';
 

@@ -17,9 +17,9 @@ class ProductService {
 
     _dio.options.headers['Authorization'] = 'Bearer $authToken';
   }
+
   Future<List<Product>> index() async {
     try {
-
       await _setAuthorizationHeader();
       final response = await _dio.get(Routes.productIndex);
       if (response.statusCode == 200) {

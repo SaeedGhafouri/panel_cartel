@@ -34,13 +34,15 @@ class _StatusSwitchWidgetState extends State<StatusSwitchWidget> {
       animationDuration: 300,
       animate: true,
       activeFgColor: Colors.white,
-      inactiveFgColor: Theme.of(context).dividerColor,
+      inactiveFgColor: Theme.of(context).textTheme.headlineMedium?.color,
       inactiveBgColor: Theme.of(context).dividerColor.withOpacity(0.5),
       totalSwitches: 2,
       labels: ['فعال', 'غیرفعال'],
       customTextStyles: const [
         TextStyle(fontSize: 12),
-        TextStyle(fontSize: 12),
+      ],
+      activeBgColor: [
+        Theme.of(context).primaryColor,
       ],
       initialLabelIndex: currentIndex, // مقدار اولیه را تعیین کنید
       onToggle: (index) {

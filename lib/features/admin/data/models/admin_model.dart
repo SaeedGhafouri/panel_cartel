@@ -65,6 +65,7 @@ class Admin {
       'id': id,
       'first_name': first_name,
       'last_name': last_name,
+      'password': password,
       'mobile': mobile,
       'mobile_verify': mobileVerify,
       'email': email,

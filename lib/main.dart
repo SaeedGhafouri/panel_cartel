@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:panel_cartel/features/admin/logic/cubit/create/admin_create_cubit.dart';
 import 'package:panel_cartel/features/auth/data/services/auth_service.dart';
 import 'package:panel_cartel/features/auth/logic/cubit/auth_cubit.dart';
 import 'package:panel_cartel/features/product/data/services/product_service.dart';
@@ -12,6 +13,7 @@ import 'features/Category/data/services/category_service.dart';
 import 'features/Category/logic/cubit/Category_cubit.dart';
 import 'features/admin/data/services/admin_service.dart';
 import 'features/admin/logic/cubit/admin_cubit.dart';
+import 'features/admin/logic/cubit/index/admin_index_cubit.dart';
 import 'features/brand/data/services/brand_service.dart';
 import 'features/brand/logic/cubit/brand_cubit.dart';
 import 'features/product/data/services/barcode_service.dart';
@@ -26,8 +28,15 @@ void main() {
   runApp(
     MultiBlocProvider(
       providers: [
+        /// Admins
         BlocProvider<AdminCubit>(
           create: (context) => AdminCubit(AdminService(Dio())),
+        ),
+        BlocProvider<AdminIndexCubit>(
+          create: (context) => AdminIndexCubit(AdminService(Dio())),
+        ),
+        BlocProvider<AdminCreateCubit>(
+          create: (context) => AdminCreateCubit(AdminService(Dio())),
         ),
         /// User
         BlocProvider<UserIndexCubit>(
