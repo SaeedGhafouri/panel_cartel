@@ -13,7 +13,12 @@ import 'features/Category/data/services/category_service.dart';
 import 'features/Category/logic/cubit/Category_cubit.dart';
 import 'features/admin/data/services/admin_service.dart';
 import 'features/admin/logic/cubit/admin_cubit.dart';
+import 'features/admin/logic/cubit/destroy/admin_destroy_cubit.dart';
 import 'features/admin/logic/cubit/index/admin_index_cubit.dart';
+import 'features/admin/logic/cubit/permission/permission_cubit.dart';
+import 'features/admin/logic/cubit/role/role_cubit.dart';
+import 'features/admin/logic/cubit/show/admin_show_cubit.dart';
+import 'features/admin/logic/cubit/update/admin_update_cubit.dart';
 import 'features/brand/data/services/brand_service.dart';
 import 'features/brand/logic/cubit/brand_cubit.dart';
 import 'features/product/data/services/barcode_service.dart';
@@ -37,6 +42,21 @@ void main() {
         ),
         BlocProvider<AdminCreateCubit>(
           create: (context) => AdminCreateCubit(AdminService(Dio())),
+        ),
+        BlocProvider<AdminDestroyCubit>(
+          create: (context) => AdminDestroyCubit(AdminService(Dio())),
+        ),
+        BlocProvider<AdminShowCubit>(
+          create: (context) => AdminShowCubit(AdminService(Dio())),
+        ),
+        BlocProvider<AdminUpdateCubit>(
+          create: (context) => AdminUpdateCubit(AdminService(Dio())),
+        ),
+        BlocProvider<RoleCubit>(
+          create: (context) => RoleCubit(AdminService(Dio())),
+        ),
+        BlocProvider<PermissionCubit>(
+          create: (context) => PermissionCubit(AdminService(Dio())),
         ),
         /// User
         BlocProvider<UserIndexCubit>(
@@ -94,4 +114,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

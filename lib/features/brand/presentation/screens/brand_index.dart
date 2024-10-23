@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:panel_cartel/core/widgets/appbar.dart';
 import 'package:panel_cartel/core/widgets/button_widget.dart';
+import 'package:panel_cartel/core/widgets/side_drawer.dart';
 
 import '../../../../core/themes/themes.dart';
 import '../../../../core/widgets/datagrid/table_column_widget.dart';
@@ -26,6 +27,13 @@ class BrandIndexScreen extends StatefulWidget {
 }
 
 class _BrandIndexScreenState extends State<BrandIndexScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<BrandCubit>().fetchBrands();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -146,6 +154,7 @@ class _BrandIndexScreenState extends State<BrandIndexScreen> {
           )
         ],
       ),
+      endDrawer: const SideDrawer(),
     );
   }
 }

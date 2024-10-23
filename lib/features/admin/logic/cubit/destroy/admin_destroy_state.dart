@@ -1,6 +1,16 @@
 part of 'admin_destroy_cubit.dart';
 
 @immutable
-sealed class AdminDestroyState {}
+abstract class AdminDestroyState {}
 
-final class AdminDestroyInitial extends AdminDestroyState {}
+ class AdminDestroyInitial extends AdminDestroyState {}
+ class AdminDestroyLoading extends AdminDestroyState {}
+ class AdminDestroySuccess extends AdminDestroyState {
+   final String message;
+   AdminDestroySuccess(this.message);
+ }
+ class AdminDestroyError extends AdminDestroyState {
+   final String message;
+
+   AdminDestroyError(this.message);
+ }

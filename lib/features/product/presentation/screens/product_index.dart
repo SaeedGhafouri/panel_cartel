@@ -109,6 +109,7 @@ class _ProductIndexScreenState extends State<ProductIndexScreen> {
                                           try {
                                             context.read<ProductDestroyCubit>().destroy(product.id!);
                                             context.read<ProductIndexCubit>().index();
+                                            showToast(context: context, message: 'محصول با موفقیت حذف شد', type: ToastType.success);
                                           } catch (e) {
                                             showToast(context: context, message: e.toString());
                                           }
@@ -143,7 +144,6 @@ class _ProductIndexScreenState extends State<ProductIndexScreen> {
                           },
                           listener: (context, state) {
                               if (state is ProductIndexLoaded) {
-
                             } else if (state is ProductIndexError) {
                               showToast(context: context, message: state.message);
                             }

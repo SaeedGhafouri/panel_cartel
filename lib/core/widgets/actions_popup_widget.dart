@@ -37,7 +37,7 @@ class ActionPopupWidget extends StatelessWidget {
                   ),
                   Icon(
                     IconsaxPlusLinear.eye,
-                    color: Theme.of(context).dividerColor,
+                    color: Theme.of(context).iconTheme.color,
                     size: 17,
                   ),
                 ]))
@@ -56,7 +56,7 @@ class ActionPopupWidget extends StatelessWidget {
                   ),
                   Icon(
                     IconsaxPlusLinear.edit,
-                    color: Theme.of(context).dividerColor,
+                    color: Theme.of(context).iconTheme.color,
                     size: 17,
                   ),
                 ]))

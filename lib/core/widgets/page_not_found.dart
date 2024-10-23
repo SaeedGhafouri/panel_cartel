@@ -43,34 +43,23 @@ class PageNotFound extends StatelessWidget {
             width: 180,
             child: ButtonWidget(
               onPressed: () {
-                // return
+                Navigator.of(context).maybePop();
+              },
+              text: 'بازگشت',
+            ),
+          ),
+          SizedBox(height: 20),
+          SizedBox(
+            width: 180,
+            child: ButtonWidget(
+              onPressed: () {
                 context.go(AppRoutes.dashboard);
               },
               text: 'به داشبورد بروید',
             ),
-          )
+          ),
         ],
       ),
     ));
-    /*return Scaffold(
-      appBar: AppBar(
-        title: const Text('صفحه پیدا نشد'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text('متاسفانه، این صفحه پیدا نشد.'),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                context.go(AppRoutes.dashboard);
-              },
-              child: const Text('به داشبورد بروید'),
-            ),
-          ],
-        ),
-      ),
-    );*/
   }
 }

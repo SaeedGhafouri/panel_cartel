@@ -3,9 +3,10 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 class ImagePickerWidget extends StatefulWidget {
+  final String? label;
   final Function(Uint8List?) onImageSelected;
 
-  const ImagePickerWidget({Key? key, required this.onImageSelected})
+  const ImagePickerWidget({Key? key, required this.onImageSelected, this.label})
       : super(key: key);
 
   @override
@@ -19,18 +20,16 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
     try {
       FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.image);
 
-      if (result != null && result.files.single.bytes != null) {
-        setState(() {
-          _selectedImage = result.files.single.bytes!;
-        });
-        widget.onImageSelected(_selectedImage);
+      if (result != null) {
+        print("Image path: ${result.files.single.path}");
       } else {
-        debugPrint("هیچ تصویری انتخاب نشد."); // برای دیباگ
+        print("No image selected.");
       }
     } catch (e) {
-      debugPrint("خطا در انتخاب تصویر: $e"); // برای دیباگ
+      print("Error picking image: $e");
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +63,7 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
             ),
             const SizedBox(height: 10),
             Text(
-              'تصویر کارشناس',
+              widget.label ??'تصویر',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
           ],

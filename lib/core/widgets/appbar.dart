@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
-import 'package:panel_cartel/core/dialogs/logout_dialog.dart';
+import 'package:panel_cartel/core/utils/app_routes.dart';
 import 'package:panel_cartel/core/widgets/profile_popup_widget.dart';
 import 'package:shamsi_date/shamsi_date.dart';
 import '../../features/auth/logic/storage/expert/expert_preferences.dart';
 import '../themes/themes.dart';
 
 class AppBarMain extends StatelessWidget {
-  const AppBarMain({super.key});
 
   final role = 'مدیرعامل';
 
+  const AppBarMain({super.key});
+
   Future<String> getImageUrl() async {
     String? imageUrl = await ExpertPreferences.getImageUrl();
-    return imageUrl ?? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAd5avdba8EiOZH8lmV3XshrXx7dKRZvhx-A&s';
+    return imageUrl!;
   }
 
   Future<String> getFullName() async {
@@ -102,9 +103,9 @@ class AppBarMain extends StatelessWidget {
               children: [
                 IconButton(
                   onPressed: () {
-                    context.pop;
+                    context.go(AppRoutes.dashboard);
                   },
-                  icon: Icon(IconsaxPlusLinear.arrow_left_1),
+                  icon: Icon(IconsaxPlusLinear.home_2, size: 17,),
                 ),
 
                 IconButton(

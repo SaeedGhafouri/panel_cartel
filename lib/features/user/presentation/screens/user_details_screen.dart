@@ -16,18 +16,18 @@ import '../../../../core/constants/assets.dart';
 import '../../../../core/themes/themes.dart';
 import '../../../../core/widgets/error_response_widget.dart';
 import '../../../../core/widgets/text_field_widget.dart';
-import '../../data/models/admin_model.dart';
-import '../../logic/cubit/update/admin_update_cubit.dart';
+import '../../data/models/user_model.dart';
+import '../../logic/cubit/show/user_show_cubit.dart';
 
-class AdminDetailsScreen extends StatefulWidget {
-  static const String routeName = '/adminDetails';
-  final int? adminId;
-  const AdminDetailsScreen({Key? key, this.adminId}) : super(key: key);
+class UserDetailsScreen extends StatefulWidget {
+  static const String routeName = '/userDetails';
+  final int? userId;
+  const UserDetailsScreen({Key? key, this.userId}) : super(key: key);
   @override
-  _AdminDetailsScreenState createState() => _AdminDetailsScreenState();
+  _UserDetailsScreenState createState() => _UserDetailsScreenState();
 }
 
-class _AdminDetailsScreenState extends State<AdminDetailsScreen> {
+class _UserDetailsScreenState extends State<UserDetailsScreen> {
   //Person
   final TextEditingController _firstName = TextEditingController();
   final TextEditingController _lastName = TextEditingController();
@@ -36,12 +36,14 @@ class _AdminDetailsScreenState extends State<AdminDetailsScreen> {
   final TextEditingController _telephone = TextEditingController();
   final TextEditingController _email = TextEditingController();
   final TextEditingController _nationalCode = TextEditingController();
+  final TextEditingController _economicCode = TextEditingController();
   late int _sex;
   @override
   void initState() {
     super.initState();
     context.read<AdminShowCubit>().show(1);
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,29 +61,29 @@ class _AdminDetailsScreenState extends State<AdminDetailsScreen> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       HeaderMain(
-                        title: 'پروفایل کارشناس',
-                        crumbs: const [
-                          'داشبورد',
-                          'کارشناسان',
-                          'پروفایل کارشناس'
-                        ],
+                        title: 'پروفایل مشتری',
+                        crumbs: const ['داشبورد', 'مشتریان', 'پروفایل مشتری'],
                       ),
-                      BlocConsumer<AdminShowCubit, AdminShowState>(
+                      BlocConsumer<UserShowCubit, UserShowState>(
                           builder: (context, state) {
-                            if (state is AdminShowLoading) {
+                            if (state is UserShowLoading) {
                               return const Center(child: ProgressWidget());
-                            } else if (state is AdminShowLoaded) {
+                            } else if (state is UserShowLoaded) {
                               return Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  buildProfileInfo(state.admin),
-                                  const SizedBox(width: spacingSmall,),
-                                  buildProfileForm(state.admin)
+                                  buildProfileInfo(state.user),
+                                  const SizedBox(
+                                    width: spacingSmall,
+                                  ),
+                                  buildProfileForm(state.user)
                                 ],
                               );
-                            } else if (state is AdminShowError) {
+                            } else if (state is UserShowError) {
                               print('request failed ${state.message}');
-                              return ErrorResponseWidget(message: state.message);;
+                              return ErrorResponseWidget(
+                                  message: state.message);
+                              ;
                             } else {
                               return Center(
                                 child: Text(
@@ -101,14 +103,15 @@ class _AdminDetailsScreenState extends State<AdminDetailsScreen> {
       endDrawer: const SideDrawer(),
     );
   }
-  Widget buildProfileForm(Admin admin) {
-    _firstName.text = admin.first_name!;
-    _lastName.text = admin.last_name!;
-    _phone.text = admin.mobile!;
-    _telephone.text = admin.telephone!;
-    _email.text = admin.email!;
-    _nationalCode.text = admin.national_code.toString();
-    _sex = admin.sex!;
+
+  Widget buildProfileForm(User user) {
+    _firstName.text = user.first_name!;
+    _lastName.text = user.last_name!;
+    _phone.text = user.mobile!;
+    _telephone.text = user.telephone!;
+    _email.text = user.email!;
+    _nationalCode.text = user.national_code.toString();
+    _sex = user.sex!;
     return Expanded(
         flex: 7,
         child: FormWidget(
@@ -124,14 +127,14 @@ class _AdminDetailsScreenState extends State<AdminDetailsScreen> {
                       context.read<AdminShowCubit>().show(1);
                     },
                   ),
-                  BlocConsumer<AdminUpdateCubit, AdminUpdateState>(
+                  /*BlocConsumer<UserUpdateCubit, UserUpdateState>(
                     listener: (context, state) {
-                      if (state is AdminUpdateError) {
+                      if (state is UserUpdateError) {
                         showToast(context: context, message: state.message);
                       }
                     },
                     builder: (context, state) {
-                      if (state is AdminUpdateLoading) {
+                      if (state is UserUpdateLoading) {
                         return CommadbarWidget(
                           text: 'ویرایش',
                           icon: IconsaxPlusLinear.edit,
@@ -142,7 +145,7 @@ class _AdminDetailsScreenState extends State<AdminDetailsScreen> {
                           text: 'ویرایش',
                           icon: IconsaxPlusLinear.edit,
                           onPressed: () {
-                            final data = Admin(
+                            final data = User(
                               id: admin.id,
                               first_name: _firstName.text,
                             );
@@ -151,15 +154,13 @@ class _AdminDetailsScreenState extends State<AdminDetailsScreen> {
                         );
                       }
                     },
-                  ),
+                  ),*/
                   CommadbarWidget(
                     text: 'حذف',
                     icon: IconsaxPlusLinear.trash,
                     iconColor: dangerColor,
                     textColor: dangerColor,
-                    onPressed: () {
-
-                    },
+                    onPressed: () {},
                   ),
                 ],
               ),
@@ -173,109 +174,73 @@ class _AdminDetailsScreenState extends State<AdminDetailsScreen> {
                         Row(
                           children: [
                             Expanded(
-                              child:
-                              TextFieldWidget(
-                                controller:
-                                _firstName,
+                              child: TextFieldWidget(
+                                controller: _firstName,
                                 label: 'نام',
                               ),
                             ),
-                            const SizedBox(
-                                width:
-                                spacingThin),
+                            const SizedBox(width: spacingThin),
                             Expanded(
-                              child:
-                              TextFieldWidget(
-                                controller:
-                                _lastName,
-                                label:
-                                'نام خانوادگی',
+                              child: TextFieldWidget(
+                                controller: _lastName,
+                                label: 'نام خانوادگی',
                               ),
                             ),
-                            const SizedBox(
-                                width:
-                                spacingThin),
+                            const SizedBox(width: spacingThin),
                             Expanded(
-                              child:
-                              TextFieldWidget(
-                                controller:
-                                _nationalCode,
+                              child: TextFieldWidget(
+                                controller: _nationalCode,
                                 label: 'کد ملی',
                               ),
                             ),
                           ],
                         ),
-                        const SizedBox(
-                            height: spacingThin),
+                        const SizedBox(height: spacingThin),
                         Row(
                           children: [
                             Expanded(
-                              child:
-                              TextFieldWidget(
-                                controller:
-                                _password,
+                              child: TextFieldWidget(
+                                controller: _password,
                                 label: 'رمز عبور',
                               ),
                             ),
-                            const SizedBox(
-                                width:
-                                spacingThin),
+                            const SizedBox(width: spacingThin),
                             Expanded(
-                              child:
-                              TextFieldWidget(
-                                controller:
-                                _email,
+                              child: TextFieldWidget(
+                                controller: _email,
                                 label: 'ایمیل',
                               ),
                             ),
-                            const SizedBox(
-                                width:
-                                spacingThin),
+                            const SizedBox(width: spacingThin),
                             Expanded(
-                                child:
-                                SpinnerWidget(
-                                  label: 'وضعیت',
-                                  items: const [
-                                    'مرد',
-                                    'زن'
-                                  ],
-                                  selectedItem:
-                                  _sex == 1
-                                      ? 'مرد'
-                                      : 'زن',
-                                  onChanged: (p0) {
-                                    if (p0 == 'مرد') {
-                                      _sex = 1;
-                                    } else {
-                                      _sex = 0;
-                                    }
-                                  },
-                                )),
+                                child: SpinnerWidget(
+                              label: 'وضعیت',
+                              items: const ['مرد', 'زن'],
+                              selectedItem: _sex == 1 ? 'مرد' : 'زن',
+                              onChanged: (p0) {
+                                if (p0 == 'مرد') {
+                                  _sex = 1;
+                                } else {
+                                  _sex = 0;
+                                }
+                              },
+                            )),
                           ],
                         ),
-                        const SizedBox(
-                            height: spacingThin),
+                        const SizedBox(height: spacingThin),
                         Row(
                           children: [
                             Expanded(
-                              child:
-                              TextFieldWidget(
-                                controller:
-                                _telephone,
-                                label:
-                                'تلفن ثابت',
+                              child: TextFieldWidget(
+                                controller: _telephone,
+                                label: 'تلفن ثابت',
                               ),
                             ),
-                            const SizedBox(
-                                width:
-                                spacingThin),
+                            const SizedBox(width: spacingThin),
                             Expanded(
-                              child:
-                              TextFieldWidget(
-                                controller:
-                                _phone,
-                                label:
-                                'شماره موبایل',
+                              child: TextFieldWidget(
+                                controller: _phone,
+                                label: 'شماره موبایل',
                               ),
                             ),
                           ],
@@ -288,28 +253,25 @@ class _AdminDetailsScreenState extends State<AdminDetailsScreen> {
             ],
           ),
         ));
-    
-}
-  Widget buildProfileInfo(Admin admin) {
+  }
+
+  Widget buildProfileInfo(User user) {
     return Expanded(
       flex: 3,
       child: FormWidget(
         body: Column(
           children: [
             ImageDisplayWidget(
-              imageUrl: admin.image,
+              imageUrl: user.image,
             ),
             const SizedBox(height: spacingSmall),
             //Change image
             TextButton(
               onPressed: () {},
               child: const Row(
-                mainAxisAlignment:
-                MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(IconsaxPlusLinear.edit,
-                      size: 15,
-                      color: grayIconColor),
+                  Icon(IconsaxPlusLinear.edit, size: 15, color: grayIconColor),
                   Text(
                     ' ویرایش تصویر',
                     style: TextStyle(
@@ -322,33 +284,35 @@ class _AdminDetailsScreenState extends State<AdminDetailsScreen> {
               ),
             ),
             const SizedBox(height: spacingThin),
-            Divider(height: 1, color: Theme.of(context).dividerColor,),
+            Divider(
+              height: 1,
+              color: Theme.of(context).dividerColor,
+            ),
             const SizedBox(height: spacingThin),
             Column(
               children: [
                 buildProfileInfoRow(
-                    IconsaxPlusLinear
-                        .personalcard,
+                    IconsaxPlusLinear.personalcard,
                     'نام و نام خانوادگی:',
-                    '${admin.first_name} ${admin.last_name}'),
+                    '${user.first_name} ${user.last_name}'),
                 buildProfileInfoRow(
-                    IconsaxPlusLinear.mobile,
-                    'شماره موبایل:',
-                    admin.mobile!),
+                    IconsaxPlusLinear.mobile, 'شماره موبایل:', user.mobile!),
                 buildProfileInfoRow(
-                    IconsaxPlusLinear.message,
-                    'ایمیل:',
-                    admin.email!),
+                    IconsaxPlusLinear.message, 'ایمیل:', user.email!),
               ],
             ),
             const SizedBox(height: spacingThin),
-            Divider(height: 1, color: Theme.of(context).dividerColor,),
+            Divider(
+              height: 1,
+              color: Theme.of(context).dividerColor,
+            ),
             const SizedBox(height: spacingThin),
           ],
         ),
       ),
     );
   }
+
   Widget buildProfileInfoRow(IconData icon, String label, String value) {
     return Container(
       margin: const EdgeInsets.only(bottom: spacingThin),
@@ -357,7 +321,11 @@ class _AdminDetailsScreenState extends State<AdminDetailsScreen> {
         children: [
           Row(
             children: [
-              Icon(icon, color: Theme.of(context).textTheme.headlineMedium?.color, size: 15,),
+              Icon(
+                icon,
+                color: Theme.of(context).textTheme.headlineMedium?.color,
+                size: 15,
+              ),
               const SizedBox(width: 5),
               Text(label, style: Theme.of(context).textTheme.headlineMedium),
             ],

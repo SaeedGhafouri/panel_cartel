@@ -8,8 +8,10 @@ class Routes {
   static const String adminIndex = '$baseUrl/admin/admin/index';
   static const String adminShow = '$baseUrl/admin/admin/show/';
   static const String adminCreate = '$baseUrl/admin/admin/create';
-  static const String adminUpdate = '$baseUrl/admin/admin/update';
-  static const String adminDelete = '$baseUrl/admin/admin/destroy/';
+  static const String adminUpdate = '$baseUrl/admin/admin/update/';
+  static const String adminDestroy = '$baseUrl/admin/admin/destroy/';
+  static const String adminRoles = '$baseUrl/admin/role/roles';
+  static const String adminPermission = '$baseUrl/admin/role/permissions';
 
   /// User
   static const String userIndex = '$baseUrl/admin/user/index';
@@ -26,7 +28,8 @@ class Routes {
   static const String productDestroy = '$baseUrl/admin/shop/product/destroy/';
 
   /// Barcode
-  static const String barcodeGenerator = '$baseUrl/admin/shop/barcode/generator';
+  static const String barcodeGenerator =
+      '$baseUrl/admin/shop/barcode/generator';
 
   /// Brand
   static const String brandIndex = '$baseUrl/admin/shop/brand/index';
@@ -39,5 +42,4 @@ class Routes {
   static const String categoryCreate = '$baseUrl/admin/shop/category/create';
   static const String categoryUpdate = '$baseUrl/admin/shop/category/update/';
   static const String categoryDelete = '$baseUrl/admin/shop/category/destroy/';
-
 }

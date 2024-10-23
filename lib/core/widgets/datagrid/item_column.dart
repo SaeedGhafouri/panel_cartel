@@ -33,7 +33,9 @@ class ItemColumn extends StatelessWidget {
             children: [
               WidgetSpan(
                 child: Icon(
-                  isVerified ? IconsaxPlusLinear.tick_circle : IconsaxPlusLinear.close_circle,
+                  isVerified
+                      ? IconsaxPlusLinear.tick_circle
+                      : IconsaxPlusLinear.close_circle,
                   size: 12,
                   color: isVerified ? successColor : dangerColor,
                 ),

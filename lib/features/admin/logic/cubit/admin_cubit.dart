@@ -12,42 +12,23 @@ class AdminCubit extends Cubit<AdminState> {
   void fetchAdmins() async {
     try {
       emit(AdminLoading());
-      final admins = await _adminService.index();
+      final admins = await _adminService.index('');
       emit(AdminLoaded(admins));
     } catch (e) {
       emit(AdminError(e.toString()));
     }
   }
 
-  void fetchAdminDetail(double id) async {
-    try {
-      emit(AdminLoading());
-      final response = await _adminService.getAdmin(id);
-      emit(AdminDetailLoaded(response['data'], response['message']));
-    } catch (e) {
-      emit(AdminError(e.toString()));
-    }
-  }
 
   void updateAdmin(Admin admin) async {
     try {
       emit(AdminLoading());
-      final response = await _adminService.updateAdmin(admin);
-      emit(AdminUpdated(response['message']));
+      final data = await _adminService.update(admin);
+      emit(AdminUpdated(data['message']));
       fetchAdmins();
     } catch (e) {
       emit(AdminError(e.toString()));
     }
   }
 
-  void deleteAdmin(int id) async {
-    try {
-      emit(AdminLoading());
-      final response = await _adminService.deleteAdmin(id);
-      emit(AdminDeleted(response['message']));
-      fetchAdmins();
-    } catch (e) {
-      emit(AdminError(e.toString()));
-    }
-  }
 }

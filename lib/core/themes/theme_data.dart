@@ -67,7 +67,6 @@ final ThemeData darkTheme = ThemeData(
       fontFamily: font_bold,
     ),
 
-
     //Gray Text
     headlineLarge: TextStyle(
       color: textSecondaryColor,
@@ -84,7 +83,6 @@ final ThemeData darkTheme = ThemeData(
       fontSize: 8,
       fontFamily: font_regular,
     ),
-
 
     labelLarge: TextStyle(
       color: textPrimaryColor,
@@ -103,8 +101,6 @@ final ThemeData darkTheme = ThemeData(
       fontFamily: font_regular,
     ),
   ),
-
-
 );
 
 /// DARK style
@@ -207,6 +203,4 @@ final ThemeData lightTheme = ThemeData(
       fontFamily: font_regular,
     ),
   ),
-
-
 );

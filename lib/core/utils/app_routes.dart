@@ -4,7 +4,7 @@ class AppRoutes {
   static const admins = '/admins';
   static const adminCreate = 'create';
   static const adminDetails = 'details/:adminId';
-  static const adminRoles = 'roles/:adminId';
+  static const adminRoles = 'roles';
   static const products = '/products';
   static const productDetails = 'details/:productId';
   static const productCreate = 'create';
@@ -15,4 +15,5 @@ class AppRoutes {
   static const userDetails = 'details/:userId';
   static const categories = '/products/categories';
   static const brands = '/brands';
+  static const permission = '/permission';
 }

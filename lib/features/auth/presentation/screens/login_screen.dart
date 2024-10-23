@@ -167,6 +167,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ExpertPreferences.setUserInfo(
                                 firstName: state.expert['expert']['first_name']!,
                                 lastName: state.expert['expert']['last_name']!,
+                                imageUrl: state.expert['expert']['image'],
                                 token: state.expert['token'],
                                 isLogin: true
                               );

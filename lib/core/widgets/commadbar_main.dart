@@ -16,6 +16,7 @@ class CommadbarWidget extends StatefulWidget {
   final Widget? child;
   final VoidCallback? onPressed;
   final MainAxisAlignment? alignment;
+  final bool isLoading;
 
   CommadbarWidget({
     required this.text,
@@ -30,6 +31,7 @@ class CommadbarWidget extends StatefulWidget {
     this.iconSize,
     this.child,
     this.alignment,
+    this.isLoading = false,
   });
 
   @override
@@ -56,7 +58,17 @@ class _CommadbarWidgetState extends State<CommadbarWidget> {
           mainAxisAlignment: widget.alignment ?? MainAxisAlignment.center,
           children: [
 
-            if (widget.icon != null) ...[
+            if (widget.isLoading) ...[
+              SizedBox(
+                height: 17,
+                width: 17,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  color: widget.iconColor ?? Theme.of(context).textTheme.bodyMedium?.color,
+                ),
+              ),
+              const SizedBox(width: 5,),
+            ] else if (widget.icon != null) ...[
               Icon(
                 widget.icon,
                 size: widget.iconSize ?? 17,

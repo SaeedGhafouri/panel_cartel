@@ -440,7 +440,6 @@ class _OrdersScreenState extends State<OrdersScreen> {
                             ),
                             SearchFieldWidget(
                               controller: _searchController,
-                              onPressed: () {},
                             ),
                           ],
                         )

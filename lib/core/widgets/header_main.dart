@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import '../constants/assets.dart';
 import '../themes/themes.dart';
+import '../utils/app_routes.dart';
 
 class HeaderMain extends StatefulWidget {
   final String? title;
@@ -31,12 +34,21 @@ class _HeaderMainState extends State<HeaderMain> {
                     child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      widget.title ?? '',
-                      style: const TextStyle(
-                        fontFamily: font_bold,
-                        fontSize: txt_50,
-                      ),
+                    Row(
+                      children: [
+                        IconButton(
+                            onPressed: () {
+                              navigateBack(context);
+                        }, icon: Icon(IconsaxPlusLinear.arrow_right_3, size: 20 , color: Theme.of(context).iconTheme.color?.withOpacity(0.4),)
+                        ),
+                        Text(
+                          widget.title ?? '',
+                          style: const TextStyle(
+                            fontFamily: font_bold,
+                            fontSize: txt_50,
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: spacingThin),
                     if (widget.crumbs != null && widget.crumbs!.isNotEmpty)
@@ -75,4 +87,12 @@ class _HeaderMainState extends State<HeaderMain> {
               ],
             )));
   }
+  void navigateBack(BuildContext context) {
+    if (Navigator.of(context).canPop()) {
+      Navigator.of(context).pop();
+    } else {
+      context.go(AppRoutes.dashboard);
+    }
+  }
+
 }

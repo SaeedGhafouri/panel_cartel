@@ -36,7 +36,7 @@ void showToast({
   toastification.show(
     context: context,
     title: Text(
-      message,
+      message.replaceAll('Exception:', ''),
       style: Theme.of(context).textTheme.bodySmall,
     ),
     icon: Icon(icon, color: iconColor),
