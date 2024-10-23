@@ -6,7 +6,7 @@ import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:panel_cartel/core/dialogs/price_and_quantity_dialog.dart';
 import 'package:panel_cartel/core/widgets/appbar.dart';
 import 'package:panel_cartel/core/widgets/button_widget.dart';
-import 'package:panel_cartel/core/widgets/commadbar_main.dart';
+import 'package:panel_cartel/core/widgets/commadbar_widget.dart';
 import 'package:panel_cartel/core/widgets/datagrid/table_header_widget.dart';
 import 'package:panel_cartel/core/widgets/form_widget.dart';
 import 'package:panel_cartel/core/widgets/image_diplay_widget.dart';

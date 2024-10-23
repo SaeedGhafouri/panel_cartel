@@ -4,6 +4,8 @@ class Brand {
   String? description;
   String? status;
   String? image;
+  String? createdAt;
+
 
   Brand({
     required this.id,
@@ -11,6 +13,7 @@ class Brand {
     this.description,
     this.status,
     this.image,
+    this.createdAt,
   });
 
   factory Brand.fromJson(Map<String, dynamic> json) {
@@ -20,6 +23,7 @@ class Brand {
       description: json['description'],
       status: json['status'],
       image: json['image'],
+      createdAt: json['created_at'],
     );
   }
 

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
+import 'package:octo_image/octo_image.dart';
+import 'package:panel_cartel/core/constants/assets.dart';
 import 'package:panel_cartel/core/themes/themes.dart';
 import '../dialogs/logout_dialog.dart';
 import 'image_diplay_widget.dart';
@@ -130,11 +132,18 @@ class ProfilePopupWidget extends StatelessWidget {
             ],
           ),
           const SizedBox(width: 10),
-          ImageDisplayWidget(
-            radius: radiusSmall,
-            imageUrl: imageUrl ,
-            size: 40.0,
-          ),
+          Container(
+            width: 48,
+            height: 48,
+            child: OctoImage.fromSet(
+              fit: BoxFit.cover,
+              image: NetworkImage('https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg'),
+              octoSet: OctoSet.circleAvatar(
+                backgroundColor: primaryColor,
+                text: Text(username.substring(0, 1), style: TextStyle(fontSize: txt_40, fontFamily: font_bold),),
+              ),
+            ),
+          )
         ],
       ),
     );

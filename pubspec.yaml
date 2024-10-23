@@ -60,6 +60,9 @@ dependencies:
   flutter_map: ^7.0.2
   latlong2: ^0.9.1
   geocoding: ^3.0.0
+  number_paginator: ^0.4.1
+  card_loading: ^0.3.2
+  octo_image: ^2.1.0
 
 
 dev_dependencies:

@@ -33,6 +33,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.11.0"
+  auto_size_text:
+    dependency: transitive
+    description:
+      name: auto_size_text
+      sha256: "3f5261cd3fb5f2a9ab4e2fc3fba84fd9fcaac8821f20a1d4e71f557521b22599"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   bloc:
     dependency: transitive
     description:
@@ -49,6 +57,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+  card_loading:
+    dependency: "direct main"
+    description:
+      name: card_loading
+      sha256: "40cf98405a104ee8151600510033a9e22a3f9ad808e613c0e563ee7bd85a644c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.2"
   carousel_slider:
     dependency: "direct main"
     description:
@@ -749,6 +765,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
+  number_paginator:
+    dependency: "direct main"
+    description:
+      name: number_paginator
+      sha256: "342992c0d87b1f0d7434e37b25b514effb075c89db3539ac6ec498f9d4d5f61e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.1"
+  octo_image:
+    dependency: "direct main"
+    description:
+      name: octo_image
+      sha256: "34faa6639a78c7e3cbe79be6f9f96535867e879748ade7d17c9b1ae7536293bd"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
   path:
     dependency: transitive
     description:

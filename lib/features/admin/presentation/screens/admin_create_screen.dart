@@ -15,7 +15,7 @@ import 'package:panel_cartel/core/widgets/status_switch_widget.dart';
 import 'package:panel_cartel/features/admin/presentation/widgets/role_dropdown_widget.dart';
 import '../../../../core/themes/themes.dart';
 import '../../../../core/widgets/appbar.dart';
-import '../../../../core/widgets/commadbar_main.dart';
+import '../../../../core/widgets/commadbar_widget.dart';
 import '../../../../core/widgets/form_widget.dart';
 import '../../../../core/widgets/header_main.dart';
 import '../../../../core/widgets/image_picker_widget.dart';
@@ -229,7 +229,7 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                     }
                                   },
                                 ),
-                                const SizedBox(width: 8.0),
+                                const SizedBox(width: spacingSmall),
                                 Expanded(
                                   flex: 8,
                                   child: Column(
@@ -244,7 +244,7 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                               errorText: _errors['firstName'],
                                             ),
                                           ),
-                                          const SizedBox(width: 8.0),
+                                          const SizedBox(width: spacingSmall),
                                           Expanded(
                                             child: TextFieldWidget(
                                               controller: _lastName,
@@ -253,7 +253,7 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                               errorText: _errors['lastName'],
                                             ),
                                           ),
-                                          const SizedBox(width: 8.0),
+                                          const SizedBox(width: spacingSmall),
                                           Expanded(
                                             child: TextFieldWidget(
                                               controller: _nationalCode,
@@ -265,7 +265,7 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                           ),
                                         ],
                                       ),
-                                      const SizedBox(height: 8.0),
+                                      const SizedBox(height: spacingSmall),
                                       Row(
                                         children: [
                                           Expanded(
@@ -279,7 +279,7 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                               errorText: _errors['password'],
                                             ),
                                           ),
-                                          const SizedBox(width: 8.0),
+                                          const SizedBox(width: spacingSmall),
                                           Expanded(
                                             child: TextFieldWidget(
                                               controller: _email,
@@ -288,14 +288,14 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                               errorText: _errors['email'],
                                             ),
                                           ),
-                                          const SizedBox(width: 8.0),
+                                          const SizedBox(width: spacingSmall),
                                           Expanded(
                                             child: GenderSpinnerWidget(
                                                 /*errorText: _errors['sex']*/)
                                           ),
                                         ],
                                       ),
-                                      const SizedBox(height: 8.0),
+                                      const SizedBox(height: spacingSmall),
                                       Row(
                                         children: [
                                           Expanded(
@@ -307,7 +307,7 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                               errorText: _errors['telephone'],
                                             ),
                                           ),
-                                          const SizedBox(width: 8.0),
+                                          const SizedBox(width: spacingSmall),
                                           Expanded(
                                             flex: 2,
                                             child: TextFieldWidget(
@@ -327,7 +327,7 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                             )
 
                                           ),
-                                          const SizedBox(width: 8.0),
+                                          const SizedBox(width: spacingSmall),
                                           StatusSwitchWidget(
                                             onToggle: (p0) {
                                               _status = p0;
@@ -361,14 +361,14 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                               label: 'کشور',
                                             ),
                                           ),
-                                          const SizedBox(width: 8.0),
+                                          const SizedBox(width: spacingSmall),
                                           Expanded(
                                             child: TextFieldWidget(
                                               controller: _state,
                                               label: 'استان',
                                             ),
                                           ),
-                                          const SizedBox(width: 8.0),
+                                          const SizedBox(width: spacingSmall),
                                           Expanded(
                                             child: TextFieldWidget(
                                               controller: _city,
@@ -377,7 +377,7 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                           ),
                                         ],
                                       ),
-                                      const SizedBox(height: 8.0),
+                                      const SizedBox(height: spacingSmall),
                                       Row(
                                         children: [
                                           Expanded(
@@ -386,14 +386,14 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                               label: 'منطقه',
                                             ),
                                           ),
-                                          const SizedBox(width: 8.0),
+                                          const SizedBox(width: spacingSmall),
                                           Expanded(
                                             child: TextFieldWidget(
                                               controller: _street,
                                               label: 'خیابان',
                                             ),
                                           ),
-                                          const SizedBox(width: 8.0),
+                                          const SizedBox(width: spacingSmall),
                                           Expanded(
                                             child: TextFieldWidget(
                                               controller: _alley,
@@ -402,7 +402,7 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                           ),
                                         ],
                                       ),
-                                      const SizedBox(height: 8.0),
+                                      const SizedBox(height: spacingSmall),
                                       Row(
                                         children: [
                                           Expanded(
@@ -414,7 +414,7 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
 
                                         ],
                                       ),
-                                      const SizedBox(height: 8.0),
+                                      const SizedBox(height: spacingSmall),
                                       Row(
                                         children: [
                                           Expanded(
@@ -428,13 +428,21 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                     ],
                                   ),
                                 ),
-                                SizedBox(width: 8.0),
+                                SizedBox(width: spacingSmall),
                                 Expanded(
                                   flex: 4,
                                   child: MapPickerWidget(onLocationSelected: (location) {
                                     print(location);
                                   }
                                   ),
+                                ),
+                                const SizedBox(width: spacingSmall),
+                                Expanded(
+                                  child: TextFieldWidget(
+                                    controller: _lat,
+                                    label: 'عرض',
+                                  ),
+                                ),
                                 )
                               ],
                             )

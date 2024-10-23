@@ -20,7 +20,7 @@ import 'features/admin/logic/cubit/role/role_cubit.dart';
 import 'features/admin/logic/cubit/show/admin_show_cubit.dart';
 import 'features/admin/logic/cubit/update/admin_update_cubit.dart';
 import 'features/brand/data/services/brand_service.dart';
-import 'features/brand/logic/cubit/brand_cubit.dart';
+import 'features/brand/logic/cubit/index/brand_index_cubit.dart';
 import 'features/product/data/services/barcode_service.dart';
 import 'features/product/logic/cubit/barcode_cubit.dart';
 import 'features/product/logic/cubit/create/product_create_cubit.dart';
@@ -65,8 +65,9 @@ void main() {
         BlocProvider<AuthCubit>(
           create: (context) => AuthCubit(AuthService(Dio())),
         ),
-        BlocProvider<BrandCubit>(
-          create: (context) => BrandCubit(BrandService(Dio())),
+        /// Brand
+        BlocProvider<BrandIndexCubit>(
+          create: (context) => BrandIndexCubit(BrandService(Dio())),
         ),
         BlocProvider<CategoryCubit>(
           create: (context) => CategoryCubit(CategoryService(Dio())),

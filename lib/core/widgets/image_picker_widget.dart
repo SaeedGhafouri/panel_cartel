@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 
 class ImagePickerWidget extends StatefulWidget {
   final String? label;
@@ -53,7 +54,7 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              Icons.photo_library,
+              IconsaxPlusLinear.gallery_add,
               size: 50,
               color: Theme.of(context)
                   .textTheme
@@ -63,8 +64,14 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
             ),
             const SizedBox(height: 10),
             Text(
-              widget.label ??'تصویر',
+              'افزودن تصویر',
               style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            const SizedBox(height: 5),
+            Text(
+              'حداقل ۵۰۰ کیلو بایت (JPG, PNG, WEBP)',
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.headlineSmall,
             ),
           ],
         )

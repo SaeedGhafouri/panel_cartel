@@ -8,7 +8,7 @@ import 'package:panel_cartel/core/widgets/side_drawer.dart';
 
 import '../../../../core/themes/themes.dart';
 import '../../../../core/widgets/appbar.dart';
-import '../../../../core/widgets/commadbar_main.dart';
+import '../../../../core/widgets/commadbar_widget.dart';
 import '../../../../core/widgets/datagrid/table_header_widget.dart';
 import '../../../../core/widgets/form_widget.dart';
 import '../../../../core/widgets/text_field_widget.dart';

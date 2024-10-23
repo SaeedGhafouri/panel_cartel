@@ -12,31 +12,29 @@ class BrandService {
   Future<void> _setAuthorizationHeader() async {
     Future<String> token() async {
       String? token = await ExpertPreferences.getToken();
-      return token!;
+      return token ?? '';
     }
-    _dio.options.headers['Authorization'] = token();
+    String authToken = await token();
+    _dio.options.headers['Authorization'] = authToken;
   }
 
-  Future<List<Brand>> getBrands() async {
+  Future<Map<String, dynamic>> index({String? filter,int page = 1}) async {
     try {
       await _setAuthorizationHeader();
-      final response = await _dio.get(Routes.brandIndex);
-      if (response.statusCode != 200) {
-        return (response.data['data'] as List)
-            .map((json) => Brand.fromJson(json))
-            .toList();
-      } else {
-        return (response.data['data'] as List)
-            .map((json) => Brand.fromJson(json))
-            .toList();
-      }
+      _dio.options.queryParameters['filter'] = filter;
+      final response = await _dio.get('${Routes.brandIndex}?page=$page');
+
+      List<Brand> brands = (response.data['data'] as List)
+          .map((json) => Brand.fromJson(json))
+          .toList();
+
+      return {
+        'data': brands, 
+        'meta': response.data['meta']
+      };
     } on DioError catch (e) {
-      if (e.response?.statusCode == 401) {
-        throw Exception('Error 401');
-      }
-      throw Exception('Failed to login: ${e.message}');
-    } catch (e) {
-      throw Exception('Failed to login: $e');
+      throw Exception('Failed to fetch brands: ${e.message}');
     }
   }
+
 }

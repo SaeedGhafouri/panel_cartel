@@ -18,7 +18,7 @@ import '../widgets/page_not_found.dart';
 import 'app_routes.dart';
 class AppRouter {
   final GoRouter router = GoRouter(
-    initialLocation: AppRoutes.users,
+    initialLocation: AppRoutes.adminDetails,
     routes: <RouteBase>[
       // Auth
       GoRoute(
@@ -26,12 +26,26 @@ class AppRouter {
         name: 'login',
         builder: (context, state) => const LoginScreen(),
       ),
+
       // Overview
       GoRoute(
         path: AppRoutes.dashboard,
         name: '/',
         builder: (context, state) => const DashboardScreen(),
       ),
+
+      // Brands
+      GoRoute(
+        path: AppRoutes.brands,
+        name: 'brands',
+        builder: (context, state) => const BrandIndexScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.categories,
+        name: 'categories',
+        builder: (context, state) => const CategoryIndexScreen(),
+      ),
+
       // Admins
       GoRoute(
         path: AppRoutes.admins,

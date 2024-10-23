@@ -229,7 +229,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                             errorText: _errors['name'],
                                           ),
                                         ),
-                                        const SizedBox(width: spacingThin),
+                                        const SizedBox(width: spacingSmall),
                                         Expanded(
                                           child: TextFieldWidget(
                                             controller: _slug,
@@ -237,7 +237,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                             errorText: _errors['slug'],
                                           ),
                                         ),
-                                        const SizedBox(width: spacingThin),
+                                        const SizedBox(width: spacingSmall),
                                         Expanded(
                                             child: TextFieldWidget(
                                           controller: _barcode,
@@ -280,7 +280,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                         }),
                                       ],
                                     ),
-                                    const SizedBox(height: spacingThin),
+                                    const SizedBox(height: spacingSmall),
                                     //02
                                     Row(
                                       children: [
@@ -302,7 +302,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                             },
                                           ),
                                         ),
-                                        const SizedBox(width: spacingThin),
+                                        const SizedBox(width: spacingSmall),
                                         Expanded(
                                           child: ValueListenableBuilder<String>(
                                             valueListenable: brandTxt,
@@ -322,7 +322,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                             },
                                           ),
                                         ),
-                                        const SizedBox(width: spacingThin),
+                                        const SizedBox(width: spacingSmall),
                                         ToggleSwitch(
                                           minWidth: 80.0,
                                           minHeight: heightCmdBrMain,
@@ -344,7 +344,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                           ],
                                           onToggle: (index) {},
                                         ),
-                                        const SizedBox(width: spacingThin),
+                                        const SizedBox(width: spacingSmall),
                                         CheckboxWidget(
                                           label: 'پیشنهادی',
                                           value: _isSpecial,
@@ -356,7 +356,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                         )
                                       ],
                                     ),
-                                    const SizedBox(height: spacingThin),
+                                    const SizedBox(height: spacingSmall),
                                     Container(
                                         decoration: BoxDecoration(
                                           shape: BoxShape.rectangle,
@@ -380,7 +380,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                                     .headlineMedium,
                                               ),
                                               const SizedBox(
-                                                height: spacingThin,
+                                                height: spacingSmall,
                                               ),
                                               QuillSimpleToolbar(
                                                 controller: _controller,
@@ -413,7 +413,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                 ),
                               )),
                           const SizedBox(
-                            width: spacingThin,
+                            width: spacingSmall,
                           ),
                           Expanded(
                               flex: 3,
@@ -473,7 +473,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                         ),
 
                                         const SizedBox(
-                                          height: spacingThin,
+                                          height: spacingSmall,
                                         ),
                                         Text(
                                           'حداکثر حجم تصویر 500 کیلوبایت',
@@ -485,7 +485,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                     ),
                                   ),
                                   const SizedBox(
-                                    height: spacingThin,
+                                    height: spacingSmall,
                                   ),
 
                                   /// TODO Price
@@ -509,7 +509,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                                 errorText: _errors['price'],
                                               ),
                                             ),
-                                            const SizedBox(width: spacingThin),
+                                            const SizedBox(width: spacingSmall),
                                             Expanded(
                                               child: TextFieldWidget(
                                                 controller: _sale_price,
@@ -525,7 +525,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                             ),
                                           ],
                                         ),
-                                        const SizedBox(height: spacingThin),
+                                        const SizedBox(height: spacingSmall),
                                         Row(
                                           children: [
                                             Expanded(
@@ -540,7 +540,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                                 },
                                               ),
                                             ),
-                                            const SizedBox(width: spacingThin),
+                                            const SizedBox(width: spacingSmall),
                                             Expanded(
                                               child: TextFieldWidget(
                                                 controller: _discount,
@@ -554,7 +554,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                             ),
                                           ],
                                         ),
-                                        const SizedBox(height: spacingThin),
+                                        const SizedBox(height: spacingSmall),
                                         Row(
                                           children: [
                                             //Type
@@ -577,7 +577,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                                 },
                                               ),
                                             ),
-                                            SizedBox(width: spacingThin),
+                                            SizedBox(width: spacingSmall),
                                             //Qantity
                                             Expanded(
                                               child: TextFieldWidget(
@@ -605,7 +605,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                                   .textTheme
                                                   .headlineMedium,
                                             )),
-                                            const SizedBox(width: spacingThin),
+                                            const SizedBox(width: spacingSmall),
                                             Expanded(
                                                 child: Row(
                                               mainAxisAlignment:
@@ -631,7 +631,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                             )),
                                           ],
                                         ),
-                                        const SizedBox(height: spacingThin),
+                                        const SizedBox(height: spacingSmall),
                                         //Discount
                                         Row(
                                           children: [
@@ -642,7 +642,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                                   .textTheme
                                                   .headlineMedium,
                                             )),
-                                            const SizedBox(width: spacingThin),
+                                            const SizedBox(width: spacingSmall),
                                             Expanded(
                                                 child: Row(
                                               mainAxisAlignment:
@@ -673,7 +673,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                             )),
                                           ],
                                         ),
-                                        const SizedBox(height: spacingThin),
+                                        const SizedBox(height: spacingSmall),
                                         //Total price
                                         Row(
                                           children: [
@@ -684,7 +684,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                                                   .textTheme
                                                   .headlineMedium,
                                             )),
-                                            const SizedBox(width: spacingThin),
+                                            const SizedBox(width: spacingSmall),
                                             Expanded(
                                                 child: Row(
                                               mainAxisAlignment:

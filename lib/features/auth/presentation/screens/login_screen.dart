@@ -163,7 +163,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                   context: context,
                                   message: 'ورود با موفقیت انجام شد.',
                                   type: ToastType.success);
-                              print('saeeds : ${state.expert['token']}');
                               ExpertPreferences.setUserInfo(
                                 firstName: state.expert['expert']['first_name']!,
                                 lastName: state.expert['expert']['last_name']!,
