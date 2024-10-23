@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:octo_image/octo_image.dart';
 import 'package:panel_cartel/core/widgets/image_diplay_widget.dart';
 
 import '../../constants/assets.dart';
@@ -11,11 +12,13 @@ import 'package:flutter/material.dart';
 class TableColumnWidget extends StatelessWidget {
   final List<dynamic>? values;
   final List<Widget>? actions;
+  final double height;
 
   const TableColumnWidget({
     Key? key,
     required this.values,
     this.actions,
+    this.height = 50,
   }) : super(key: key);
 
   @override
@@ -27,7 +30,7 @@ class TableColumnWidget extends StatelessWidget {
           FocusScope(
             node: FocusScopeNode(),
             child: Container(
-              height: 50,
+              height: height + 10,
               decoration: BoxDecoration(
                 border: Border(
                   top: BorderSide(
@@ -65,32 +68,29 @@ class TableColumnWidget extends StatelessWidget {
   }
 
   Widget _buildCell(dynamic value, BuildContext context) {
+
     if (value is String && value.startsWith('http')) {
-      // Image
-      return SizedBox(
-        width: 50,
-        height: 50,
-        child: ImageDisplayWidget(imageUrl: value),
+      return ImageDisplayWidget(
+        imageUrl: value,
+        isShow: true,
       );
     } else if (value is List && _isCategory(value)) {
-      // Category
+      // دسته‌بندی‌ها
       return _buildCategoryChips(value, context);
     } else if (value is String && _isEmail(value)) {
-      // Email
+      // ایمیل
       return _buildTextCell(value, context, TextAlign.center);
     } else if (value is String && _isPhoneNumber(value)) {
-      // Mobile
+      // موبایل
       return _buildTextCell(value, context, TextAlign.center);
     } else if (value is int && _isStatus(value)) {
-      // Status
+      // وضعیت
       return _buildStatusCell(value, context);
     } else if (value is String && _isDateString(value)) {
-      // Timestamp
+      // تاریخ شمسی
       return _buildShamsiDate(DateTime.parse(value), context);
-    }
-
-    else {
-      // Default
+    } else {
+      // متن پیش‌فرض برای انواع دیگر
       return _buildTextCell(value.toString(), context, TextAlign.center);
     }
   }
@@ -98,15 +98,19 @@ class TableColumnWidget extends StatelessWidget {
   bool _isEmail(String value) {
     return value.contains('@');
   }
+
   bool _isPhoneNumber(String value) {
     return value.length == 11 && value.startsWith('09');
   }
+
   bool _isCategory(dynamic value) {
     return value is List<dynamic>;
   }
+
   bool _isStatus(int value) {
     return value == 0 || value == 1 || value == 2;
   }
+
   bool _isDateString(String value) {
     try {
       DateTime.parse(value);
@@ -182,3 +186,5 @@ class TableColumnWidget extends StatelessWidget {
     );
   }
 }
+
+

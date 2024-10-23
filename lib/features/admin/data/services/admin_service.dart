@@ -32,7 +32,7 @@ class AdminService {
       } else {
         throw Exception(response.data['message']);
       }
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw Exception(e.response?.data['message'] ?? 'Request failed with status ${e.response?.statusCode}');
     } catch (e) {
       throw Exception('Failed: $e');
@@ -45,7 +45,7 @@ class AdminService {
     try {
       final adminData = response.data['data'];
       return Admin.fromJson(adminData);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw Exception(e.response?.data['message'] ?? 'Request failed with status ${e.response?.statusCode}');
     } catch (e) {
       throw Exception('Failed: $e');
@@ -64,7 +64,7 @@ class AdminService {
       return {
         'message': response.data['message'] ?? 'Admin created successfully',
       };
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       print('Error: ${e.response?.data ?? 'Request failed with status ${e.response?.statusCode}'}');
       throw Exception(e.response?.data['message'] ?? 'Request failed with status ${e.response?.statusCode}');
     }
@@ -85,7 +85,7 @@ class AdminService {
         'status' : response.data['status'],
         'message': response.data['message'] ?? 'Admin updated successfully',
       };
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       print(e.message);
       throw Exception(e.message);
     }
@@ -103,7 +103,7 @@ class AdminService {
       } else {
         throw Exception(response.data['message']);
       }
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw Exception('Failed to delete admin: ${e.response}');
     }
   }
@@ -119,7 +119,7 @@ class AdminService {
       } else {
         throw Exception(response.data['message']);
       }
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw Exception(e.response?.data['message'] ?? 'Request failed with status ${e.response?.statusCode}');
     } catch (e) {
       throw Exception('$e');
@@ -148,7 +148,7 @@ class AdminService {
       } else {
         throw Exception(response.data['message']);
       }
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw Exception(e.response?.data['message'] ?? 'Request failed with status ${e.response?.statusCode}');
     } catch (e) {
       throw Exception('$e');

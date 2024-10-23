@@ -32,8 +32,23 @@ class BrandService {
         'data': brands, 
         'meta': response.data['meta']
       };
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw Exception('Failed to fetch brands: ${e.message}');
+    }
+  }
+
+  Future<Map<String, dynamic>> create(Brand brand) async {
+    try{
+      await _setAuthorizationHeader();
+      final response = await _dio.post(
+        Routes.brandCreate,
+        data: brand.toJson(),
+      );
+      return{
+        'message': response.data['message'] ?? 'Brand created successfully',
+      };
+    } on DioException catch (e) {
+      throw Exception(e.response?.data['message']);
     }
   }
 

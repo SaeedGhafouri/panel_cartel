@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
-import 'package:panel_cartel/core/constants/assets.dart';
-
-import 'package:flutter/material.dart';
+import 'package:octo_image/octo_image.dart';
+import 'package:panel_cartel/core/themes/themes.dart';
+import 'package:panel_cartel/core/utils/toast.dart';
+import 'package:panel_cartel/core/widgets/commadbar_widget.dart';
+import '../utils/file_downloader.dart';
 
 class ImageDisplayWidget extends StatelessWidget {
   final String? imageUrl;
@@ -22,77 +24,105 @@ class ImageDisplayWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final imageDecoration = _getImageDecoration();
-
     return GestureDetector(
       onTap: () => isShow ? _showImageDialog(context) : null,
       child: Container(
-        width: size,
-        height: size,
-        decoration: BoxDecoration(
-          shape: BoxShape.rectangle,
-          color: Theme.of(context).dividerColor.withOpacity(0.2),
-          borderRadius: BorderRadius.circular(radius),
-          image: imageDecoration,
+        width: 48,
+        height: 48,
+        child: OctoImage.fromSet(
+          fit: BoxFit.cover,
+          image: NetworkImage(imageUrl!),
+          fadeInDuration: Duration(seconds: 1),
+          octoSet: OctoSet.circularIndicatorAndIcon(showProgress: true),
         ),
-        child: imageDecoration == null ? _getChildWidget(context) : null,
-      ),
-    );
-  }
-
-  DecorationImage? _getImageDecoration() {
-    if (imageUrl != null && imageUrl!.isNotEmpty) {
-      return DecorationImage(
-        image: NetworkImage(imageUrl!),
-        fit: BoxFit.cover,
-      );
-    } else if (assetPath != null && assetPath!.isNotEmpty) {
-      return DecorationImage(
-        image: AssetImage(assetPath!),
-        fit: BoxFit.cover,
-      );
-    }
-    return null; // در صورت نبودن عکس، مقدار null برمی‌گردد تا آیکون نمایش داده شود.
-  }
-
-  Widget _getChildWidget(BuildContext context) {
-    // در صورتی که هیچ عکسی وجود نداشت، آیکون گالری نمایش داده می‌شود.
-    return Center(
-      child: Icon(
-        Icons.photo_library, // از آیکون گالری استفاده شده
-        color: Theme.of(context).iconTheme.color!.withOpacity(0.2),
-        size: size / 1.7,
       ),
     );
   }
 
   void _showImageDialog(BuildContext context) {
-    showDialog(
+    showGeneralDialog(
       context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(7),
+      barrierColor: Colors.transparent,
+      pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+        final screenSize = MediaQuery.of(context).size;
+        return Center(
+          child: ClipRRect(
+            borderRadius: smallRadius,
+            child: Container(
+              width: screenSize.width * 0.3,
+              height: screenSize.height * 0.6,
+              decoration: BoxDecoration(
+                borderRadius: smallRadius,
+                color: Colors.transparent,
+              ),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: _buildImageDialogContent(context),
+                  ),
+                  Padding(
+                    padding: padding_20,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CommadbarWidget(
+                          text: 'دریافت',
+                          icon: IconsaxPlusLinear.arrow_down_1,
+                          onPressed: () async {
+                            final downloader = FileDownloader();
+                            try {
+                              final filePath = await downloader.downloadFile(
+                                url: imageUrl!, fileName: 'Admin of Cartel'
+                              );
+                              print('File downloaded to: ');
+                              showToast(context: context, message: 'تصویر با موفقیت دریافت شد: $filePath', type: ToastType.success);
+                            } catch (e) {
+                              showToast(context: context, message: 'خطایی رخ داده است');
+                              print(e);
+                            }
+                          },
+                        ),
+                        CommadbarWidget(
+                          text: 'بستن',
+                          icon: IconsaxPlusLinear.close_circle,
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
-          child: _buildImageDialogContent(context),
         );
       },
     );
   }
 
+
+
+// Example image widget
+
   Widget _buildImageDialogContent(BuildContext context) {
     if (imageUrl != null && imageUrl!.isNotEmpty) {
       return InteractiveViewer(
-        child: Image.network(
-          imageUrl!,
-          fit: BoxFit.contain, // تصویر با نسبت ابعاد واقعی نمایش داده می‌شود
-        ),
-      );
+          child: OctoImage.fromSet(
+        fit: BoxFit.cover,
+        image: NetworkImage(imageUrl!),
+        fadeInDuration: Duration(seconds: 1),
+        octoSet: OctoSet.circularIndicatorAndIcon(showProgress: true),
+      ));
     } else if (assetPath != null && assetPath!.isNotEmpty) {
       return InteractiveViewer(
-        child: Image.asset(
-          assetPath!,
-          fit: BoxFit.contain, // تصویر از asset با نسبت واقعی نمایش داده می‌شود
+        child: OctoImage.fromSet(
+          fit: BoxFit.cover,
+          image: AssetImage(assetPath!),
+          fadeInDuration: Duration(seconds: 1),
+          octoSet: OctoSet.circularIndicatorAndIcon(
+            showProgress: true,
+          ),
         ),
       );
     } else {

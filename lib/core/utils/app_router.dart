@@ -6,7 +6,8 @@ import '../../features/admin/presentation/screens/admin_create_screen.dart';
 import '../../features/admin/presentation/screens/admin_details_screen.dart';
 import '../../features/admin/presentation/screens/admin_index_screen.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
-import '../../features/brand/presentation/screens/brand_index.dart';
+import '../../features/brand/presentation/screens/brand_index_screen.dart';
+import '../../features/category/presentation/screens/category_index.dart';
 import '../../features/dashboard/presentation/screens/dashboard_screen.dart';
 import '../../features/order/presentation/screens/order_details_screen.dart';
 import '../../features/order/presentation/screens/orders_screen.dart';
@@ -18,7 +19,7 @@ import '../widgets/page_not_found.dart';
 import 'app_routes.dart';
 class AppRouter {
   final GoRouter router = GoRouter(
-    initialLocation: AppRoutes.adminDetails,
+    initialLocation: AppRoutes.brands,
     routes: <RouteBase>[
       // Auth
       GoRoute(
@@ -113,12 +114,6 @@ class AppRouter {
             builder: (context, state) => const ProductCreateScreen(),
           ),
         ],
-      ),
-      // Brands
-      GoRoute(
-        path: AppRoutes.brands,
-        name: 'brands',
-        builder: (context, state) => const BrandIndexScreen(),
       ),
       // Orders
       GoRoute(

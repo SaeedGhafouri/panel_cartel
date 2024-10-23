@@ -27,7 +27,7 @@ class ProductService {
       } else {
         throw Exception(response.data['message']);
       }
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw Exception(e.response?.data['message'] ?? 'Request failed with status ${e.response?.statusCode}');
     } catch (e) {
       throw Exception('Failed1: $e');
@@ -63,7 +63,7 @@ class ProductService {
       } else {
         throw Exception(response.data['message']);
       }
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw Exception('Failed to create product: ${e.response}');
     } catch (e) {
       throw Exception('Failed to create product: $e');
@@ -82,7 +82,7 @@ class ProductService {
       } else {
         throw Exception(response.data['message']);
       }
-    } on DioError catch (e) {
+    } on DioException catch (e) {
      throw Exception('Failed to delete product: ${e.response}');
     }
   }

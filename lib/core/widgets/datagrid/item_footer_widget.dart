@@ -22,7 +22,7 @@ class _ItemFooterWidgetState extends State<ItemFooterWidget> {
       child: Row(
         children: [
           Expanded(
-            flex: 7,
+            flex: 6,
             child: Text(
               'درحال نمایش ${widget.initialPage! * 10} از ${widget.total}',
               style: const TextStyle(
@@ -32,7 +32,7 @@ class _ItemFooterWidgetState extends State<ItemFooterWidget> {
             ),
           ),
           Expanded(
-            flex: 3,
+            flex: 4,
               child: NumberPaginator(
                   numberPages: widget.numberPages!,
                   initialPage: widget.initialPage!,

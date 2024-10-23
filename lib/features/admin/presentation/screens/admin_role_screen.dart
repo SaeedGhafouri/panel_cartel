@@ -12,7 +12,7 @@ import 'package:panel_cartel/core/widgets/side_drawer.dart';
 import 'package:panel_cartel/core/widgets/text_field_widget.dart';
 import '../../../../core/themes/themes.dart';
 import '../../../../core/utils/app_routes.dart';
-import '../../../../core/widgets/commadbar_main.dart';
+import '../../../../core/widgets/commadbar_widget.dart';
 import '../../../../core/widgets/datagrid/table_column_widget.dart';
 import '../../../../core/widgets/datagrid/table_header_widget.dart';
 import '../../../../core/widgets/form_widget.dart';

@@ -9,7 +9,7 @@ import '../../../../core/themes/themes.dart';
 import '../../../../core/utils/app_routes.dart';
 import '../../../../core/widgets/actions_popup_widget.dart';
 import '../../../../core/widgets/appbar.dart';
-import '../../../../core/widgets/commadbar_main.dart';
+import '../../../../core/widgets/commadbar_widget.dart';
 import '../../../../core/widgets/datagrid/table_column_widget.dart';
 import '../../../../core/widgets/datagrid/table_header_widget.dart';
 import '../../../../core/widgets/datagrid/table_row_widget.dart';
@@ -77,7 +77,7 @@ class _UserIndexScreenState extends State<UserIndexScreen> {
                           endChildren: [
                             SearchFieldWidget(
                               controller: controller,
-                              action: () => context
+                              onTap: () => context
                                   .read<UserIndexCubit>()
                                   .index(filter: controller.text),
                             )

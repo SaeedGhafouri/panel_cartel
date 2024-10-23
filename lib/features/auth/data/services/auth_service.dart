@@ -22,7 +22,7 @@ class AuthService {
       } else {
         throw Exception(response.data['message']);
       }
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       if (e.response?.statusCode == 401) {
         throw Exception('Error 401');
       }

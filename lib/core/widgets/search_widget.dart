@@ -4,10 +4,10 @@ import 'package:iconsax_plus/iconsax_plus.dart';
 class SearchFieldWidget extends StatelessWidget {
   // controller
   final TextEditingController controller;
-  final Function()? action;
+  final Function()? onTap;
 
   const SearchFieldWidget(
-      {Key? key, required this.controller, this.action})
+      {Key? key, required this.controller, this.onTap})
       : super(key: key);
 
   @override
@@ -27,9 +27,9 @@ class SearchFieldWidget extends StatelessWidget {
           children: [
             Expanded(
               child: SearchBar(
-                onTap: () => action?.call(),
+                onTap: () => onTap?.call(),
                   controller: controller,
-                  onSubmitted: (value) => action?.call(),
+                  onSubmitted: (value) => onTap?.call(),
                   hintText: 'جستجو',
                   textStyle: MaterialStateProperty.all(Theme.of(context).textTheme.titleMedium),
                   hintStyle: MaterialStateProperty.all(TextStyle(

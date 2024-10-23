@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:panel_cartel/core/utils/toast.dart';
 import 'package:panel_cartel/core/widgets/actions_popup_widget.dart';
 import 'package:panel_cartel/core/widgets/appbar.dart';
 import 'package:panel_cartel/core/widgets/button_widget.dart';
@@ -9,6 +10,7 @@ import 'package:panel_cartel/core/widgets/image_picker_widget.dart';
 import 'package:panel_cartel/core/widgets/search_widget.dart';
 import 'package:panel_cartel/core/widgets/side_drawer.dart';
 import 'package:panel_cartel/core/widgets/status_switch_widget.dart';
+import 'package:panel_cartel/features/brand/logic/cubit/create/brand_create_cubit.dart';
 import '../../../../core/themes/themes.dart';
 import '../../../../core/widgets/datagrid/table_column_widget.dart';
 import '../../../../core/widgets/datagrid/table_header_widget.dart';
@@ -17,6 +19,7 @@ import '../../../../core/widgets/form_widget.dart';
 import '../../../../core/widgets/header_main.dart';
 import '../../../../core/widgets/progress_widget.dart';
 import '../../../../core/widgets/text_field_widget.dart';
+import '../../data/models/brand.dart';
 import '../../logic/cubit/index/brand_index_cubit.dart';
 import '../../logic/cubit/index/brand_index_state.dart';
 
@@ -44,6 +47,45 @@ class _BrandIndexScreenState extends State<BrandIndexScreen> {
     });
     context.read<BrandIndexCubit>().index();
   }
+
+  Map<String, String?> _errors = {};
+
+  Map<String, String> _validateForm() {
+    final Map<String, String> errors = {};
+
+    if (_nameController.text.isEmpty) {
+      errors['name'] = 'نام الزامی است';
+    }
+
+    if (_slugController.text.isEmpty) {
+      errors['slug'] = 'slug الزامی است';
+    }
+
+    setState(() {
+      _errors = errors;
+    });
+
+    return errors;
+  }
+
+  void _submit() {
+    final errors = _validateForm();
+
+    if (errors.isNotEmpty) {
+      print('Error isnotempty');
+      return;
+    }
+
+    final brand = Brand(
+      name: _nameController.text,
+      description: _descriptionController.text,
+      status: 1,
+      image: ''
+    );
+    print('start');
+    context.read<BrandCreateCubit>().create(brand);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -89,6 +131,7 @@ class _BrandIndexScreenState extends State<BrandIndexScreen> {
                                           child: TextFieldWidget(
                                             label: 'نام برند',
                                             controller: _nameController,
+                                            errorText: _errors['name'],
                                           ),
                                         ),
                                         const SizedBox(
@@ -98,6 +141,7 @@ class _BrandIndexScreenState extends State<BrandIndexScreen> {
                                           child: TextFieldWidget(
                                             label: 'نام مرحله ای',
                                             controller: _slugController,
+                                            errorText: _errors['slug'],
                                           ),
                                         )
                                       ],
@@ -129,9 +173,26 @@ class _BrandIndexScreenState extends State<BrandIndexScreen> {
                                       width: spacingSmall,
                                     ),
                                     const SizedBox(height: spacingMedium,),
-                                    ButtonWidget(
-                                      text: 'افزودن برند',
-                                      onPressed: () {},
+                                    BlocConsumer<BrandCreateCubit, BrandCreateState>(
+                                        builder: (context, state) {
+                                          if (state is BrandCreateLoading) {
+                                            return const ProgressWidget();
+                                          } else {
+                                            return ButtonWidget(
+                                                text: 'افزودن برند',
+                                              onPressed: () {
+                                                _submit();
+                                              },
+                                            );
+                                          }
+                                          },
+                                      listener: (BuildContext context, Object? state) {
+                                          if (state is BrandCreateSuccess) {
+                                            showToast(context: context, message: 'برند با موفقیت اضافه شد', type: ToastType.success);
+                                          } else if (state is BrandCreateError) {
+                                            showToast(context: context, message: state.message);
+                                          }
+                                      },
                                     )
                                   ]),
                                 )),
@@ -146,7 +207,7 @@ class _BrandIndexScreenState extends State<BrandIndexScreen> {
                                   body: Column(children: [
                                     TableHeaderWidget(
                                         startChildren: [
-                                          SearchFieldWidget(controller: _searchController, onPressed: () {
+                                          SearchFieldWidget(controller: _searchController, onTap: () {
                                             context.read<BrandIndexCubit>().index(filter: _searchController.text);
                                           },)
                                         ],
@@ -206,13 +267,6 @@ class _BrandIndexScreenState extends State<BrandIndexScreen> {
                                               )
                                             ],
                                           );
-                                        } else if (state is BrandIndexError) {
-                                          return Center(
-                                            child: Text(
-                                              state.message,
-                                              style: Theme.of(context).textTheme.bodyLarge,
-                                            ),
-                                          );
                                         } else {
                                           return Center(
                                             child: Text(
@@ -237,3 +291,4 @@ class _BrandIndexScreenState extends State<BrandIndexScreen> {
     );
   }
 }
+

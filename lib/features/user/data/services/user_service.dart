@@ -28,7 +28,7 @@ class UserService {
       } else {
         throw Exception(response.data['message']);
       }
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw Exception(e.response?.data['message'] ?? 'Request failed with status ${e.response?.statusCode}');
     } catch (e) {
       throw Exception('Failed: $e');
@@ -41,7 +41,7 @@ class UserService {
     try {
       final data = response.data['data'];
       return User.fromJson(data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw Exception(e.response?.data['message'] ?? 'Request failed with status ${e.response?.statusCode}');
     } catch (e) {
       throw Exception('Failed: $e');
@@ -65,7 +65,7 @@ class UserService {
           'postal_code': user.postal_code,
         }
       )
-    } on DioError catch (e) {
+    } on DioException catch (e) {
      throw Exception('Failed to create user: ${e.response}');
     }
   }*/

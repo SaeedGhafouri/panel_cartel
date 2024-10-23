@@ -30,6 +30,8 @@ class ProductIndexScreen extends StatefulWidget {
 }
 
 class _ProductIndexScreenState extends State<ProductIndexScreen> {
+  bool isListView = false;
+  final TextEditingController _searchController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -60,7 +62,7 @@ class _ProductIndexScreenState extends State<ProductIndexScreen> {
                                 startChildren: [
                                   SearchFieldWidget(
                                     controller: _searchController,
-                                    onPressed: () {
+                                    onTap: () {
 
                                     },
                                   )

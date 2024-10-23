@@ -443,7 +443,6 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                     label: 'عرض',
                                   ),
                                 ),
-                                )
                               ],
                             )
                           ],

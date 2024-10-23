@@ -205,16 +205,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Text(
-                                  'آقای سعید غفوری',
-                                  style:
-                                      Theme.of(context).textTheme.titleMedium,
-                                ),
-                                const SizedBox(
-                                  width: 4,
-                                ),
                                 Text(
                                   ' به پنل مدیریت خوش آمدید 👋',
                                   style: Theme.of(context).textTheme.titleSmall,

@@ -1,15 +1,15 @@
 class Brand {
-  int id;
-  String name;
+  int? id;
+  String? name;
   String? description;
-  String? status;
+  int? status;
   String? image;
   String? createdAt;
 
 
   Brand({
-    required this.id,
-    required this.name,
+    this.id,
+    this.name,
     this.description,
     this.status,
     this.image,

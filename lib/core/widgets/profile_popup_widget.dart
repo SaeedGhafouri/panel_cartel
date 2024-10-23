@@ -15,6 +15,7 @@ class ProfilePopupWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(imageUrl);
     return PopupMenuButton<String>(
       color: Theme.of(context).cardColor,
       position: PopupMenuPosition.under,
@@ -137,7 +138,8 @@ class ProfilePopupWidget extends StatelessWidget {
             height: 48,
             child: OctoImage.fromSet(
               fit: BoxFit.cover,
-              image: NetworkImage('https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg'),
+              image: NetworkImage(imageUrl!),
+              fadeInDuration: Duration(seconds: 1),
               octoSet: OctoSet.circleAvatar(
                 backgroundColor: primaryColor,
                 text: Text(username.substring(0, 1), style: TextStyle(fontSize: txt_40, fontFamily: font_bold),),

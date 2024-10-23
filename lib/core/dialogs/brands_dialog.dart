@@ -40,7 +40,7 @@ class BrandsDialog extends StatelessWidget {
                       final brand = state.brands[index];
                       return InkWell(
                         onTap: () {
-                          onBrandSelected(brand.id, brand.name);
+                          onBrandSelected(brand.id!, brand.name!);
                           Navigator.of(context).pop();
                         },
                         borderRadius: smallRadius,
@@ -58,7 +58,7 @@ class BrandsDialog extends StatelessWidget {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    Text(brand.name),
+                                    Text(brand.name!),
                                     SizedBox(height: 5),
                                     Text(
                                       brand.description ?? '',

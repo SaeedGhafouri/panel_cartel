@@ -9,14 +9,16 @@ import 'package:panel_cartel/core/widgets/form_widget.dart';
 import 'package:panel_cartel/core/widgets/header_main.dart';
 import 'package:panel_cartel/features/admin/logic/cubit/index/admin_index_cubit.dart';
 import '../../../../core/utils/app_routes.dart';
+import '../../../../core/utils/toast.dart';
 import '../../../../core/widgets/commadbar_widget.dart';
 import '../../../../core/widgets/datagrid/table_column_widget.dart';
 import '../../../../core/widgets/datagrid/table_header_widget.dart';
 import '../../../../core/widgets/datagrid/table_row_widget.dart';
+import '../../../../core/widgets/error_response_widget.dart';
 import '../../../../core/widgets/progress_widget.dart';
 import '../../../../core/widgets/search_widget.dart';
 import '../../../../core/widgets/side_drawer.dart';
-import '../../logic/cubit/create/admin_create_cubit.dart';
+import '../../logic/cubit/destroy/admin_destroy_cubit.dart';
 
 class AdminIndexScreen extends StatefulWidget {
   static String routeName = '/admins';
@@ -86,7 +88,7 @@ class _AdminIndexScreenState extends State<AdminIndexScreen> {
                                 endChildren: [
                                   SearchFieldWidget(
                                     controller: controller,
-                                    action: () => context
+                                    onTap: () => context
                                         .read<AdminIndexCubit>()
                                         .index(filter: controller.text),
                                   )

@@ -63,6 +63,7 @@ dependencies:
   number_paginator: ^0.4.1
   card_loading: ^0.3.2
   octo_image: ^2.1.0
+  path_provider: ^2.1.4
 
 
 dev_dependencies:

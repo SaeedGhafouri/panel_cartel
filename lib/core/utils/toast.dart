@@ -39,6 +39,7 @@ void showToast({
       message.replaceAll('Exception:', ''),
       style: Theme.of(context).textTheme.bodySmall,
     ),
+    showProgressBar: true,
     icon: Icon(icon, color: iconColor),
     borderRadius: smallRadius,
     autoCloseDuration: duration,

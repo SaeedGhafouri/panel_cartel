@@ -29,7 +29,7 @@ class CategoryService {
             .map((json) => Category.fromJson(json))
             .toList();
       }
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       if (e.response?.statusCode == 401) {
         throw Exception('Error 401');
       }
