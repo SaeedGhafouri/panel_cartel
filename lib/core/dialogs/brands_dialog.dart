@@ -6,8 +6,8 @@ import 'package:panel_cartel/core/themes/themes.dart';
 import 'package:panel_cartel/core/widgets/image_diplay_widget.dart';
 import 'package:panel_cartel/core/widgets/progress_widget.dart';
 import '../../features/brand/data/services/brand_service.dart';
-import '../../features/brand/logic/cubit/brand_cubit.dart';
-import '../../features/brand/logic/cubit/brand_state.dart';
+import '../../features/brand/logic/cubit/index/brand_index_cubit.dart';
+import '../../features/brand/logic/cubit/index/brand_index_state.dart';
 
 class BrandsDialog extends StatelessWidget {
   final Function(int, String) onBrandSelected;
@@ -17,27 +17,27 @@ class BrandsDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => BrandCubit(BrandService(Dio()))..fetchBrands(),
+      create: (context) => BrandIndexCubit(BrandService(Dio()))..index(),
       child: Dialog(
         backgroundColor: Theme.of(context).cardColor,
         shape: RoundedRectangleBorder(borderRadius: smallRadius),
         child: FractionallySizedBox(
           widthFactor: 0.3,
-          child: BlocBuilder<BrandCubit, BrandState>(
+          child: BlocBuilder<BrandIndexCubit, BrandIndexState>(
             builder: (context, state) {
-              if (state is BrandLoading) {
+              if (state is BrandIndexLoading) {
                 return Container(
                   height: 200,
                   child: Center(child: ProgressWidget()),
                 );
-              } else if (state is BrandLoaded) {
+              } else if (state is BrandIndexLoaded) {
                 return Container(
                   padding: container,
                   height: 400,
                   child: ListView.builder(
-                    itemCount: state.Brands.length,
+                    itemCount: state.brands.length,
                     itemBuilder: (context, index) {
-                      final brand = state.Brands[index];
+                      final brand = state.brands[index];
                       return InkWell(
                         onTap: () {
                           onBrandSelected(brand.id, brand.name);
@@ -79,7 +79,7 @@ class BrandsDialog extends StatelessWidget {
                     },
                   ),
                 );
-              } else if (state is BrandError) {
+              } else if (state is BrandIndexError) {
                 return Container(
                   height: 200,
                   child: Center(child: Text('Error: ${state.message}')),

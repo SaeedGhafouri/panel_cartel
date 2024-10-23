@@ -7,18 +7,15 @@ import 'package:panel_cartel/core/widgets/actions_popup_widget.dart';
 import 'package:panel_cartel/core/widgets/appbar.dart';
 import 'package:panel_cartel/core/widgets/form_widget.dart';
 import 'package:panel_cartel/core/widgets/header_main.dart';
-import 'package:panel_cartel/features/admin/logic/cubit/destroy/admin_destroy_cubit.dart';
 import 'package:panel_cartel/features/admin/logic/cubit/index/admin_index_cubit.dart';
-import 'package:panel_cartel/features/admin/presentation/screens/admin_create_screen.dart';
 import '../../../../core/utils/app_routes.dart';
-import '../../../../core/widgets/commadbar_main.dart';
+import '../../../../core/widgets/commadbar_widget.dart';
 import '../../../../core/widgets/datagrid/table_column_widget.dart';
 import '../../../../core/widgets/datagrid/table_header_widget.dart';
 import '../../../../core/widgets/datagrid/table_row_widget.dart';
 import '../../../../core/widgets/progress_widget.dart';
 import '../../../../core/widgets/search_widget.dart';
 import '../../../../core/widgets/side_drawer.dart';
-import '../../logic/cubit/create/admin_create_cubit.dart';
 
 class AdminIndexScreen extends StatefulWidget {
   static String routeName = '/admins';

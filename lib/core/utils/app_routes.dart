@@ -13,6 +13,6 @@ class AppRoutes {
   static const users = '/users';
   static const userCreate = 'create';
   static const userDetails = 'details/:userId';
-  static const categories = '/products/categories';
+  static const categories = '/categories';
   static const brands = '/brands';
 }

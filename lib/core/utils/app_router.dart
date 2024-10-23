@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:panel_cartel/features/category/presentation/screens/category_index.dart';
 import 'package:panel_cartel/features/user/presentation/screens/user_create.dart';
 import 'package:panel_cartel/features/user/presentation/screens/user_index.dart';
 import '../../features/admin/presentation/screens/admin_create_screen.dart';
@@ -16,7 +17,7 @@ import '../widgets/page_not_found.dart';
 import 'app_routes.dart';
 class AppRouter {
   final GoRouter router = GoRouter(
-    initialLocation: AppRoutes.admins,
+    initialLocation: AppRoutes.adminDetails,
     routes: <RouteBase>[
       // Auth
       GoRoute(
@@ -37,6 +38,11 @@ class AppRouter {
         path: AppRoutes.brands,
         name: 'brands',
         builder: (context, state) => const BrandIndexScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.categories,
+        name: 'categories',
+        builder: (context, state) => const CategoryIndexScreen(),
       ),
 
       // Admins

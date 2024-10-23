@@ -13,14 +13,13 @@ import 'package:panel_cartel/core/widgets/side_drawer.dart';
 import 'package:panel_cartel/core/widgets/status_switch_widget.dart';
 import '../../../../core/themes/themes.dart';
 import '../../../../core/widgets/appbar.dart';
-import '../../../../core/widgets/commadbar_main.dart';
+import '../../../../core/widgets/commadbar_widget.dart';
 import '../../../../core/widgets/form_widget.dart';
 import '../../../../core/widgets/header_main.dart';
 import '../../../../core/widgets/image_picker_widget.dart';
 import '../../../../core/widgets/progress_widget.dart';
 import '../../../../core/widgets/text_field_widget.dart';
 import '../../data/models/admin_model.dart';
-import '../../logic/cubit/admin_cubit.dart';
 import '../../logic/cubit/create/admin_create_cubit.dart';
 
 class AdminCreateScreen extends StatefulWidget {
@@ -217,7 +216,7 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                     }
                                   },
                                 ),
-                                const SizedBox(width: 8.0),
+                                const SizedBox(width: spacingSmall),
                                 Expanded(
                                   flex: 8,
                                   child: Column(
@@ -232,7 +231,7 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                               errorText: _errors['firstName'],
                                             ),
                                           ),
-                                          const SizedBox(width: 8.0),
+                                          const SizedBox(width: spacingSmall),
                                           Expanded(
                                             child: TextFieldWidget(
                                               controller: _lastName,
@@ -241,7 +240,7 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                               errorText: _errors['lastName'],
                                             ),
                                           ),
-                                          const SizedBox(width: 8.0),
+                                          const SizedBox(width: spacingSmall),
                                           Expanded(
                                             child: TextFieldWidget(
                                               controller: _nationalCode,
@@ -253,7 +252,7 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                           ),
                                         ],
                                       ),
-                                      const SizedBox(height: 8.0),
+                                      const SizedBox(height: spacingSmall),
                                       Row(
                                         children: [
                                           Expanded(
@@ -267,7 +266,7 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                               errorText: _errors['password'],
                                             ),
                                           ),
-                                          const SizedBox(width: 8.0),
+                                          const SizedBox(width: spacingSmall),
                                           Expanded(
                                             child: TextFieldWidget(
                                               controller: _email,
@@ -276,14 +275,14 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                               errorText: _errors['email'],
                                             ),
                                           ),
-                                          const SizedBox(width: 8.0),
+                                          const SizedBox(width: spacingSmall),
                                           Expanded(
                                             child: GenderSpinnerWidget(
                                                 /*errorText: _errors['sex']*/)
                                           ),
                                         ],
                                       ),
-                                      const SizedBox(height: 8.0),
+                                      const SizedBox(height: spacingSmall),
                                       Row(
                                         children: [
                                           Expanded(
@@ -295,7 +294,7 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                               errorText: _errors['telephone'],
                                             ),
                                           ),
-                                          const SizedBox(width: 8.0),
+                                          const SizedBox(width: spacingSmall),
                                           Expanded(
                                             flex: 2,
                                             child: TextFieldWidget(
@@ -305,7 +304,7 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                               errorText: _errors['phone'],
                                             ),
                                           ),
-                                          const SizedBox(width: 8.0),
+                                          const SizedBox(width: spacingSmall),
                                           StatusSwitchWidget(
                                             onToggle: (p0) {
                                               _status = p0;
@@ -330,21 +329,21 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                     label: 'کشور',
                                   ),
                                 ),
-                                const SizedBox(width: 8.0),
+                                const SizedBox(width: spacingSmall),
                                 Expanded(
                                   child: TextFieldWidget(
                                     controller: _state,
                                     label: 'استان',
                                   ),
                                 ),
-                                const SizedBox(width: 8.0),
+                                const SizedBox(width: spacingSmall),
                                 Expanded(
                                   child: TextFieldWidget(
                                     controller: _city,
                                     label: 'شهرستان / روستا',
                                   ),
                                 ),
-                                const SizedBox(width: 8.0),
+                                const SizedBox(width: spacingSmall),
                                 Expanded(
                                   child: TextFieldWidget(
                                     controller: _region,
@@ -353,7 +352,7 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 8.0),
+                            const SizedBox(height: spacingSmall),
                             Row(
                               children: [
                                 Expanded(
@@ -362,14 +361,14 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                     label: 'خیابان',
                                   ),
                                 ),
-                                const SizedBox(width: 8.0),
+                                const SizedBox(width: spacingSmall),
                                 Expanded(
                                   child: TextFieldWidget(
                                     controller: _alley,
                                     label: 'کوچه',
                                   ),
                                 ),
-                                const SizedBox(width: 8.0),
+                                const SizedBox(width: spacingSmall),
                                 Expanded(
                                   child: TextFieldWidget(
                                     controller: _plaque,
@@ -378,7 +377,7 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 8.0),
+                            const SizedBox(height: spacingSmall),
                             Row(
                               children: [
                                 Expanded(
@@ -387,14 +386,14 @@ class _AdminCreateScreenState extends State<AdminCreateScreen> {
                                     label: 'توضیحات',
                                   ),
                                 ),
-                                const SizedBox(width: 8.0),
+                                const SizedBox(width: spacingSmall),
                                 Expanded(
                                   child: TextFieldWidget(
                                     controller: _lng,
                                     label: 'طول',
                                   ),
                                 ),
-                                const SizedBox(width: 8.0),
+                                const SizedBox(width: spacingSmall),
                                 Expanded(
                                   child: TextFieldWidget(
                                     controller: _lat,

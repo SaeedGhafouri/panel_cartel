@@ -56,6 +56,9 @@ dependencies:
   easy_stepper: ^0.8.5+1
   flutter_launcher_icons: ^0.14.1
   shared_preferences: ^2.3.2
+  number_paginator: ^0.4.1
+  card_loading: ^0.3.2
+  octo_image: ^2.1.0
 
 
 dev_dependencies:

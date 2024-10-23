@@ -3,7 +3,6 @@ import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:panel_cartel/core/constants/assets.dart';
 
 class SearchFieldWidget extends StatelessWidget {
-  //controller
   final TextEditingController controller;
   final void Function()? onPressed;
 
