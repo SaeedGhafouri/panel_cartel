@@ -9,17 +9,18 @@ import 'package:panel_cartel/core/widgets/search_widget.dart';
 import 'package:panel_cartel/core/widgets/spinner_widget.dart';
 import '../../../../core/constants/assets.dart';
 import '../../../../core/themes/themes.dart';
+import '../../../../core/utils/app_routes.dart';
 import '../../../../core/widgets/datagrid/table_header_widget.dart';
 import '../../data/models/sales_data_model.dart';
 
-class OrdersScreen extends StatefulWidget {
-  const OrdersScreen({super.key});
+class OrderIndexScreen extends StatefulWidget {
+  const OrderIndexScreen({super.key});
 
   @override
-  State<OrdersScreen> createState() => _OrdersScreenState();
+  State<OrderIndexScreen> createState() => _OrderIndexScreenState();
 }
 
-class _OrdersScreenState extends State<OrdersScreen> {
+class _OrderIndexScreenState extends State<OrderIndexScreen> {
   TextEditingController _searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -462,192 +463,191 @@ class _OrdersScreenState extends State<OrdersScreen> {
                         itemBuilder: (context, index) {
                           return InkWell(
                             onTap: () {
-                              GoRouter.of(context).go('/orders/orderDetails/${21}');
+                              context.go(
+                                  '${AppRoutes.orders}/${AppRoutes.orderDetails}');
                             },
                             child: Container(
                                 decoration: BoxDecoration(
                                   color: Theme.of(context).cardColor,
                                   borderRadius: BorderRadius.circular(radiusSmall),
                                 ),
-                                child: Container(
-                                  padding: container,
-                                  child: Column(
+                              padding: container,
+                              child: Column(
+                                children: [
+                                  Column(
                                     children: [
-                                      Column(
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                            MainAxisAlignment
-                                                .spaceBetween,
-                                            children: [
-                                              Text(
-                                                'شناسه سفارش:',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .headlineMedium,
-                                              ),
-                                              Text(
-                                                '134',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodySmall,
-                                              ),
-                                            ],
-                                          ),
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                'شماره فاکتور:',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .headlineMedium,
-                                              ),
-                                              Text(
-                                                '#512356712',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyLarge,
-                                              ),
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        height: spacingThin,
-                                      ),
-                                      Divider(
-                                        height: 3,
-                                        color: Theme.of(context).dividerColor,
-                                      ),
-                                      const SizedBox(
-                                        height: spacingThin,
-                                      ),
                                       Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment
+                                            .spaceBetween,
                                         children: [
-                                          Icon(
-                                            IconsaxPlusLinear.calendar,
-                                            color: Theme.of(context)
-                                                .textTheme
-                                                .headlineSmall
-                                                ?.color,
-                                            size: 20,
-                                          ),
-                                          const SizedBox(
-                                            width: spacingThin,
-                                          ),
                                           Text(
-                                            '1403/دی/ 10 یکشنبه 08:13:53',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleSmall,
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        height: spacingThin,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            IconsaxPlusLinear.location,
-                                            color: Theme.of(context)
-                                                .textTheme
-                                                .headlineSmall
-                                                ?.color,
-                                            size: 20,
-                                          ),
-                                          const SizedBox(
-                                            width: spacingThin,
-                                          ),
-                                          Text(
-                                            'مشهد خیابان شهید بهشتی',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleSmall,
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        height: spacingThin,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            IconsaxPlusLinear.user,
-                                            color: Theme.of(context)
-                                                .textTheme
-                                                .headlineSmall
-                                                ?.color,
-                                            size: 20,
-                                          ),
-                                          const SizedBox(
-                                            width: spacingThin,
-                                          ),
-                                          Text(
-                                            'سعید غفوری',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleSmall,
-                                          ),
-                                          SizedBox(
-                                            width: spacingThin,
-                                          ),
-                                          Text(
-                                            '09914038707',
+                                            'شناسه سفارش:',
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .headlineMedium,
                                           ),
+                                          Text(
+                                            '134',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodySmall,
+                                          ),
                                         ],
-                                      ),
-                                      const SizedBox(
-                                        height: spacingSmall,
                                       ),
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Container(
-                                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                                            decoration: BoxDecoration(
-                                                color: Theme.of(context).dividerColor,
-                                                borderRadius:
-                                                BorderRadius.circular(50)),
-                                            child: Row(
-                                              children: [
-                                                Icon(IconsaxPlusLinear.shopping_cart, size: 20,),
-                                                SizedBox(width: spacingThin,),
-                                                Text(
-                                                  '21 قلم',
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .titleSmall,
-                                                ),
-                                              ],
-                                            ),
+                                          Text(
+                                            'شماره فاکتور:',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headlineMedium,
                                           ),
-                                          Container(
-                                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                                            decoration: BoxDecoration(
-                                                color: Theme.of(context).dividerColor,
-                                                borderRadius:
-                                                BorderRadius.circular(50)),
-                                            child: Row(
-                                              children: [
-                                                Icon(IconsaxPlusLinear.refresh_2, size: 17, color: Theme.of(context).textTheme.headlineMedium?.color,),
-                                                SizedBox(width: spacingThin,),
-                                                Text(
-                                                  'در انتظار تایید',
-                                                  style: Theme.of(context).textTheme.headlineMedium,
-                                                ),
-                                              ],
-                                            ),
-                                          )
+                                          Text(
+                                            '#512356712',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge,
+                                          ),
                                         ],
+                                      )
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: spacingThin,
+                                  ),
+                                  Divider(
+                                    height: 3,
+                                    color: Theme.of(context).dividerColor,
+                                  ),
+                                  const SizedBox(
+                                    height: spacingThin,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        IconsaxPlusLinear.calendar,
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .headlineSmall
+                                            ?.color,
+                                        size: 20,
+                                      ),
+                                      const SizedBox(
+                                        width: spacingThin,
+                                      ),
+                                      Text(
+                                        '1403/دی/ 10 یکشنبه 08:13:53',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall,
                                       ),
                                     ],
                                   ),
-                                )
+                                  const SizedBox(
+                                    height: spacingThin,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        IconsaxPlusLinear.location,
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .headlineSmall
+                                            ?.color,
+                                        size: 20,
+                                      ),
+                                      const SizedBox(
+                                        width: spacingThin,
+                                      ),
+                                      Text(
+                                        'مشهد خیابان شهید بهشتی',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall,
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: spacingThin,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        IconsaxPlusLinear.user,
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .headlineSmall
+                                            ?.color,
+                                        size: 20,
+                                      ),
+                                      const SizedBox(
+                                        width: spacingThin,
+                                      ),
+                                      Text(
+                                        'سعید غفوری',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall,
+                                      ),
+                                      SizedBox(
+                                        width: spacingThin,
+                                      ),
+                                      Text(
+                                        '09914038707',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headlineMedium,
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: spacingSmall,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                        decoration: BoxDecoration(
+                                            color: Theme.of(context).dividerColor,
+                                            borderRadius:
+                                            BorderRadius.circular(50)),
+                                        child: Row(
+                                          children: [
+                                            Icon(IconsaxPlusLinear.shopping_cart, size: 20,),
+                                            SizedBox(width: spacingThin,),
+                                            Text(
+                                              '21 قلم',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                        decoration: BoxDecoration(
+                                            color: Theme.of(context).dividerColor,
+                                            borderRadius:
+                                            BorderRadius.circular(50)),
+                                        child: Row(
+                                          children: [
+                                            Icon(IconsaxPlusLinear.refresh_2, size: 17, color: Theme.of(context).textTheme.headlineMedium?.color,),
+                                            SizedBox(width: spacingThin,),
+                                            Text(
+                                              'در انتظار تایید',
+                                              style: Theme.of(context).textTheme.headlineMedium,
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           );
                         })

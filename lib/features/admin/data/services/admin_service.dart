@@ -22,6 +22,7 @@ class AdminService {
     _dio.options.headers['Authorization'] = authToken;
   }
 
+  /// Index Admin
   Future<List<Admin>> index(String? filter) async {
     try {
       await _setAuthorizationHeader();
@@ -39,6 +40,7 @@ class AdminService {
     }
   }
 
+  /// Show Details of Admin
   Future<Admin> show(double id) async {
     await _setAuthorizationHeader();
     final response = await _dio.get('${Routes.adminShow}$id');

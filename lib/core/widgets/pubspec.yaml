@@ -64,6 +64,7 @@ dependencies:
   card_loading: ^0.3.2
   octo_image: ^2.1.0
   path_provider: ^2.1.4
+  tab_container: ^3.5.3
 
 
 dev_dependencies:

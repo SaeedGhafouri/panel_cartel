@@ -11,7 +11,7 @@ import '../../../../core/widgets/header_main.dart';
 import '../../../product/presentation/widgets/status_popup_widget.dart';
 
 class OrderDetailsScreen extends StatefulWidget {
-  final double? orderId;
+  final int? orderId;
   const OrderDetailsScreen({super.key, this.orderId});
 
   @override
@@ -22,7 +22,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: Directionality(textDirection: TextDirection.rtl, child: Column(
         children: [
           const AppBarMain(),
           Expanded(
@@ -38,44 +38,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                     FormWidget(
                         body: Column(
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    RichText(
-                                        text: TextSpan(children: [
-                                          TextSpan(
-                                              text: 'سفارش',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .titleLarge),
-                                          TextSpan(
-                                              text: ' : ',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .titleLarge),
-                                          TextSpan(
-                                              text: '#5513253',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .titleLarge
-                                                  ?.copyWith(
-                                                  color: Theme.of(context)
-                                                      .textTheme
-                                                      .headlineMedium
-                                                      ?.color)),
-                                        ])),
-                                    const SizedBox(height: 10),
-                                    Text(
-                                      'شناسه سیستمی: 12451',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineMedium,
-                                    )
-                                  ],
-                                ),
+                            TableHeaderWidget(
+                              startChildren: [
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
@@ -125,15 +89,46 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                       ],
                                     )
                                   ],
-                                )
+                                ),
                               ],
-                            ),
-                            const SizedBox(
-                              height: spacingThin,
-                            ),
-                            Divider(
-                              height: 2,
-                              color: Theme.of(context).dividerColor,
+                              endChildren: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+
+                                  children: [
+                                    RichText(
+                                        text: TextSpan(children: [
+                                          TextSpan(
+                                              text: 'سفارش',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleLarge),
+                                          TextSpan(
+                                              text: ' : ',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleLarge),
+                                          TextSpan(
+                                              text: '#5513253',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleLarge
+                                                  ?.copyWith(
+                                                  color: Theme.of(context)
+                                                      .textTheme
+                                                      .headlineMedium
+                                                      ?.color)),
+                                        ])),
+                                    const SizedBox(height: 10),
+                                    Text(
+                                      'شناسه سیستمی: 12451',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineMedium,
+                                    )
+                                  ],
+                                ),
+                              ],
                             ),
                             const SizedBox(
                               height: spacingSmall,
@@ -688,7 +683,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 ),
               ))
         ],
-      ),
+      )),
     );
   }
 }

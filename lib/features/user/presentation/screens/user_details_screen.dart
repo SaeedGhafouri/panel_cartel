@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
+import 'package:panel_cartel/core/utils/toast.dart';
 import 'package:panel_cartel/core/widgets/appbar.dart';
 import 'package:panel_cartel/core/widgets/commadbar_widget.dart';
 import 'package:panel_cartel/core/widgets/datagrid/table_header_widget.dart';
@@ -11,6 +12,7 @@ import 'package:panel_cartel/core/widgets/progress_widget.dart';
 import 'package:panel_cartel/core/widgets/side_drawer.dart';
 import 'package:panel_cartel/core/widgets/spinner_widget.dart';
 import 'package:panel_cartel/features/admin/logic/cubit/show/admin_show_cubit.dart';
+import 'package:tab_container/tab_container.dart';
 import '../../../../core/constants/assets.dart';
 import '../../../../core/themes/themes.dart';
 import '../../../../core/widgets/error_response_widget.dart';
@@ -20,7 +22,7 @@ import '../../logic/cubit/show/user_show_cubit.dart';
 
 class UserDetailsScreen extends StatefulWidget {
   static const String routeName = '/userDetails';
-  final int? userId;
+  final double? userId;
   const UserDetailsScreen({Key? key, this.userId}) : super(key: key);
   @override
   _UserDetailsScreenState createState() => _UserDetailsScreenState();
@@ -40,7 +42,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<AdminShowCubit>().show(1);
+    context.read<UserShowCubit>().show(widget.userId!);
   }
 
   @override
@@ -65,34 +67,36 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                       ),
                       BlocConsumer<UserShowCubit, UserShowState>(
                           builder: (context, state) {
-                            if (state is UserShowLoading) {
-                              return const Center(child: ProgressWidget());
-                            } else if (state is UserShowLoaded) {
-                              return Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  buildProfileInfo(state.user),
-                                  const SizedBox(
-                                    width: spacingSmall,
-                                  ),
-                                  buildProfileForm(state.user)
-                                ],
-                              );
-                            } else if (state is UserShowError) {
-                              print('request failed ${state.message}');
-                              return ErrorResponseWidget(
-                                  message: state.message);
-                              ;
-                            } else {
-                              return Center(
-                                child: Text(
-                                  'خطای بارگذاری',
-                                  style: Theme.of(context).textTheme.bodyLarge,
-                                ),
-                              );
-                            }
-                          },
-                          listener: (context, state) {})
+                        if (state is UserShowLoading) {
+                          return const Center(child: ProgressWidget());
+                        } else if (state is UserShowLoaded) {
+                          return Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              buildProfileRight(state.user),
+                              const SizedBox(
+                                width: spacingSmall,
+                              ),
+                              buildProfileLeft(state.user)
+                            ],
+                          );
+                        } else if (state is UserShowError) {
+                          print('request failed ${state.message}');
+                          return ErrorResponseWidget(message: state.message);
+                          ;
+                        } else {
+                          return Center(
+                            child: Text(
+                              'خطای بارگذاری',
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            ),
+                          );
+                        }
+                      }, listener: (context, state) {
+                        if (state is UserShowError) {
+                          showToast(context: context, message: state.message);
+                        }
+                      })
                     ],
                   ),
                 ),
@@ -103,7 +107,187 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
     );
   }
 
-  Widget buildProfileForm(User user) {
+  Widget buildProfileInfoRow(IconData icon, String label, String value) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: spacingThin),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              Icon(
+                icon,
+                color: Theme.of(context).textTheme.headlineMedium?.color,
+                size: 15,
+              ),
+              const SizedBox(width: 5),
+              Text(label, style: Theme.of(context).textTheme.headlineMedium),
+            ],
+          ),
+          Text(
+            value,
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildButtonsItems(
+      {required String title, IconData? icon, VoidCallback? onTap}) {
+    return ListTile(
+      onTap: onTap,
+      title: Text(
+        title,
+        style: Theme.of(context).textTheme.bodyMedium,
+      ),
+      leading: Icon(
+        icon,
+        size: 20,
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: smallRadius,
+      ),
+    );
+  }
+
+  Widget buildProfileRight(User user) {
+    return Expanded(
+        flex: 3,
+        child: FormWidget(
+            body: Column(
+          children: [
+            ImageDisplayWidget(
+              imageUrl: user.image,
+              size: 120,
+              radius: 20,
+              isShow: true,
+            ),
+            const SizedBox(height: spacingSmall),
+            //Change image
+            TextButton(
+              onPressed: () {},
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(IconsaxPlusLinear.edit, size: 15, color: grayIconColor),
+                  Text(
+                    ' ویرایش تصویر',
+                    style: TextStyle(
+                      fontSize: txt_20,
+                      color: grayTextColor,
+                      fontFamily: font_regular,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: spacingThin),
+            Divider(
+              height: 1,
+              color: Theme.of(context).dividerColor,
+            ),
+            const SizedBox(height: spacingThin),
+            Column(
+              children: [
+                buildProfileInfoRow(
+                    IconsaxPlusLinear.personalcard,
+                    'نام و نام خانوادگی:',
+                    '${user.first_name} ${user.last_name}'),
+                buildProfileInfoRow(
+                    IconsaxPlusLinear.mobile, 'شماره موبایل:', user.mobile!),
+                buildProfileInfoRow(
+                    IconsaxPlusLinear.message, 'ایمیل:', user.email!),
+              ],
+            ),
+            const SizedBox(height: spacingThin),
+            Divider(
+              height: 1,
+              color: Theme.of(context).dividerColor,
+            ),
+            const SizedBox(height: spacingThin),
+            buildButtonsItems(
+              title: 'اطلاعات کاربری',
+              icon: IconsaxPlusLinear.edit_2,
+              onTap: () {},
+            ),
+            buildButtonsItems(
+              title: 'امنیت و رمزعبور',
+              icon: IconsaxPlusLinear.shield,
+              onTap: () {},
+            ),
+            buildButtonsItems(
+              title: 'سفارشات',
+              icon: IconsaxPlusLinear.receipt_1,
+              onTap: () {},
+            ),
+            buildButtonsItems(
+              title: 'عملکرد',
+              icon: IconsaxPlusLinear.activity,
+              onTap: () {},
+            ),
+          ],
+        )));
+  }
+
+  Widget buildProfileLeft(User user) {
+    return Expanded(
+      flex: 7,
+      child: TabContainer(
+        duration: const Duration(milliseconds: 300),
+        tabEdge: TabEdge.top,
+        tabCurve: Curves.easeIn,
+        transitionBuilder: (child, animation) {
+          return FadeTransition(opacity: animation, child: child);
+        },
+        tabs: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(
+                IconsaxPlusLinear.activity,
+                size: 17,
+              ),
+              const SizedBox(width: 5,),
+              Text('فعالیت ها', style: Theme.of(context).textTheme.bodyMedium,)
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(
+                IconsaxPlusLinear.shield,
+                size: 17,
+              ),
+              const SizedBox(width: 5,),
+              Text('امنیت و رمزعبور', style: Theme.of(context).textTheme.bodyMedium,)
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(
+                IconsaxPlusLinear.edit_2,
+                size: 17,
+              ),
+              const SizedBox(width: 5,),
+              Text('فعالیت ها', style: Theme.of(context).textTheme.bodyMedium,)
+            ],
+          ),
+        ],
+        color: Theme.of(context).cardColor,
+        children: [
+          sectionActivity(),
+          sectionSecurity(),
+          sectionEdit(user),
+        ],
+      ),
+    );
+  }
+
+  /// Sections
+  // Edit
+  Widget sectionEdit(User user) {
     _firstName.text = user.first_name!;
     _lastName.text = user.last_name!;
     _phone.text = user.mobile!;
@@ -254,87 +438,17 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
         ));
   }
 
-  Widget buildProfileInfo(User user) {
-    return Expanded(
-      flex: 3,
-      child: FormWidget(
-        body: Column(
-          children: [
-            ImageDisplayWidget(
-              imageUrl: user.image,
-            ),
-            const SizedBox(height: spacingSmall),
-            //Change image
-            TextButton(
-              onPressed: () {},
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(IconsaxPlusLinear.edit, size: 15, color: grayIconColor),
-                  Text(
-                    ' ویرایش تصویر',
-                    style: TextStyle(
-                      fontSize: txt_20,
-                      color: grayTextColor,
-                      fontFamily: font_regular,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: spacingThin),
-            Divider(
-              height: 1,
-              color: Theme.of(context).dividerColor,
-            ),
-            const SizedBox(height: spacingThin),
-            Column(
-              children: [
-                buildProfileInfoRow(
-                    IconsaxPlusLinear.personalcard,
-                    'نام و نام خانوادگی:',
-                    '${user.first_name} ${user.last_name}'),
-                buildProfileInfoRow(
-                    IconsaxPlusLinear.mobile, 'شماره موبایل:', user.mobile!),
-                buildProfileInfoRow(
-                    IconsaxPlusLinear.message, 'ایمیل:', user.email!),
-              ],
-            ),
-            const SizedBox(height: spacingThin),
-            Divider(
-              height: 1,
-              color: Theme.of(context).dividerColor,
-            ),
-            const SizedBox(height: spacingThin),
-          ],
-        ),
-      ),
+  // Security
+  Widget sectionSecurity() {
+    return Column(
+      children: [Text('Secruity')],
     );
   }
 
-  Widget buildProfileInfoRow(IconData icon, String label, String value) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: spacingThin),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              Icon(
-                icon,
-                color: Theme.of(context).textTheme.headlineMedium?.color,
-                size: 15,
-              ),
-              const SizedBox(width: 5),
-              Text(label, style: Theme.of(context).textTheme.headlineMedium),
-            ],
-          ),
-          Text(
-            value,
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
-        ],
-      ),
+  // Activity
+  Widget sectionActivity() {
+    return Column(
+      children: [Text('Activity')],
     );
   }
 }

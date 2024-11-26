@@ -16,4 +16,5 @@ class AppRoutes {
   static const categories = '/categories';
   static const brands = '/brands';
   static const permission = '/permission';
+  static const settings = '/settings';
 }

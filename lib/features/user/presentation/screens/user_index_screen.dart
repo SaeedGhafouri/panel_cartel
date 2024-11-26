@@ -122,6 +122,11 @@ class _UserIndexScreenState extends State<UserIndexScreen> {
                                               context.go(
                                                   '${AppRoutes.users}/${AppRoutes.userDetails}/${user.id}');
                                             },
+                                            onShow: () {
+                                              context.go(
+                                                '${AppRoutes.users}/details/${user.id}'
+                                              );
+                                            },
                                             /*onDelete: () {
                                               try {
                                                 context

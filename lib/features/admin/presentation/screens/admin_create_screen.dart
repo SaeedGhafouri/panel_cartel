@@ -26,7 +26,7 @@ import '../../logic/cubit/create/admin_create_cubit.dart';
 
 class AdminCreateScreen extends StatefulWidget {
   static String routeName = 'adminCreate';
-  const AdminCreateScreen({Key? key}) : super(key: key);
+  const AdminCreateScreen({super.key});
 
   @override
   _AdminCreateScreenState createState() => _AdminCreateScreenState();

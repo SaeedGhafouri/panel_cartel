@@ -29,6 +29,7 @@ import 'features/product/logic/cubit/destroy/product_destroy_cubit.dart';
 import 'features/product/logic/cubit/show/product_show_cubit.dart';
 import 'features/user/data/services/user_service.dart';
 import 'features/user/logic/cubit/index/user_index_cubit.dart';
+import 'features/user/logic/cubit/show/user_show_cubit.dart';
 
 void main() {
   runApp(
@@ -63,6 +64,10 @@ void main() {
         BlocProvider<UserIndexCubit>(
           create: (context) => UserIndexCubit(UserService(Dio())),
         ),
+        BlocProvider<UserShowCubit>(
+          create: (context) => UserShowCubit(UserService(Dio())),
+        ),
+        /// Auth
         BlocProvider<AuthCubit>(
           create: (context) => AuthCubit(AuthService(Dio())),
         ),

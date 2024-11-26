@@ -27,8 +27,11 @@ class ImageDisplayWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () => isShow ? _showImageDialog(context) : null,
       child: Container(
-        width: 48,
-        height: 48,
+        width: size ?? 45,
+        height: size ?? 45,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(radius ?? 0)
+        ),
         child: OctoImage.fromSet(
           fit: BoxFit.cover,
           image: NetworkImage(imageUrl!),

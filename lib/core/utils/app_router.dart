@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:panel_cartel/features/admin/presentation/screens/admin_role_screen.dart';
+import 'package:panel_cartel/features/settings/presentation/screens/settings_screen.dart';
 import 'package:panel_cartel/features/user/presentation/screens/user_create.dart';
 import 'package:panel_cartel/features/user/presentation/screens/user_index_screen.dart';
 import '../../features/admin/presentation/screens/admin_create_screen.dart';
@@ -10,7 +11,7 @@ import '../../features/brand/presentation/screens/brand_index_screen.dart';
 import '../../features/category/presentation/screens/category_index.dart';
 import '../../features/dashboard/presentation/screens/dashboard_screen.dart';
 import '../../features/order/presentation/screens/order_details_screen.dart';
-import '../../features/order/presentation/screens/orders_screen.dart';
+import '../../features/order/presentation/screens/orders_index_screen.dart';
 import '../../features/product/presentation/screens/product_create.dart';
 import '../../features/product/presentation/screens/product_details_screen.dart';
 import '../../features/product/presentation/screens/product_index.dart';
@@ -19,7 +20,7 @@ import '../widgets/page_not_found.dart';
 import 'app_routes.dart';
 class AppRouter {
   final GoRouter router = GoRouter(
-    initialLocation: AppRoutes.brands,
+    initialLocation: AppRoutes.users,
     routes: <RouteBase>[
       // Auth
       GoRoute(
@@ -27,14 +28,12 @@ class AppRouter {
         name: 'login',
         builder: (context, state) => const LoginScreen(),
       ),
-
       // Overview
       GoRoute(
         path: AppRoutes.dashboard,
         name: '/',
         builder: (context, state) => const DashboardScreen(),
       ),
-
       // Brands
       GoRoute(
         path: AppRoutes.brands,
@@ -46,7 +45,6 @@ class AppRouter {
         name: 'categories',
         builder: (context, state) => const CategoryIndexScreen(),
       ),
-
       // Admins
       GoRoute(
         path: AppRoutes.admins,
@@ -88,7 +86,7 @@ class AppRouter {
             path: AppRoutes.userDetails,
             name: 'userDetails',
             builder: (context, state) {
-              final userId = int.tryParse(state.pathParameters['userId'] ?? '0');
+              final userId = double.tryParse(state.pathParameters['userId'] ?? '0');
               return UserDetailsScreen(userId: userId);
             },
           ),
@@ -119,17 +117,25 @@ class AppRouter {
       GoRoute(
         path: AppRoutes.orders,
         name: 'orders',
-        builder: (context, state) => const OrdersScreen(),
+        builder: (context, state) => const OrderIndexScreen(),
         routes: [
           GoRoute(
             path: AppRoutes.orderDetails,
             name: 'orderDetails',
-            builder: (context, state) => const OrderDetailsScreen(),
+            builder: (context, state) {
+              final order_id = int.tryParse(state.pathParameters['order_id'] ?? '0');
+              return OrderDetailsScreen(orderId: order_id);
+            },
           ),
         ],
       ),
+      // Settings
+      GoRoute(
+        path: AppRoutes.settings,
+        name: 'settings',
+        builder: (context, state) => const SettingsScreen(),
+      ),
     ],
-
     errorBuilder: (context, state) {
       return const PageNotFound(); 
     },

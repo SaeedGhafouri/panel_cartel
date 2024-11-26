@@ -324,7 +324,7 @@ List<Menu> menuItems(BuildContext context) => [
         name: 'تنظیمات فروشگاه',
         icon: IconsaxPlusLinear.shop,
         onPress: () {
-          // Navigate to Store Settings
+          context.go(AppRoutes.settings);
         },
       ),
       Menu(
